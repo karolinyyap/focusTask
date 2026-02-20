@@ -26,21 +26,165 @@ public class FrmPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        fundoTitulo = new javax.swing.JPanel();
+        tituloGerenciador = new javax.swing.JLabel();
+        tituloFocus = new javax.swing.JLabel();
+        fundoBtn = new javax.swing.JPanel();
+        btnTarefas = new javax.swing.JButton();
+        btnEquipes = new javax.swing.JButton();
+        btnCategorias = new javax.swing.JButton();
+        btnUsuarios = new javax.swing.JButton();
+        btnRelatorios = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("FocusTask");
+        setMaximumSize(null);
+        setPreferredSize(new java.awt.Dimension(600, 420));
+        setResizable(false);
+
+        fundoTitulo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        tituloGerenciador.setFont(new java.awt.Font("Source Sans Pro Black", 1, 24)); // NOI18N
+        tituloGerenciador.setText("GERENCIADOR DE TAREFAS");
+
+        tituloFocus.setFont(new java.awt.Font("Source Sans Pro Black", 0, 18)); // NOI18N
+        tituloFocus.setText("FOCUS TASK");
+
+        javax.swing.GroupLayout fundoTituloLayout = new javax.swing.GroupLayout(fundoTitulo);
+        fundoTitulo.setLayout(fundoTituloLayout);
+        fundoTituloLayout.setHorizontalGroup(
+            fundoTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(fundoTituloLayout.createSequentialGroup()
+                .addContainerGap(131, Short.MAX_VALUE)
+                .addGroup(fundoTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fundoTituloLayout.createSequentialGroup()
+                        .addComponent(tituloGerenciador)
+                        .addGap(96, 96, 96))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fundoTituloLayout.createSequentialGroup()
+                        .addComponent(tituloFocus)
+                        .addGap(213, 213, 213))))
+        );
+        fundoTituloLayout.setVerticalGroup(
+            fundoTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(fundoTituloLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tituloGerenciador)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tituloFocus)
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
+
+        fundoBtn.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        btnTarefas.setText("Tarefas");
+        btnTarefas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnTarefas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTarefasMouseClicked(evt);
+            }
+        });
+        btnTarefas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTarefasActionPerformed(evt);
+            }
+        });
+
+        btnEquipes.setText("Equipes");
+        btnEquipes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnEquipes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEquipesActionPerformed(evt);
+            }
+        });
+
+        btnCategorias.setText("Categorias");
+        btnCategorias.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnCategorias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCategoriasActionPerformed(evt);
+            }
+        });
+
+        btnUsuarios.setText("Usuários");
+        btnUsuarios.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        btnRelatorios.setText("Relatórios");
+        btnRelatorios.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout fundoBtnLayout = new javax.swing.GroupLayout(fundoBtn);
+        fundoBtn.setLayout(fundoBtnLayout);
+        fundoBtnLayout.setHorizontalGroup(
+            fundoBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(fundoBtnLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(btnTarefas, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnEquipes, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(34, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fundoBtnLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCategorias, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(btnRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(111, 111, 111))
+        );
+        fundoBtnLayout.setVerticalGroup(
+            fundoBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(fundoBtnLayout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addGroup(fundoBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnTarefas, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEquipes, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(fundoBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnRelatorios, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+                    .addComponent(btnCategorias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fundoTitulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fundoBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(fundoTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addComponent(fundoBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnEquipesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEquipesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEquipesActionPerformed
+
+    private void btnCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCategoriasActionPerformed
+
+    private void btnTarefasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTarefasActionPerformed
+        FrmJanTarefa janTarefa = new FrmJanTarefa(this, true);
+        janTarefa.setVisible(true);
+    }//GEN-LAST:event_btnTarefasActionPerformed
+
+    private void btnTarefasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTarefasMouseClicked
+
+    }//GEN-LAST:event_btnTarefasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -53,7 +197,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -78,5 +222,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCategorias;
+    private javax.swing.JButton btnEquipes;
+    private javax.swing.JButton btnRelatorios;
+    private javax.swing.JButton btnTarefas;
+    private javax.swing.JButton btnUsuarios;
+    private javax.swing.JPanel fundoBtn;
+    private javax.swing.JPanel fundoTitulo;
+    private javax.swing.JLabel tituloFocus;
+    private javax.swing.JLabel tituloGerenciador;
     // End of variables declaration//GEN-END:variables
 }
