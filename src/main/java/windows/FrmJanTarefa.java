@@ -32,8 +32,29 @@ public class FrmJanTarefa extends javax.swing.JDialog {
         txtDesc = new javax.swing.JLabel();
         panelTabela = new javax.swing.JTabbedPane();
         tabCadastrar = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        labelNomeTarefa = new javax.swing.JLabel();
+        txtNomeTarefa = new javax.swing.JTextField();
+        labelDescricao = new javax.swing.JLabel();
+        labelCategoria = new javax.swing.JLabel();
+        labelEquipe = new javax.swing.JLabel();
+        labelResponsavel = new javax.swing.JLabel();
+        labelDtLimite = new javax.swing.JLabel();
+        labelStatus = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtAreaDescricao = new javax.swing.JTextArea();
+        comboBoxCategoria = new javax.swing.JComboBox<>();
+        comboBoxEquipe = new javax.swing.JComboBox<>();
+        comboBoxResponsavel = new javax.swing.JComboBox<>();
+        txtDtLimite = new javax.swing.JFormattedTextField();
+        comboBoxStatus = new javax.swing.JComboBox<>();
+        btnSalvar = new javax.swing.JButton();
+        labelPrioridade = new javax.swing.JLabel();
+        comboBoxPrioridade = new javax.swing.JComboBox<>();
         tabListar = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        btnEditar = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
         btnVoltarJanTarefa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -70,47 +91,181 @@ public class FrmJanTarefa extends javax.swing.JDialog {
         tabCadastrar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         tabCadastrar.setToolTipText("");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 511, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 416, Short.MAX_VALUE)
-        );
+        labelNomeTarefa.setText("Nome da tarefa");
+
+        txtNomeTarefa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNomeTarefaActionPerformed(evt);
+            }
+        });
+
+        labelDescricao.setText("Descrição");
+
+        labelCategoria.setText("Categoria");
+
+        labelEquipe.setText("Equipe");
+
+        labelResponsavel.setText("Responsável");
+
+        labelDtLimite.setText("Data Limite");
+
+        labelStatus.setText("Status");
+
+        txtAreaDescricao.setColumns(20);
+        txtAreaDescricao.setRows(5);
+        jScrollPane1.setViewportView(txtAreaDescricao);
+
+        comboBoxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sem categoria", "Desenvolvimento", "Manutenção", "Entregas", "Reunião", "Documentação" }));
+
+        comboBoxEquipe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nenhuma", "Equipe Marketing", "Equipe Comunicação" }));
+
+        comboBoxResponsavel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nenhum", "Rafael", "Luisa", "Carina", "Felipe" }));
+
+        try {
+            txtDtLimite.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtDtLimite.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDtLimiteActionPerformed(evt);
+            }
+        });
+
+        comboBoxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A começar", "Em andamento", "Completa" }));
+
+        btnSalvar.setText("Salvar");
+
+        labelPrioridade.setText("Prioridade");
+
+        comboBoxPrioridade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alta", "Média", "Baixa" }));
 
         javax.swing.GroupLayout tabCadastrarLayout = new javax.swing.GroupLayout(tabCadastrar);
         tabCadastrar.setLayout(tabCadastrarLayout);
         tabCadastrarLayout.setHorizontalGroup(
             tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabCadastrarLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tabCadastrarLayout.createSequentialGroup()
+                        .addComponent(labelNomeTarefa)
+                        .addGap(189, 189, 189)
+                        .addComponent(labelCategoria))
+                    .addGroup(tabCadastrarLayout.createSequentialGroup()
+                        .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txtDtLimite, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+                                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+                                        .addComponent(txtNomeTarefa, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addComponent(labelDescricao)))
+                            .addComponent(labelDtLimite)
+                            .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(45, 45, 45)
+                        .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(comboBoxPrioridade, 0, 160, Short.MAX_VALUE)
+                            .addComponent(labelPrioridade)
+                            .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(labelStatus)
+                                .addComponent(comboBoxCategoria, 0, 128, Short.MAX_VALUE)
+                                .addComponent(labelEquipe)
+                                .addComponent(comboBoxEquipe, 0, 0, Short.MAX_VALUE)
+                                .addComponent(labelResponsavel)
+                                .addComponent(comboBoxResponsavel, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(comboBoxStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
         tabCadastrarLayout.setVerticalGroup(
             tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabCadastrarLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addGap(19, 19, 19)
+                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelNomeTarefa)
+                    .addComponent(labelCategoria))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNomeTarefa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBoxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelDescricao)
+                    .addComponent(labelEquipe))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(tabCadastrarLayout.createSequentialGroup()
+                        .addComponent(comboBoxEquipe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(labelResponsavel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(comboBoxResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1))
+                .addGap(18, 18, 18)
+                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelDtLimite)
+                    .addComponent(labelStatus))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtDtLimite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(labelPrioridade)
+                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tabCadastrarLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                        .addComponent(btnSalvar)
+                        .addGap(18, 18, 18))
+                    .addGroup(tabCadastrarLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboBoxPrioridade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         panelTabela.addTab("Cadastrar Tarefa", tabCadastrar);
 
         tabListar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Tarefa", "Equipe", "Responsável", "Prioridade", "Data Limite", "Status"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
+
+        btnEditar.setText("Editar");
+
+        btnExcluir.setText("Excluir");
+
         javax.swing.GroupLayout tabListarLayout = new javax.swing.GroupLayout(tabListar);
         tabListar.setLayout(tabListarLayout);
         tabListarLayout.setHorizontalGroup(
             tabListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 547, Short.MAX_VALUE)
+            .addGroup(tabListarLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(tabListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabListarLayout.createSequentialGroup()
+                        .addComponent(btnEditar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnExcluir))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         tabListarLayout.setVerticalGroup(
             tabListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 448, Short.MAX_VALUE)
+            .addGroup(tabListarLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(tabListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEditar)
+                    .addComponent(btnExcluir))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         panelTabela.addTab("Listar Tarefas", tabListar);
@@ -126,16 +281,17 @@ public class FrmJanTarefa extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(painelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38))
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(panelTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnVoltarJanTarefa, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(painelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(panelTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnVoltarJanTarefa, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(23, 23, 23))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,10 +299,10 @@ public class FrmJanTarefa extends javax.swing.JDialog {
                 .addGap(15, 15, 15)
                 .addComponent(painelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(panelTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
                 .addComponent(btnVoltarJanTarefa)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
@@ -155,6 +311,14 @@ public class FrmJanTarefa extends javax.swing.JDialog {
     private void btnVoltarJanTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarJanTarefaActionPerformed
 
     }//GEN-LAST:event_btnVoltarJanTarefaActionPerformed
+
+    private void txtNomeTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeTarefaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNomeTarefaActionPerformed
+
+    private void txtDtLimiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDtLimiteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDtLimiteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -199,13 +363,34 @@ public class FrmJanTarefa extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnVoltarJanTarefa;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JComboBox<String> comboBoxCategoria;
+    private javax.swing.JComboBox<String> comboBoxEquipe;
+    private javax.swing.JComboBox<String> comboBoxPrioridade;
+    private javax.swing.JComboBox<String> comboBoxResponsavel;
+    private javax.swing.JComboBox<String> comboBoxStatus;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel labelCategoria;
+    private javax.swing.JLabel labelDescricao;
+    private javax.swing.JLabel labelDtLimite;
+    private javax.swing.JLabel labelEquipe;
+    private javax.swing.JLabel labelNomeTarefa;
+    private javax.swing.JLabel labelPrioridade;
+    private javax.swing.JLabel labelResponsavel;
+    private javax.swing.JLabel labelStatus;
     private javax.swing.JPanel painelTitulo;
     private javax.swing.JTabbedPane panelTabela;
     private javax.swing.JPanel tabCadastrar;
     private javax.swing.JPanel tabListar;
+    private javax.swing.JTextArea txtAreaDescricao;
     private javax.swing.JLabel txtDesc;
+    private javax.swing.JFormattedTextField txtDtLimite;
+    private javax.swing.JTextField txtNomeTarefa;
     private javax.swing.JLabel txtTitulo;
     // End of variables declaration//GEN-END:variables
 }
