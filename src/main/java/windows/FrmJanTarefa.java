@@ -36,28 +36,32 @@ public class FrmJanTarefa extends javax.swing.JDialog {
         txtNomeTarefa = new javax.swing.JTextField();
         labelDescricao = new javax.swing.JLabel();
         labelCategoria = new javax.swing.JLabel();
-        labelEquipe = new javax.swing.JLabel();
         labelResponsavel = new javax.swing.JLabel();
         labelDtLimite = new javax.swing.JLabel();
         labelStatus = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtAreaDescricao = new javax.swing.JTextArea();
         comboBoxCategoria = new javax.swing.JComboBox<>();
-        comboBoxEquipe = new javax.swing.JComboBox<>();
         comboBoxResponsavel = new javax.swing.JComboBox<>();
         txtDtLimite = new javax.swing.JFormattedTextField();
         comboBoxStatus = new javax.swing.JComboBox<>();
-        btnSalvar = new javax.swing.JButton();
+        btnSalvarTarefa = new javax.swing.JButton();
         labelPrioridade = new javax.swing.JLabel();
         comboBoxPrioridade = new javax.swing.JComboBox<>();
+        panelEquipe = new javax.swing.JPanel();
+        labelEquipe = new javax.swing.JLabel();
+        checkBox1 = new javax.swing.JCheckBox();
+        checkBox2 = new javax.swing.JCheckBox();
+        checkBox3 = new javax.swing.JCheckBox();
         tabListar = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        btnEditar = new javax.swing.JButton();
-        btnExcluir = new javax.swing.JButton();
+        tabelaListarTarefa = new javax.swing.JTable();
+        btnEditarTarefa = new javax.swing.JButton();
+        btnExcluirTarefa = new javax.swing.JButton();
         btnVoltarJanTarefa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("FocusTask - Tarefas");
 
         txtTitulo.setFont(new java.awt.Font("Source Sans Pro Black", 0, 24)); // NOI18N
         txtTitulo.setText("TAREFAS");
@@ -103,8 +107,6 @@ public class FrmJanTarefa extends javax.swing.JDialog {
 
         labelCategoria.setText("Categoria");
 
-        labelEquipe.setText("Equipe");
-
         labelResponsavel.setText("Responsável");
 
         labelDtLimite.setText("Data Limite");
@@ -115,11 +117,9 @@ public class FrmJanTarefa extends javax.swing.JDialog {
         txtAreaDescricao.setRows(5);
         jScrollPane1.setViewportView(txtAreaDescricao);
 
-        comboBoxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sem categoria", "Desenvolvimento", "Manutenção", "Entregas", "Reunião", "Documentação" }));
+        comboBoxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "             ", "Desenvolvimento", "Manutenção", "Entregas", "Reunião", "Documentação" }));
 
-        comboBoxEquipe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nenhuma", "Equipe Marketing", "Equipe Comunicação" }));
-
-        comboBoxResponsavel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nenhum", "Rafael", "Luisa", "Carina", "Felipe" }));
+        comboBoxResponsavel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "                    ", "Rafael", "Luisa", "Carina", "Felipe" }));
 
         try {
             txtDtLimite.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
@@ -134,11 +134,53 @@ public class FrmJanTarefa extends javax.swing.JDialog {
 
         comboBoxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A começar", "Em andamento", "Completa" }));
 
-        btnSalvar.setText("Salvar");
+        btnSalvarTarefa.setText("Salvar");
 
         labelPrioridade.setText("Prioridade");
 
         comboBoxPrioridade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alta", "Média", "Baixa" }));
+
+        panelEquipe.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        labelEquipe.setText("Equipe");
+
+        checkBox1.setText("Marketing");
+        checkBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkBox1ActionPerformed(evt);
+            }
+        });
+
+        checkBox2.setText("Recursos Humanos");
+
+        checkBox3.setText("Manutenção");
+
+        javax.swing.GroupLayout panelEquipeLayout = new javax.swing.GroupLayout(panelEquipe);
+        panelEquipe.setLayout(panelEquipeLayout);
+        panelEquipeLayout.setHorizontalGroup(
+            panelEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEquipeLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(checkBox1)
+                    .addComponent(labelEquipe)
+                    .addComponent(checkBox2)
+                    .addComponent(checkBox3))
+                .addContainerGap(65, Short.MAX_VALUE))
+        );
+        panelEquipeLayout.setVerticalGroup(
+            panelEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEquipeLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelEquipe)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(checkBox1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(checkBox2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(checkBox3)
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout tabCadastrarLayout = new javax.swing.GroupLayout(tabCadastrar);
         tabCadastrar.setLayout(tabCadastrarLayout);
@@ -146,77 +188,71 @@ public class FrmJanTarefa extends javax.swing.JDialog {
             tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabCadastrarLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
+                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtDtLimite, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+                            .addComponent(txtNomeTarefa, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addComponent(labelDescricao))
+                    .addComponent(labelDtLimite)
+                    .addComponent(btnSalvarTarefa, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelCategoria)
+                    .addComponent(labelNomeTarefa)
+                    .addComponent(comboBoxCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(45, 45, 45)
                 .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(tabCadastrarLayout.createSequentialGroup()
-                        .addComponent(labelNomeTarefa)
-                        .addGap(189, 189, 189)
-                        .addComponent(labelCategoria))
+                    .addComponent(comboBoxPrioridade, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelEquipe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(comboBoxResponsavel, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(tabCadastrarLayout.createSequentialGroup()
                         .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txtDtLimite, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
-                                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
-                                        .addComponent(txtNomeTarefa, javax.swing.GroupLayout.Alignment.LEADING))
-                                    .addComponent(labelDescricao)))
-                            .addComponent(labelDtLimite)
-                            .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(45, 45, 45)
-                        .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(comboBoxPrioridade, 0, 160, Short.MAX_VALUE)
                             .addComponent(labelPrioridade)
-                            .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(labelStatus)
-                                .addComponent(comboBoxCategoria, 0, 128, Short.MAX_VALUE)
-                                .addComponent(labelEquipe)
-                                .addComponent(comboBoxEquipe, 0, 0, Short.MAX_VALUE)
-                                .addComponent(labelResponsavel)
-                                .addComponent(comboBoxResponsavel, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(comboBoxStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(69, Short.MAX_VALUE))
+                            .addComponent(labelStatus)
+                            .addComponent(labelResponsavel))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(comboBoxStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(29, 29, 29))
         );
         tabCadastrarLayout.setVerticalGroup(
             tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabCadastrarLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelNomeTarefa)
-                    .addComponent(labelCategoria))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNomeTarefa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboBoxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelDescricao)
-                    .addComponent(labelEquipe))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tabCadastrarLayout.createSequentialGroup()
-                        .addComponent(comboBoxEquipe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelNomeTarefa)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNomeTarefa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(labelDescricao)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(tabCadastrarLayout.createSequentialGroup()
+                        .addComponent(panelEquipe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(labelResponsavel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(comboBoxResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1))
-                .addGap(18, 18, 18)
+                        .addComponent(comboBoxResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelDtLimite)
-                    .addComponent(labelStatus))
+                    .addComponent(labelStatus)
+                    .addComponent(labelDtLimite))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtDtLimite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(labelPrioridade)
+                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelPrioridade)
+                    .addComponent(labelCategoria))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tabCadastrarLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                        .addComponent(btnSalvar)
-                        .addGap(18, 18, 18))
+                        .addComponent(comboBoxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addComponent(btnSalvarTarefa)
+                        .addGap(12, 12, 12))
                     .addGroup(tabCadastrarLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(comboBoxPrioridade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
@@ -225,7 +261,7 @@ public class FrmJanTarefa extends javax.swing.JDialog {
 
         tabListar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaListarTarefa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -236,11 +272,11 @@ public class FrmJanTarefa extends javax.swing.JDialog {
                 "Tarefa", "Equipe", "Responsável", "Prioridade", "Data Limite", "Status"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(tabelaListarTarefa);
 
-        btnEditar.setText("Editar");
+        btnEditarTarefa.setText("Editar");
 
-        btnExcluir.setText("Excluir");
+        btnExcluirTarefa.setText("Excluir");
 
         javax.swing.GroupLayout tabListarLayout = new javax.swing.GroupLayout(tabListar);
         tabListar.setLayout(tabListarLayout);
@@ -248,12 +284,12 @@ public class FrmJanTarefa extends javax.swing.JDialog {
             tabListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabListarLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(tabListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabListarLayout.createSequentialGroup()
-                        .addComponent(btnEditar)
+                .addGroup(tabListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(tabListarLayout.createSequentialGroup()
+                        .addComponent(btnEditarTarefa, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnExcluir))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnExcluirTarefa, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
         tabListarLayout.setVerticalGroup(
@@ -263,9 +299,9 @@ public class FrmJanTarefa extends javax.swing.JDialog {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(tabListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEditar)
-                    .addComponent(btnExcluir))
-                .addContainerGap(10, Short.MAX_VALUE))
+                    .addComponent(btnEditarTarefa)
+                    .addComponent(btnExcluirTarefa))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         panelTabela.addTab("Listar Tarefas", tabListar);
@@ -299,8 +335,8 @@ public class FrmJanTarefa extends javax.swing.JDialog {
                 .addGap(15, 15, 15)
                 .addComponent(painelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addComponent(panelTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnVoltarJanTarefa)
                 .addContainerGap(16, Short.MAX_VALUE))
         );
@@ -309,7 +345,7 @@ public class FrmJanTarefa extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVoltarJanTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarJanTarefaActionPerformed
-
+        this.setVisible(false);
     }//GEN-LAST:event_btnVoltarJanTarefaActionPerformed
 
     private void txtNomeTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeTarefaActionPerformed
@@ -319,6 +355,10 @@ public class FrmJanTarefa extends javax.swing.JDialog {
     private void txtDtLimiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDtLimiteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDtLimiteActionPerformed
+
+    private void checkBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_checkBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -363,18 +403,19 @@ public class FrmJanTarefa extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnExcluir;
-    private javax.swing.JButton btnSalvar;
+    private javax.swing.JButton btnEditarTarefa;
+    private javax.swing.JButton btnExcluirTarefa;
+    private javax.swing.JButton btnSalvarTarefa;
     private javax.swing.JButton btnVoltarJanTarefa;
+    private javax.swing.JCheckBox checkBox1;
+    private javax.swing.JCheckBox checkBox2;
+    private javax.swing.JCheckBox checkBox3;
     private javax.swing.JComboBox<String> comboBoxCategoria;
-    private javax.swing.JComboBox<String> comboBoxEquipe;
     private javax.swing.JComboBox<String> comboBoxPrioridade;
     private javax.swing.JComboBox<String> comboBoxResponsavel;
     private javax.swing.JComboBox<String> comboBoxStatus;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel labelCategoria;
     private javax.swing.JLabel labelDescricao;
     private javax.swing.JLabel labelDtLimite;
@@ -384,9 +425,11 @@ public class FrmJanTarefa extends javax.swing.JDialog {
     private javax.swing.JLabel labelResponsavel;
     private javax.swing.JLabel labelStatus;
     private javax.swing.JPanel painelTitulo;
+    private javax.swing.JPanel panelEquipe;
     private javax.swing.JTabbedPane panelTabela;
     private javax.swing.JPanel tabCadastrar;
     private javax.swing.JPanel tabListar;
+    private javax.swing.JTable tabelaListarTarefa;
     private javax.swing.JTextArea txtAreaDescricao;
     private javax.swing.JLabel txtDesc;
     private javax.swing.JFormattedTextField txtDtLimite;
