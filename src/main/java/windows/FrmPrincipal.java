@@ -4,6 +4,8 @@
  */
 package windows;
 
+import javax.swing.UIManager;
+
 /**
  *
  * @author Karoliny
@@ -26,9 +28,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        fundoTitulo = new javax.swing.JPanel();
-        tituloGerenciador = new javax.swing.JLabel();
-        tituloFocus = new javax.swing.JLabel();
+        fundoTitulo16 = new javax.swing.JPanel();
+        tituloGerenciador16 = new javax.swing.JLabel();
+        tituloFocus16 = new javax.swing.JLabel();
         fundoBtn = new javax.swing.JPanel();
         btnTarefas = new javax.swing.JButton();
         btnEquipes = new javax.swing.JButton();
@@ -41,44 +43,50 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("FocusTask");
+        setAutoRequestFocus(false);
+        setBackground(new java.awt.Color(255, 255, 255));
         setMaximumSize(null);
         setResizable(false);
 
-        fundoTitulo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        fundoTitulo16.setBackground(new java.awt.Color(204, 204, 204));
+        fundoTitulo16.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        tituloGerenciador.setFont(new java.awt.Font("Source Sans Pro Black", 1, 24)); // NOI18N
-        tituloGerenciador.setText("GERENCIADOR DE TAREFAS");
+        tituloGerenciador16.setFont(new java.awt.Font("Source Sans Pro Black", 1, 24)); // NOI18N
+        tituloGerenciador16.setText("GERENCIADOR DE TAREFAS");
 
-        tituloFocus.setFont(new java.awt.Font("Source Sans Pro Black", 0, 18)); // NOI18N
-        tituloFocus.setText("FOCUS TASK");
+        tituloFocus16.setFont(new java.awt.Font("Source Sans Pro Black", 0, 18)); // NOI18N
+        tituloFocus16.setText("FOCUS TASK");
 
-        javax.swing.GroupLayout fundoTituloLayout = new javax.swing.GroupLayout(fundoTitulo);
-        fundoTitulo.setLayout(fundoTituloLayout);
-        fundoTituloLayout.setHorizontalGroup(
-            fundoTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(fundoTituloLayout.createSequentialGroup()
+        javax.swing.GroupLayout fundoTitulo16Layout = new javax.swing.GroupLayout(fundoTitulo16);
+        fundoTitulo16.setLayout(fundoTitulo16Layout);
+        fundoTitulo16Layout.setHorizontalGroup(
+            fundoTitulo16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(fundoTitulo16Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(fundoTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fundoTituloLayout.createSequentialGroup()
-                        .addComponent(tituloGerenciador)
+                .addGroup(fundoTitulo16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fundoTitulo16Layout.createSequentialGroup()
+                        .addComponent(tituloGerenciador16)
                         .addGap(96, 96, 96))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fundoTituloLayout.createSequentialGroup()
-                        .addComponent(tituloFocus)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fundoTitulo16Layout.createSequentialGroup()
+                        .addComponent(tituloFocus16)
                         .addGap(213, 213, 213))))
         );
-        fundoTituloLayout.setVerticalGroup(
-            fundoTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(fundoTituloLayout.createSequentialGroup()
+        fundoTitulo16Layout.setVerticalGroup(
+            fundoTitulo16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(fundoTitulo16Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tituloGerenciador)
+                .addComponent(tituloGerenciador16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tituloFocus)
+                .addComponent(tituloFocus16)
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
+        fundoBtn.setBackground(new java.awt.Color(204, 204, 204));
         fundoBtn.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        btnTarefas.setText("Tarefas");
+        btnTarefas.setBackground(new java.awt.Color(153, 153, 153));
+        btnTarefas.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
+        btnTarefas.setText("TAREFAS");
         btnTarefas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnTarefas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -91,7 +99,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnEquipes.setText("Equipes");
+        btnEquipes.setBackground(new java.awt.Color(153, 153, 153));
+        btnEquipes.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
+        btnEquipes.setText("EQUIPES");
         btnEquipes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnEquipes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,7 +109,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnCategorias.setText("Categorias");
+        btnCategorias.setBackground(new java.awt.Color(153, 153, 153));
+        btnCategorias.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
+        btnCategorias.setText("CATEGORIAS");
         btnCategorias.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnCategorias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,7 +119,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnUsuarios.setText("Usuários");
+        btnUsuarios.setBackground(new java.awt.Color(153, 153, 153));
+        btnUsuarios.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
+        btnUsuarios.setText("USUÁRIOS");
         btnUsuarios.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,7 +129,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnRelatorios.setText("Relatórios");
+        btnRelatorios.setBackground(new java.awt.Color(153, 153, 153));
+        btnRelatorios.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
+        btnRelatorios.setText("RELATÓRIOS");
         btnRelatorios.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnRelatorios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -160,6 +176,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         panelFundoUsuario.setBackground(new java.awt.Color(204, 204, 204));
         panelFundoUsuario.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        btnEntrarPrincipal.setBackground(new java.awt.Color(153, 153, 153));
         btnEntrarPrincipal.setText("Entrar");
         btnEntrarPrincipal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -167,6 +184,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnSair.setBackground(new java.awt.Color(153, 153, 153));
         btnSair.setText("Sair");
         btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -203,7 +221,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(fundoBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(fundoTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(fundoTitulo16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(29, Short.MAX_VALUE))
             .addComponent(panelFundoUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -212,33 +230,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelFundoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(fundoTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addComponent(fundoTitulo16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addComponent(fundoBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnEquipesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEquipesActionPerformed
-        FrmJanEquipe janEquipe = new FrmJanEquipe(this, true);
-        janEquipe.setVisible(true);
-    }//GEN-LAST:event_btnEquipesActionPerformed
-
-    private void btnCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriasActionPerformed
-        FrmJanCategoria janCategoria = new FrmJanCategoria(this, true);
-        janCategoria.setVisible(true);
-    }//GEN-LAST:event_btnCategoriasActionPerformed
-
-    private void btnTarefasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTarefasActionPerformed
-        FrmJanTarefa janTarefa = new FrmJanTarefa(this, true);
-        janTarefa.setVisible(true);
-    }//GEN-LAST:event_btnTarefasActionPerformed
-
-    private void btnTarefasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTarefasMouseClicked
-
-    }//GEN-LAST:event_btnTarefasMouseClicked
 
     private void btnEntrarPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarPrincipalActionPerformed
         JanLogin login = new JanLogin(this, true);
@@ -249,15 +248,34 @@ public class FrmPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSairActionPerformed
 
+    private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
+        FrmJanRelatorio janRelatorio = new FrmJanRelatorio(this, true);
+        janRelatorio.setVisible(true);
+    }//GEN-LAST:event_btnRelatoriosActionPerformed
+
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
         FrmJanUsuario janUsuario = new FrmJanUsuario(this, true);
         janUsuario.setVisible(true);
     }//GEN-LAST:event_btnUsuariosActionPerformed
 
-    private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
-        FrmJanRelatorio janRelatorio = new FrmJanRelatorio(this, true);
-        janRelatorio.setVisible(true);
-    }//GEN-LAST:event_btnRelatoriosActionPerformed
+    private void btnCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriasActionPerformed
+        FrmJanCategoria janCategoria = new FrmJanCategoria(this, true);
+        janCategoria.setVisible(true);
+    }//GEN-LAST:event_btnCategoriasActionPerformed
+
+    private void btnEquipesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEquipesActionPerformed
+        FrmJanEquipe janEquipe = new FrmJanEquipe(this, true);
+        janEquipe.setVisible(true);
+    }//GEN-LAST:event_btnEquipesActionPerformed
+
+    private void btnTarefasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTarefasActionPerformed
+        FrmJanTarefa janTarefa = new FrmJanTarefa(this, true);
+        janTarefa.setVisible(true);
+    }//GEN-LAST:event_btnTarefasActionPerformed
+
+    private void btnTarefasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTarefasMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTarefasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -292,6 +310,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 new FrmPrincipal().setVisible(true);
             }
         });
+        
+        UIManager.put("OptionPane.yesButtonText", "Sim");
+        UIManager.put("OptionPane.noButtonText", "Não");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -303,9 +324,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnTarefas;
     private javax.swing.JButton btnUsuarios;
     private javax.swing.JPanel fundoBtn;
-    private javax.swing.JPanel fundoTitulo;
+    private javax.swing.JPanel fundoTitulo16;
     private javax.swing.JPanel panelFundoUsuario;
-    private javax.swing.JLabel tituloFocus;
-    private javax.swing.JLabel tituloGerenciador;
+    private javax.swing.JLabel tituloFocus16;
+    private javax.swing.JLabel tituloGerenciador16;
     // End of variables declaration//GEN-END:variables
 }

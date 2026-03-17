@@ -191,6 +191,11 @@ public class FrmJanUsuario extends javax.swing.JDialog {
         comboBoxSetorUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "             ", "Marketing", "T.I.", "Comunicação", "Manutenção" }));
 
         btnSalvarUsuario.setText("Salvar");
+        btnSalvarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarUsuarioActionPerformed(evt);
+            }
+        });
 
         try {
             txtTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
@@ -319,6 +324,10 @@ public class FrmJanUsuario extends javax.swing.JDialog {
     private void radioBtnNaoDizerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBtnNaoDizerActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_radioBtnNaoDizerActionPerformed
+
+    private void btnSalvarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarUsuarioActionPerformed
+        /*usar o mnemonic para pegar o sexo*/
+    }//GEN-LAST:event_btnSalvarUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
