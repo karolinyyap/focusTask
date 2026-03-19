@@ -1,17 +1,19 @@
-package windows;
+package view;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
+import domain.AtributoTarefa;
+import controller.TableModelAtributoTarefa;
 /**
  *
  * @author Karoliny
  */
-public class FrmJanTarefa extends javax.swing.JDialog {
-    private tableModelAtributoTarefa tblModelTarefa;
+public class DlgJanTarefa extends javax.swing.JDialog {
+    private TableModelAtributoTarefa tblModelTarefa;
 
-    public FrmJanTarefa(java.awt.Frame parent, boolean modal) {
+    public DlgJanTarefa(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         
@@ -25,7 +27,7 @@ public class FrmJanTarefa extends javax.swing.JDialog {
             }
         });
         
-        tblModelTarefa = new tableModelAtributoTarefa();
+        tblModelTarefa = new TableModelAtributoTarefa();
         tabelaListarTarefa.setModel(tblModelTarefa);
     }
     
@@ -392,7 +394,7 @@ public class FrmJanTarefa extends javax.swing.JDialog {
             );
 
             if (resposta == JOptionPane.YES_OPTION) {
-                tableModelAtributoTarefa modelo = (tableModelAtributoTarefa) tabelaListarTarefa.getModel();
+                TableModelAtributoTarefa modelo = (TableModelAtributoTarefa) tabelaListarTarefa.getModel();
                 modelo.remover(linha);
             }
 
@@ -449,20 +451,21 @@ public class FrmJanTarefa extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmJanTarefa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DlgJanTarefa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmJanTarefa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DlgJanTarefa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmJanTarefa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DlgJanTarefa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmJanTarefa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DlgJanTarefa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrmJanTarefa dialog = new FrmJanTarefa(new javax.swing.JFrame(), true);
+                DlgJanTarefa dialog = new DlgJanTarefa(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

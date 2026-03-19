@@ -1,20 +1,22 @@
 
-package windows;
+package view;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
+import domain.AtributoEquipe;
+import controller.TableModelAtributoEquipe;
 
 /**
  *
  * @author Karoliny
  */
-public class FrmJanEquipe extends javax.swing.JDialog {
-    private tableModelAtributoEquipe tblModelEquipe;
+public class DlgJanEquipe extends javax.swing.JDialog {
+    private TableModelAtributoEquipe tblModelEquipe;
 
 
-    public FrmJanEquipe(java.awt.Frame parent, boolean modal) {
+    public DlgJanEquipe(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         
@@ -33,7 +35,7 @@ public class FrmJanEquipe extends javax.swing.JDialog {
             }
         });
         
-        tblModelEquipe = new tableModelAtributoEquipe();
+        tblModelEquipe = new TableModelAtributoEquipe();
         tableEquipe.setModel(tblModelEquipe);
     }
 
@@ -326,7 +328,7 @@ public class FrmJanEquipe extends javax.swing.JDialog {
             );
 
             if (resposta == JOptionPane.YES_OPTION) {
-                tableModelAtributoEquipe modelo = (tableModelAtributoEquipe) tableEquipe.getModel();
+                TableModelAtributoEquipe modelo = (TableModelAtributoEquipe) tableEquipe.getModel();
                 modelo.remover(linha);
             }
 
@@ -379,21 +381,23 @@ public class FrmJanEquipe extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmJanEquipe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DlgJanEquipe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmJanEquipe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DlgJanEquipe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmJanEquipe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DlgJanEquipe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmJanEquipe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DlgJanEquipe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrmJanEquipe dialog = new FrmJanEquipe(new javax.swing.JFrame(), true);
+                DlgJanEquipe dialog = new DlgJanEquipe(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

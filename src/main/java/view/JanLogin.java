@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package windows;
+package view;
 
 /**
  *
@@ -124,7 +124,7 @@ public class JanLogin extends javax.swing.JDialog {
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     private void btnCadastrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarUsuarioActionPerformed
-        FrmJanUsuario janUsuario = new FrmJanUsuario(null, true);
+        DlgJanUsuario janUsuario = new DlgJanUsuario(null, true);
         this.setVisible(false);
         janUsuario.setVisible(true);
     }//GEN-LAST:event_btnCadastrarUsuarioActionPerformed

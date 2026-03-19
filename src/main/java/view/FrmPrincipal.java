@@ -1,10 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-package windows;
 
-import javax.swing.UIManager;
+package view;
+
+import controller.GerenciadorInterface;
 
 /**
  *
@@ -12,9 +9,7 @@ import javax.swing.UIManager;
  */
 public class FrmPrincipal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FrmPrincipal
-     */
+ 
     public FrmPrincipal() {
         initComponents();
     }
@@ -45,7 +40,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         setTitle("FocusTask");
         setAutoRequestFocus(false);
         setBackground(new java.awt.Color(255, 255, 255));
-        setMaximumSize(null);
         setResizable(false);
 
         fundoTitulo16.setBackground(new java.awt.Color(204, 204, 204));
@@ -249,71 +243,29 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
-        FrmJanRelatorio janRelatorio = new FrmJanRelatorio(this, true);
-        janRelatorio.setVisible(true);
+        GerenciadorInterface.getMyInstance().abrirRelatorio();
     }//GEN-LAST:event_btnRelatoriosActionPerformed
 
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
-        FrmJanUsuario janUsuario = new FrmJanUsuario(this, true);
-        janUsuario.setVisible(true);
+        GerenciadorInterface.getMyInstance().abrirUsuario();
     }//GEN-LAST:event_btnUsuariosActionPerformed
 
     private void btnCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriasActionPerformed
-        FrmJanCategoria janCategoria = new FrmJanCategoria(this, true);
-        janCategoria.setVisible(true);
+        GerenciadorInterface.getMyInstance().abrirCategoria();
     }//GEN-LAST:event_btnCategoriasActionPerformed
 
     private void btnEquipesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEquipesActionPerformed
-        FrmJanEquipe janEquipe = new FrmJanEquipe(this, true);
-        janEquipe.setVisible(true);
+        GerenciadorInterface.getMyInstance().abrirEquipe();
     }//GEN-LAST:event_btnEquipesActionPerformed
 
     private void btnTarefasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTarefasActionPerformed
-        FrmJanTarefa janTarefa = new FrmJanTarefa(this, true);
-        janTarefa.setVisible(true);
+        GerenciadorInterface.getMyInstance().abrirTarefa();
     }//GEN-LAST:event_btnTarefasActionPerformed
 
     private void btnTarefasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTarefasMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTarefasMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrmPrincipal().setVisible(true);
-            }
-        });
-        
-        UIManager.put("OptionPane.yesButtonText", "Sim");
-        UIManager.put("OptionPane.noButtonText", "Não");
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCategorias;

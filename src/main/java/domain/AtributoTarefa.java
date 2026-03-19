@@ -1,5 +1,5 @@
 
-package windows;
+package domain;
 
 import java.util.List;
 

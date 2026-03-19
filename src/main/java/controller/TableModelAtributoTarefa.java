@@ -1,11 +1,12 @@
 
-package windows;
+package controller;
 
+import domain.AtributoTarefa;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-public class tableModelAtributoTarefa extends AbstractTableModel{
+public class TableModelAtributoTarefa extends AbstractTableModel{
 
     private List listaTarefas = new ArrayList();
     

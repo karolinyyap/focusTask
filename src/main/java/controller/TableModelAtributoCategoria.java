@@ -1,6 +1,7 @@
 
-package windows;
+package controller;
 
+import domain.AtributoCategoria;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -9,7 +10,7 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Karoliny
  */
-public class tableModelAtributoCategoria extends AbstractTableModel{
+public class TableModelAtributoCategoria extends AbstractTableModel{
 
      private List listaCategorias = new ArrayList();
     
