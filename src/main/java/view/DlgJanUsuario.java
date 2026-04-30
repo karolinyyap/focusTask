@@ -1,8 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
 package view;
+
+import static controller.FuncoesUteis.strToDate;
+import controller.GerenciadorInterface;
+import domain.Equipe;
+import domain.Usuario;
+import java.sql.SQLException;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,6 +20,18 @@ public class DlgJanUsuario extends javax.swing.JDialog {
     public DlgJanUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+
+        try {
+            List<Equipe> lista = GerenciadorInterface.getMyInstance().getDominio().listarEquipes();
+
+            carregarComboEquipes(lista);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao carregar equipes");
+        } catch (ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao carregar classe");
+        } 
     }
 
     /**
@@ -44,14 +60,16 @@ public class DlgJanUsuario extends javax.swing.JDialog {
         panelSenha = new javax.swing.JPanel();
         labelSenha = new javax.swing.JLabel();
         labelConfSenha = new javax.swing.JLabel();
-        passwordConfSenha = new javax.swing.JPasswordField();
-        passwordSenha1 = new javax.swing.JPasswordField();
+        txtConfSenha = new javax.swing.JPasswordField();
+        txtSenha = new javax.swing.JPasswordField();
         labelTelefone = new javax.swing.JLabel();
         labelSetor = new javax.swing.JLabel();
-        comboBoxSetorUsuario = new javax.swing.JComboBox<>();
+        comboBoxEquipe = new javax.swing.JComboBox<>();
         btnSalvarUsuario = new javax.swing.JButton();
         txtTelefone = new javax.swing.JFormattedTextField();
         txtDataNascimento = new javax.swing.JFormattedTextField();
+        labelCPF = new javax.swing.JLabel();
+        txtCPF = new javax.swing.JFormattedTextField();
         btnVoltarUsuario = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -164,10 +182,10 @@ public class DlgJanUsuario extends javax.swing.JDialog {
             .addGroup(panelSenhaLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(panelSenhaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(passwordSenha1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelConfSenha)
                     .addComponent(labelSenha)
-                    .addComponent(passwordConfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtConfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelSenhaLayout.setVerticalGroup(
@@ -176,19 +194,23 @@ public class DlgJanUsuario extends javax.swing.JDialog {
                 .addGap(15, 15, 15)
                 .addComponent(labelSenha)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(passwordSenha1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(labelConfSenha)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(passwordConfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtConfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(33, Short.MAX_VALUE))
         );
 
         labelTelefone.setText("Telefone");
 
-        labelSetor.setText("Setor");
+        labelSetor.setText("Equipe");
 
-        comboBoxSetorUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "             ", "Marketing", "T.I.", "Comunicação", "Manutenção" }));
+        comboBoxEquipe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxEquipeActionPerformed(evt);
+            }
+        });
 
         btnSalvarUsuario.setText("Salvar");
         btnSalvarUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -209,6 +231,14 @@ public class DlgJanUsuario extends javax.swing.JDialog {
             ex.printStackTrace();
         }
 
+        labelCPF.setText("CPF");
+
+        try {
+            txtCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout panelUsuarioLayout = new javax.swing.GroupLayout(panelUsuario);
         panelUsuario.setLayout(panelUsuarioLayout);
         panelUsuarioLayout.setHorizontalGroup(
@@ -217,17 +247,19 @@ public class DlgJanUsuario extends javax.swing.JDialog {
                 .addGap(28, 28, 28)
                 .addGroup(panelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(labelNomeUsuario)
-                    .addComponent(txtNome)
                     .addComponent(labelEmail)
-                    .addComponent(txtEmail)
                     .addComponent(labelDataNascimento)
                     .addComponent(labelTelefone)
                     .addComponent(labelSetor)
-                    .addComponent(comboBoxSetorUsuario, 0, 240, Short.MAX_VALUE)
+                    .addComponent(btnSalvarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelCPF)
                     .addComponent(txtTelefone)
                     .addComponent(txtDataNascimento)
-                    .addComponent(btnSalvarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                    .addComponent(txtEmail)
+                    .addComponent(txtNome)
+                    .addComponent(txtCPF)
+                    .addComponent(comboBoxEquipe, 0, 226, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(panelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panelSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panelSexo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -237,32 +269,39 @@ public class DlgJanUsuario extends javax.swing.JDialog {
             panelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelUsuarioLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(panelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelUsuarioLayout.createSequentialGroup()
                         .addComponent(labelNomeUsuario)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(labelEmail)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(labelDataNascimento)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelDataNascimento))
+                    .addComponent(panelSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
                 .addGroup(panelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelUsuarioLayout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(panelSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panelUsuarioLayout.createSequentialGroup()
                         .addComponent(txtDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(12, 12, 12)
                         .addComponent(labelTelefone)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(labelSetor)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboBoxSetorUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(panelSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(labelCPF)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(labelSetor)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(comboBoxEquipe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)))
                 .addComponent(btnSalvarUsuario)
                 .addGap(21, 21, 21))
         );
@@ -288,7 +327,7 @@ public class DlgJanUsuario extends javax.swing.JDialog {
                         .addGroup(layout.createSequentialGroup()
                             .addGap(31, 31, 31)
                             .addComponent(panelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -299,7 +338,7 @@ public class DlgJanUsuario extends javax.swing.JDialog {
                 .addComponent(panelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnVoltarUsuario)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -326,8 +365,52 @@ public class DlgJanUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_radioBtnNaoDizerActionPerformed
 
     private void btnSalvarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarUsuarioActionPerformed
-        /*usar o mnemonic para pegar o sexo*/
+        try {
+            Usuario usuario = new Usuario();
+
+            usuario.setNomeUsuario(txtNome.getText());
+            usuario.setCpf(txtCPF.getText());
+            usuario.setEmail(txtEmail.getText());
+            String sexo = null;
+
+            if (radioBtnFeminino.isSelected()) {
+                sexo = "F";
+            } else if (radioBtnMasculino.isSelected()) {
+                sexo = "M";
+            } else if (radioBtnNaoDizer.isSelected()) {
+                sexo = "ND";
+            }
+            usuario.setSexo(sexo);
+            usuario.setTelefone(txtTelefone.getText());
+            usuario.setSenha(txtSenha.getText());
+
+            usuario.setDtNascimento(strToDate(txtDataNascimento.getText()));
+
+            Equipe equipe = (Equipe) comboBoxEquipe.getSelectedItem();
+            usuario.setEquipe(equipe);
+            
+            GerenciadorInterface.getMyInstance().getDominio().inserirUsuario(usuario);
+
+            JOptionPane.showMessageDialog(null, "Usuário salvo com sucesso!");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao salvar usuário");
+        }
     }//GEN-LAST:event_btnSalvarUsuarioActionPerformed
+
+    private void comboBoxEquipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxEquipeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboBoxEquipeActionPerformed
+
+    private void carregarComboEquipes(List<Equipe> listaEquipes) {
+
+        comboBoxEquipe.removeAllItems();
+
+        for (Equipe equipe : listaEquipes) {
+            comboBoxEquipe.addItem(equipe);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -378,7 +461,8 @@ public class DlgJanUsuario extends javax.swing.JDialog {
     private javax.swing.ButtonGroup btnGroupSexo;
     private javax.swing.JButton btnSalvarUsuario;
     private javax.swing.JButton btnVoltarUsuario;
-    private javax.swing.JComboBox<String> comboBoxSetorUsuario;
+    private javax.swing.JComboBox<Object> comboBoxEquipe;
+    private javax.swing.JLabel labelCPF;
     private javax.swing.JLabel labelConfSenha;
     private javax.swing.JLabel labelDataNascimento;
     private javax.swing.JLabel labelEmail;
@@ -390,15 +474,16 @@ public class DlgJanUsuario extends javax.swing.JDialog {
     private javax.swing.JPanel panelSenha;
     private javax.swing.JPanel panelSexo;
     private javax.swing.JPanel panelUsuario;
-    private javax.swing.JPasswordField passwordConfSenha;
-    private javax.swing.JPasswordField passwordSenha1;
     private javax.swing.JRadioButton radioBtnFeminino;
     private javax.swing.JRadioButton radioBtnMasculino;
     private javax.swing.JRadioButton radioBtnNaoDizer;
+    private javax.swing.JFormattedTextField txtCPF;
+    private javax.swing.JPasswordField txtConfSenha;
     private javax.swing.JFormattedTextField txtDataNascimento;
     private javax.swing.JLabel txtDesc;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtNome;
+    private javax.swing.JPasswordField txtSenha;
     private javax.swing.JFormattedTextField txtTelefone;
     private javax.swing.JLabel txtTitulo;
     // End of variables declaration//GEN-END:variables

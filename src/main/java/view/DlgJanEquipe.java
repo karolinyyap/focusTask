@@ -1,45 +1,41 @@
-
 package view;
 
+import static controller.FuncoesUteis.strToDate;
+import controller.GerenciadorInterface;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.List;
 import javax.swing.JOptionPane;
-import domain.AtributoEquipe;
-import controller.TableModelAtributoEquipe;
+import domain.Equipe;
+import controller.TableModelEquipe;
+import domain.Usuario;
 
 /**
  *
  * @author Karoliny
  */
 public class DlgJanEquipe extends javax.swing.JDialog {
-    private TableModelAtributoEquipe tblModelEquipe;
 
+    private TableModelEquipe tblModelEquipe;
 
     public DlgJanEquipe(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
-        comboBoxLider.setEnabled(false);
+
         btnSalvarEquipe.setEnabled(false);
-        
-        listPessoasEquipe.addListSelectionListener(e -> {
-            verificarEquipeSelecionada();
-         });
-        
-         // Listener do campo nome
+
+        // Listener do campo nome
         txtNomeEquipe.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
                 verificarCampos();
             }
         });
-        
-        tblModelEquipe = new TableModelAtributoEquipe();
+
+        tblModelEquipe = new TableModelEquipe();
         tableEquipe.setModel(tblModelEquipe);
+
     }
 
- 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -54,11 +50,6 @@ public class DlgJanEquipe extends javax.swing.JDialog {
         paneCadastrarEquipe = new javax.swing.JPanel();
         labelNomeEquipe = new javax.swing.JLabel();
         txtNomeEquipe = new javax.swing.JTextField();
-        labelLider = new javax.swing.JLabel();
-        comboBoxLider = new javax.swing.JComboBox<>();
-        panelMembros = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        listPessoasEquipe = new javax.swing.JList<>();
         btnSalvarEquipe = new javax.swing.JButton();
         labelSetor = new javax.swing.JLabel();
         comboBoxSetor = new javax.swing.JComboBox<>();
@@ -123,37 +114,6 @@ public class DlgJanEquipe extends javax.swing.JDialog {
             }
         });
 
-        labelLider.setText("Líder");
-
-        comboBoxLider.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "              ", "Luisa", "Felipe", "Camila", "Paula", "Lucas" }));
-        comboBoxLider.setEnabled(false);
-
-        panelMembros.setBorder(javax.swing.BorderFactory.createTitledBorder("Membros"));
-
-        listPessoasEquipe.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Ana Luisa Feliz", "Paulo Candido", "Samuel Vieira", "Lucas Almeida", "Pamela Laerte" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(listPessoasEquipe);
-
-        javax.swing.GroupLayout panelMembrosLayout = new javax.swing.GroupLayout(panelMembros);
-        panelMembros.setLayout(panelMembrosLayout);
-        panelMembrosLayout.setHorizontalGroup(
-            panelMembrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelMembrosLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
-        );
-        panelMembrosLayout.setVerticalGroup(
-            panelMembrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelMembrosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
-        );
-
         btnSalvarEquipe.setText("Salvar");
         btnSalvarEquipe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -170,7 +130,7 @@ public class DlgJanEquipe extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Equipe", "Setor", "Líder", "Membros"
+                "Equipe", "Setor"
             }
         ));
         tableEquipe.setComponentPopupMenu(popUpMenuEquipes);
@@ -182,45 +142,38 @@ public class DlgJanEquipe extends javax.swing.JDialog {
             paneCadastrarEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paneCadastrarEquipeLayout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addGroup(paneCadastrarEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
+                .addGroup(paneCadastrarEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(paneCadastrarEquipeLayout.createSequentialGroup()
-                        .addGroup(paneCadastrarEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(paneCadastrarEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnSalvarEquipe, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35))
+                    .addGroup(paneCadastrarEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
+                        .addGroup(paneCadastrarEquipeLayout.createSequentialGroup()
+                            .addGroup(paneCadastrarEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(labelNomeEquipe)
+                                .addComponent(txtNomeEquipe, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(24, 24, 24)
+                            .addGroup(paneCadastrarEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(labelSetor)
-                                .addComponent(comboBoxSetor, 0, 204, Short.MAX_VALUE)
-                                .addComponent(txtNomeEquipe)
-                                .addComponent(labelLider)
-                                .addComponent(comboBoxLider, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(btnSalvarEquipe, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(panelMembros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(comboBoxSetor, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(28, 28, 28))
         );
         paneCadastrarEquipeLayout.setVerticalGroup(
             paneCadastrarEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paneCadastrarEquipeLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(paneCadastrarEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(paneCadastrarEquipeLayout.createSequentialGroup()
-                        .addComponent(labelNomeEquipe)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtNomeEquipe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(labelSetor)
-                        .addGap(18, 18, 18)
-                        .addComponent(comboBoxSetor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(labelLider)
-                        .addGap(18, 18, 18)
-                        .addComponent(comboBoxLider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSalvarEquipe))
-                    .addComponent(panelMembros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
-                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addGroup(paneCadastrarEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelNomeEquipe)
+                    .addComponent(labelSetor))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(paneCadastrarEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNomeEquipe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBoxSetor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31)
+                .addComponent(btnSalvarEquipe)
+                .addGap(32, 32, 32)
+                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         paneCadEquipe.addTab("Cadastrar Equipe", paneCadastrarEquipe);
@@ -253,10 +206,10 @@ public class DlgJanEquipe extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(painelTituloEquipe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(paneCadEquipe, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(paneCadEquipe, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
                 .addComponent(btnVoltarJanEquipe)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
@@ -271,14 +224,22 @@ public class DlgJanEquipe extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNomeEquipeActionPerformed
 
     private void btnSalvarEquipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarEquipeActionPerformed
-        String nomeEquipe = txtNomeEquipe.getText();
-        String setor = comboBoxSetor.getSelectedItem().toString();
-        String lider = comboBoxLider.getSelectedItem().toString();
-        
-        List<String> pessoasSelecionadas = listPessoasEquipe.getSelectedValuesList();
-        String equipe = String.join(", ", pessoasSelecionadas);
-        
-        adicionarTabela(nomeEquipe, setor, lider, equipe);
+        try {
+            Equipe equipe = new Equipe();
+
+            equipe.setNomeEquipe(txtNomeEquipe.getText());
+            equipe.setSetor(comboBoxSetor.getSelectedItem().toString());
+            
+            GerenciadorInterface.getMyInstance().getDominio().inserirEquipe(equipe);
+
+            JOptionPane.showMessageDialog(null, "Equipe salva com sucesso!");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao salvar equipe");
+        }
+        //Fazer Listar ao invés de inserir na tabela
+        //inserirTabela(nomeEquipe, setor);
     }//GEN-LAST:event_btnSalvarEquipeActionPerformed
 
     private void menuLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLimparActionPerformed
@@ -293,28 +254,22 @@ public class DlgJanEquipe extends javax.swing.JDialog {
         excluir();
     }//GEN-LAST:event_menuExcluirActionPerformed
 
-    private void verificarEquipeSelecionada() {
-
-        boolean equipeSelecionada = !listPessoasEquipe.isSelectionEmpty();
-        comboBoxLider.setEnabled(equipeSelecionada);
-    }
-    
     private void verificarCampos() {
         boolean temTexto = !txtNomeEquipe.getText().trim().isEmpty();
 
         btnSalvarEquipe.setEnabled(temTexto);
     }
-    
-    private void adicionarTabela(String nomeEquipe, String setor, String lider,
-            String equipe){
-        
-        AtributoEquipe tarefa = new AtributoEquipe(nomeEquipe, setor, lider,
-            equipe);
-        
-        tblModelEquipe.adicionar(tarefa);
+
+    private void inserirTabela(String nomeEquipe, String setor) {
+
+        Equipe equipe = new Equipe();
+        equipe.setNomeEquipe(nomeEquipe);
+        equipe.setSetor(setor);
+
+        tblModelEquipe.adicionar(equipe);
 
     }
-    
+
     private void excluir() {
         int linha = tableEquipe.getSelectedRow();
 
@@ -328,7 +283,7 @@ public class DlgJanEquipe extends javax.swing.JDialog {
             );
 
             if (resposta == JOptionPane.YES_OPTION) {
-                TableModelAtributoEquipe modelo = (TableModelAtributoEquipe) tableEquipe.getModel();
+                TableModelEquipe modelo = (TableModelEquipe) tableEquipe.getModel();
                 modelo.remover(linha);
             }
 
@@ -336,37 +291,25 @@ public class DlgJanEquipe extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Selecione uma linha para excluir!");
         }
     }
-    
+
     private void limparCampos() {
         txtNomeEquipe.setText("");
 
         comboBoxSetor.setSelectedIndex(-1);
-        comboBoxLider.setSelectedIndex(-1);
-
-        listPessoasEquipe.clearSelection();
     }
-    
+
     private void editar() {
         int linha = tableEquipe.getSelectedRow();
-        
-        if (linha >= 0){
+
+        if (linha >= 0) {
             txtNomeEquipe.setText(tableEquipe.getValueAt(linha, 0).toString());
-            
-            String pessoas = tableEquipe.getValueAt(linha, 3).toString();
-            for (int i = 0; i < listPessoasEquipe.getModel().getSize(); i++) {
-                String item = listPessoasEquipe.getModel().getElementAt(i);
-                if (pessoas.contains(item)) {
-                    listPessoasEquipe.addSelectionInterval(i, i);
-                }
-            }
             comboBoxSetor.setSelectedItem(tableEquipe.getValueAt(linha, 1).toString());
-            comboBoxLider.setSelectedItem(tableEquipe.getValueAt(linha, 2).toString());
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "Selecione uma linha para excluir!");
         }
     }
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -412,21 +355,16 @@ public class DlgJanEquipe extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalvarEquipe;
     private javax.swing.JButton btnVoltarJanEquipe;
-    private javax.swing.JComboBox<String> comboBoxLider;
     private javax.swing.JComboBox<String> comboBoxSetor;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
-    private javax.swing.JLabel labelLider;
     private javax.swing.JLabel labelNomeEquipe;
     private javax.swing.JLabel labelSetor;
-    private javax.swing.JList<String> listPessoasEquipe;
     private javax.swing.JMenuItem menuEditar;
     private javax.swing.JMenuItem menuExcluir;
     private javax.swing.JMenuItem menuLimpar;
     private javax.swing.JPanel painelTituloEquipe;
     private javax.swing.JTabbedPane paneCadEquipe;
     private javax.swing.JPanel paneCadastrarEquipe;
-    private javax.swing.JPanel panelMembros;
     private javax.swing.JPopupMenu popUpMenuEquipes;
     private javax.swing.JTable tableEquipe;
     private javax.swing.JTextField txtNomeEquipe;

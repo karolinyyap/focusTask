@@ -267,7 +267,7 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Object&gt;"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JFormattedTextField" name="txtDtLimite">
@@ -286,12 +286,12 @@
                   <StringArray count="3">
                     <StringItem index="0" value="A come&#xe7;ar"/>
                     <StringItem index="1" value="Em andamento"/>
-                    <StringItem index="2" value="Completa"/>
+                    <StringItem index="2" value="Finalizada"/>
                   </StringArray>
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Object&gt;"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JButton" name="btnSalvarTarefa">
@@ -319,7 +319,7 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Object&gt;"/>
               </AuxValues>
             </Component>
             <Container class="javax.swing.JPanel" name="panelEquipe">

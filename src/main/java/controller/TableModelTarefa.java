@@ -1,12 +1,12 @@
 
 package controller;
 
-import domain.AtributoTarefa;
+import domain.Tarefa;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-public class TableModelAtributoTarefa extends AbstractTableModel{
+public class TableModelTarefa extends AbstractTableModel{
 
     private List listaTarefas = new ArrayList();
     
@@ -22,15 +22,15 @@ public class TableModelAtributoTarefa extends AbstractTableModel{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        AtributoTarefa tarefa = (AtributoTarefa) listaTarefas.get(rowIndex);
+        Tarefa tarefa = (Tarefa) listaTarefas.get(rowIndex);
         
         switch (columnIndex) {
             case 0: return tarefa.getNomeTarefa();
-            case 1: return tarefa.getNomeEquipe();
-            case 2: return tarefa.getTipoPrioridade();
-            case 3: return tarefa.getDataLimite();
-            case 4: return tarefa.getTipoCategoria();
-            case 5: return tarefa.getTipoStatus();
+            case 1: return tarefa.getCategoria();
+            case 2: return tarefa.getDataLimite();
+            case 3: return tarefa.getEquipes();
+            case 4: return tarefa.getPrioridade();
+            case 5: return tarefa.getStatus();
         }
         
         return null;

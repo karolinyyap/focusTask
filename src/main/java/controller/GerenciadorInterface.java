@@ -1,8 +1,8 @@
-
 package controller;
 
 import java.awt.Frame;
 import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -19,69 +19,85 @@ import view.JanLogin;
  * @author Karoliny
  */
 public class GerenciadorInterface {
+
     private FrmPrincipal janPrincipal = null;
-    private DlgJanTarefa janTarefa = null; 
-    private DlgJanEquipe janEquipe = null; 
-    private DlgJanUsuario janUsuario = null; 
-    private DlgJanCategoria janCategoria = null; 
+    private DlgJanTarefa janTarefa = null;
+    private DlgJanEquipe janEquipe = null;
+    private DlgJanUsuario janUsuario = null;
+    private DlgJanCategoria janCategoria = null;
     private DlgJanRelatorio janRelatorio = null;
     private JanLogin janLogin = null;
-    
+
+    GerenciadorDominio gerDominio;
+
     //SINGLETON
     private static GerenciadorInterface myInstance = new GerenciadorInterface();
-    
+
     private GerenciadorInterface() {
-        
+        try {
+            gerDominio = new GerenciadorDominio();
+        } catch (ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex, "Inicialização", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
     }
 
     public static GerenciadorInterface getMyInstance() {
         return myInstance;
     }
+    
+    public GerenciadorDominio getDominio() {
+        return gerDominio;
+    }
     //FIM DO SINGLETON
-    
+
     private JDialog abrirJanela(java.awt.Frame parent, JDialog dlg, Class classe) {
-        if (dlg == null){     
+        if (dlg == null) {
             try {
-                dlg = (JDialog) classe.getConstructor(Frame.class, boolean.class).newInstance(parent,true);                                
+                dlg = (JDialog) classe.getConstructor(Frame.class, boolean.class).newInstance(parent, true);
             } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                JOptionPane.showMessageDialog(parent, "Erro ao abrir a janela " + classe.getName() + ". " + ex.getMessage() );
-            } 
-        }               
-        dlg.setVisible(true); 
+                JOptionPane.showMessageDialog(parent, "Erro ao abrir a janela " + classe.getName() + ". " + ex.getMessage());
+            }
+        }
+        dlg.setVisible(true);
         return dlg;
-    }  
-    
+    }
+
     public void abrirPrincipal() {
-        if (janPrincipal == null){
+        if (janPrincipal == null) {
             janPrincipal = new FrmPrincipal();
-        }  
+        }
         janPrincipal.setVisible(true);
     }
-    
+
     public void abrirTarefa() {
-        abrirJanela(janPrincipal, janTarefa, DlgJanTarefa.class);
+        janTarefa = (DlgJanTarefa) abrirJanela(janPrincipal, janTarefa, DlgJanTarefa.class);
     }
-    
-    public void abrirEquipe(){
-        abrirJanela(janPrincipal, janEquipe, DlgJanEquipe.class);
+
+    public void abrirEquipe() {
+        if (janPrincipal == null) {
+            abrirPrincipal();
+        }
+
+        janEquipe = (DlgJanEquipe) abrirJanela(janPrincipal, janEquipe, DlgJanEquipe.class);
     }
-    
-    public void abrirCategoria(){
-        abrirJanela(janPrincipal, janCategoria, DlgJanCategoria.class);
+
+    public void abrirCategoria() {
+        janCategoria = (DlgJanCategoria) abrirJanela(janPrincipal, janCategoria, DlgJanCategoria.class);
     }
-    
-    public void abrirUsuario(){
-        abrirJanela(janPrincipal, janUsuario, DlgJanUsuario.class);
+
+    public void abrirUsuario() {
+        janUsuario = (DlgJanUsuario) abrirJanela(janPrincipal, janUsuario, DlgJanUsuario.class);
     }
-    
-    public void abrirRelatorio(){
-        abrirJanela(janPrincipal, janRelatorio, DlgJanRelatorio.class);
+
+    public void abrirRelatorio() {
+        janRelatorio = (DlgJanRelatorio) abrirJanela(janPrincipal, janRelatorio, DlgJanRelatorio.class);
     }
-    
-    public void abrirLogin(){
-        abrirJanela(janPrincipal, janLogin, JanLogin.class);
+
+    public void abrirLogin() {
+        janLogin = (JanLogin) abrirJanela(janPrincipal, janLogin, JanLogin.class);
     }
-    
+
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -104,11 +120,10 @@ public class GerenciadorInterface {
             java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
-        
+
         UIManager.put("OptionPane.yesButtonText", "Sim");
         UIManager.put("OptionPane.noButtonText", "Não");
-        
+
         GerenciadorInterface.getMyInstance().abrirPrincipal();
     }
 }

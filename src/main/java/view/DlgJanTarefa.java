@@ -1,22 +1,30 @@
 package view;
 
+import static controller.FuncoesUteis.strToDate;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
-import domain.AtributoTarefa;
-import controller.TableModelAtributoTarefa;
+import domain.Tarefa;
+import controller.TableModelTarefa;
+import domain.Categoria;
+import domain.Equipe;
+import domain.Prioridade;
+import domain.Status;
+import java.util.ArrayList;
+
 /**
  *
  * @author Karoliny
  */
 public class DlgJanTarefa extends javax.swing.JDialog {
-    private TableModelAtributoTarefa tblModelTarefa;
+
+    private TableModelTarefa tblModelTarefa;
 
     public DlgJanTarefa(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+
         btnSalvarTarefa.setEnabled(false);
 
         // Listener do campo nome
@@ -26,11 +34,11 @@ public class DlgJanTarefa extends javax.swing.JDialog {
                 verificarCampos();
             }
         });
-        
-        tblModelTarefa = new TableModelAtributoTarefa();
+
+        tblModelTarefa = new TableModelTarefa();
         tabelaListarTarefa.setModel(tblModelTarefa);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -139,7 +147,7 @@ public class DlgJanTarefa extends javax.swing.JDialog {
             }
         });
 
-        comboBoxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A começar", "Em andamento", "Completa" }));
+        comboBoxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A começar", "Em andamento", "Finalizada" }));
 
         btnSalvarTarefa.setText("Salvar");
         btnSalvarTarefa.setEnabled(false);
@@ -323,11 +331,12 @@ public class DlgJanTarefa extends javax.swing.JDialog {
         List<String> equipesSelecionadas = listEquipes.getSelectedValuesList();
         String nomeEquipe = String.join(", ", equipesSelecionadas);
 
-        String tipoCategoria = comboBoxCategoria.getSelectedItem().toString();
-        String tipoStatus = comboBoxStatus.getSelectedItem().toString();
-        String tipoPrioridade = comboBoxPrioridade.getSelectedItem().toString();
+        Categoria categoria = (Categoria) comboBoxCategoria.getSelectedItem();
 
-        adicionarTabela(nomeTarefa, nomeEquipe, tipoPrioridade, dataLimite, tipoCategoria, tipoStatus);
+        Status status = (Status) comboBoxStatus.getSelectedItem();
+        Prioridade prioridade = (Prioridade) comboBoxPrioridade.getSelectedItem();
+
+        inserir(nomeTarefa, nomeEquipe, prioridade, dataLimite, categoria, status);
     }//GEN-LAST:event_btnSalvarTarefaActionPerformed
 
     private void txtDtLimiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDtLimiteActionPerformed
@@ -350,37 +359,38 @@ public class DlgJanTarefa extends javax.swing.JDialog {
         editar();
     }//GEN-LAST:event_menuEditarActionPerformed
 
-    //Função de adicionar linhas da tabela
-    private void adicionarTabela(String nomeTarefa, String nomeEquipe, String tipoPrioridade,
-            String dataLimite, String tipoCategoria, String tipoStatus){
-        
-        AtributoTarefa tarefa = new AtributoTarefa(nomeTarefa, nomeEquipe, tipoPrioridade,
-            dataLimite, tipoCategoria, tipoStatus);
-        
-        tblModelTarefa.adicionar(tarefa);
-        /*
-        //Contador de linhas
-        int linha = tabelaListarTarefa.getRowCount();
-        
-        //Transformando para tabela padrão
-        ((DefaultTableModel)tabelaListarTarefa.getModel()).addRow(new Object[7]);
-        tabelaListarTarefa.setValueAt(nomeTarefa, linha, 0);
-        tabelaListarTarefa.setValueAt(nomeEquipe, linha, 1);
-        tabelaListarTarefa.setValueAt(usuarioResponsavel, linha, 2);
-        tabelaListarTarefa.setValueAt(tipoPrioridade, linha, 3);
-        tabelaListarTarefa.setValueAt(dataLimite, linha, 4);
-        tabelaListarTarefa.setValueAt(tipoCategoria, linha, 5);
-        tabelaListarTarefa.setValueAt(tipoStatus, linha, 6);*/
-        
+    private void inserir(String nomeTarefa, String nomeEquipe, Prioridade prioridade,
+            String dataLimite, Categoria categoria, Status status) {
+
+        try {
+            Tarefa tarefa = new Tarefa();
+
+            tarefa.setNomeTarefa(nomeTarefa);
+            tarefa.setDataLimite(strToDate(dataLimite));
+            tarefa.setPrioridade(prioridade);
+            tarefa.setStatus(status);
+            tarefa.setCategoria(categoria);
+            Equipe equipe = new Equipe();
+            equipe.setNomeEquipe(nomeEquipe);
+            List<Equipe> equipes = new ArrayList<>();
+            equipes.add(equipe);
+
+            tarefa.setEquipes(equipes);
+
+            tblModelTarefa.adicionar(tarefa);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-    
+
     private void verificarCampos() {
         boolean temTexto = !txtNomeTarefa.getText().trim().isEmpty();
         boolean equipeSelecionada = !listEquipes.isSelectionEmpty();
 
         btnSalvarTarefa.setEnabled(temTexto);
     }
-    
+
     private void excluir() {
         int linha = tabelaListarTarefa.getSelectedRow();
 
@@ -394,7 +404,7 @@ public class DlgJanTarefa extends javax.swing.JDialog {
             );
 
             if (resposta == JOptionPane.YES_OPTION) {
-                TableModelAtributoTarefa modelo = (TableModelAtributoTarefa) tabelaListarTarefa.getModel();
+                TableModelTarefa modelo = (TableModelTarefa) tabelaListarTarefa.getModel();
                 modelo.remover(linha);
             }
 
@@ -402,7 +412,7 @@ public class DlgJanTarefa extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Selecione uma linha para excluir!");
         }
     }
-    
+
     private void limparCampos() {
         txtNomeTarefa.setText("");
         txtDtLimite.setText("");
@@ -413,13 +423,13 @@ public class DlgJanTarefa extends javax.swing.JDialog {
 
         listEquipes.clearSelection();
     }
-    
+
     private void editar() {
         int linha = tabelaListarTarefa.getSelectedRow();
-        
-        if (linha >= 0){
+
+        if (linha >= 0) {
             txtNomeTarefa.setText(tabelaListarTarefa.getValueAt(linha, 0).toString());
-            
+
             String equipe = tabelaListarTarefa.getValueAt(linha, 1).toString();
             for (int i = 0; i < listEquipes.getModel().getSize(); i++) {
                 String item = listEquipes.getModel().getElementAt(i);
@@ -431,12 +441,12 @@ public class DlgJanTarefa extends javax.swing.JDialog {
             txtDtLimite.setText(tabelaListarTarefa.getValueAt(linha, 3).toString());
             comboBoxCategoria.setSelectedItem(tabelaListarTarefa.getValueAt(linha, 4).toString());
             comboBoxStatus.setSelectedItem(tabelaListarTarefa.getValueAt(linha, 5).toString());
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "Selecione uma linha para excluir!");
         }
     }
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -475,17 +485,15 @@ public class DlgJanTarefa extends javax.swing.JDialog {
                 dialog.setVisible(true);
             }
         });
-  
-        
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalvarTarefa;
     private javax.swing.JButton btnVoltarJanTarefa;
-    private javax.swing.JComboBox<String> comboBoxCategoria;
-    private javax.swing.JComboBox<String> comboBoxPrioridade;
-    private javax.swing.JComboBox<String> comboBoxStatus;
+    private javax.swing.JComboBox<Object> comboBoxCategoria;
+    private javax.swing.JComboBox<Object> comboBoxPrioridade;
+    private javax.swing.JComboBox<Object> comboBoxStatus;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel labelCategoria;

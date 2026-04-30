@@ -1,7 +1,7 @@
 
 package controller;
 
-import domain.AtributoCategoria;
+import domain.Equipe;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -10,13 +10,13 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Karoliny
  */
-public class TableModelAtributoCategoria extends AbstractTableModel{
+public class TableModelEquipe extends AbstractTableModel{
 
-     private List listaCategorias = new ArrayList();
+    private List listaEquipes = new ArrayList();
     
     @Override
     public int getRowCount() {
-        return listaCategorias.size();
+        return listaEquipes.size();
     }
 
     @Override
@@ -26,11 +26,11 @@ public class TableModelAtributoCategoria extends AbstractTableModel{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        AtributoCategoria categoria = (AtributoCategoria) listaCategorias.get(rowIndex);
+        Equipe equipe = (Equipe) listaEquipes.get(rowIndex);
         
         switch (columnIndex) {
-            case 0: return categoria.getNome();
-            case 1: return categoria.getDescricao();
+            case 0: return equipe.getNomeEquipe();
+            case 1: return equipe.getSetor();
         }
         
         return null;
@@ -38,41 +38,41 @@ public class TableModelAtributoCategoria extends AbstractTableModel{
     
     @Override
     public String getColumnName (int column) {
-        String nomes[] = {"Categoria", "Descrição"};
+        String nomes[] = {"Nome", "Setor"};
         return nomes[column];
     }
     
     public Object getTarefa (int rowIndex){
-        return listaCategorias.get(rowIndex);
+        return listaEquipes.get(rowIndex);
     }
     
     public void adicionar (Object obj) {
-        listaCategorias.add(obj);
-        fireTableRowsInserted( listaCategorias.size() - 1, listaCategorias.size() - 1 );
+        listaEquipes.add(obj);
+        fireTableRowsInserted( listaEquipes.size() - 1, listaEquipes.size() - 1 );
         
     }
     
     public void remover (int indice) {
-        listaCategorias.remove(indice);
+        listaEquipes.remove(indice);
         fireTableRowsDeleted( indice, indice );
         
     }
     
     public void setLista(List novaLista) {
         if ( novaLista == null || novaLista.isEmpty()) {
-            if ( !listaCategorias.isEmpty() ) {
-                listaCategorias.clear();
+            if ( !listaEquipes.isEmpty() ) {
+                listaEquipes.clear();
                 fireTableRowsDeleted(0,0);
             }
         } else {
-            listaCategorias = novaLista;
-            fireTableRowsInserted( 0, listaCategorias.size() - 1);
+            listaEquipes = novaLista;
+            fireTableRowsInserted( 0, listaEquipes.size() - 1);
         }
         
     }
     
     public List getLista() {
-        return listaCategorias;
+        return listaEquipes;
     }
     
 }

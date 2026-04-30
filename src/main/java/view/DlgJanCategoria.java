@@ -4,15 +4,15 @@ package view;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
-import domain.AtributoCategoria;
-import controller.TableModelAtributoCategoria;
+import domain.Categoria;
+import controller.TableModelCategoria;
 
 /**
  *
  * @author Karoliny
  */
 public class DlgJanCategoria extends javax.swing.JDialog {
-    private TableModelAtributoCategoria tblModelCategoria;
+    private TableModelCategoria tblModelCategoria;
     
     public DlgJanCategoria(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -26,7 +26,7 @@ public class DlgJanCategoria extends javax.swing.JDialog {
             }
         });
         
-        tblModelCategoria = new TableModelAtributoCategoria();
+        tblModelCategoria = new TableModelCategoria();
         tabelaListarCategoria.setModel(tblModelCategoria);
     }
 
@@ -245,9 +245,11 @@ public class DlgJanCategoria extends javax.swing.JDialog {
     
     private void adicionarTabela(String nomeCategoria, String descricao){
         
-        AtributoCategoria tarefa = new AtributoCategoria(nomeCategoria, descricao);
-        
-        tblModelCategoria.adicionar(tarefa);
+        Categoria cat = new Categoria();
+        cat.setNomeCat(nomeCategoria);
+        cat.setDescricaoCat(descricao);
+
+        tblModelCategoria.adicionar(cat);
 
     }
     
@@ -264,7 +266,7 @@ public class DlgJanCategoria extends javax.swing.JDialog {
             );
 
             if (resposta == JOptionPane.YES_OPTION) {
-                TableModelAtributoCategoria modelo = (TableModelAtributoCategoria) tabelaListarCategoria.getModel();
+                TableModelCategoria modelo = (TableModelCategoria) tabelaListarCategoria.getModel();
                 modelo.remover(linha);
             }
 

@@ -41,7 +41,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="34" max="32767" attributes="0"/>
+              <EmptySpace pref="46" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -54,7 +54,7 @@
               <Component id="panelUsuario" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="btnVoltarUsuario" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="11" max="32767" attributes="0"/>
+              <EmptySpace pref="19" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -127,18 +127,20 @@
                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="labelNomeUsuario" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtNome" alignment="0" max="32767" attributes="0"/>
                       <Component id="labelEmail" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtEmail" alignment="0" max="32767" attributes="0"/>
                       <Component id="labelDataNascimento" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="labelTelefone" min="-2" max="-2" attributes="0"/>
                       <Component id="labelSetor" min="-2" max="-2" attributes="0"/>
-                      <Component id="comboBoxSetorUsuario" alignment="0" pref="240" max="32767" attributes="0"/>
-                      <Component id="txtTelefone" max="32767" attributes="0"/>
-                      <Component id="txtDataNascimento" max="32767" attributes="0"/>
                       <Component id="btnSalvarUsuario" alignment="0" min="-2" pref="105" max="-2" attributes="0"/>
+                      <Component id="labelCPF" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtTelefone" alignment="0" max="32767" attributes="0"/>
+                      <Component id="txtDataNascimento" alignment="0" max="32767" attributes="0"/>
+                      <Component id="txtEmail" alignment="0" max="32767" attributes="0"/>
+                      <Component id="txtNome" alignment="0" max="32767" attributes="0"/>
+                      <Component id="txtCPF" max="32767" attributes="0"/>
+                      <Component id="comboBoxEquipe" alignment="0" pref="226" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="28" max="32767" attributes="0"/>
+                  <EmptySpace pref="20" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="panelSenha" max="32767" attributes="0"/>
                       <Component id="panelSexo" max="32767" attributes="0"/>
@@ -151,36 +153,44 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="panelSexo" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" attributes="0">
                           <Component id="labelNomeUsuario" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtNome" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="labelEmail" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtEmail" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="labelDataNascimento" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <Component id="panelSexo" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="labelDataNascimento" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                          <Component id="panelSenha" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
                           <Component id="txtDataNascimento" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                           <Component id="labelTelefone" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtTelefone" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                          <Component id="labelSetor" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="comboBoxSetorUsuario" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelCPF" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="txtCPF" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="labelSetor" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="comboBoxEquipe" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="panelSenha" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="btnSalvarUsuario" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
               </Group>
@@ -298,10 +308,10 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="passwordSenha1" min="-2" pref="160" max="-2" attributes="0"/>
+                          <Component id="txtSenha" min="-2" pref="160" max="-2" attributes="0"/>
                           <Component id="labelConfSenha" min="-2" max="-2" attributes="0"/>
                           <Component id="labelSenha" min="-2" max="-2" attributes="0"/>
-                          <Component id="passwordConfSenha" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
+                          <Component id="txtConfSenha" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -313,11 +323,11 @@
                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                       <Component id="labelSenha" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="passwordSenha1" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtSenha" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       <Component id="labelConfSenha" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="passwordConfSenha" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtConfSenha" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="33" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -334,9 +344,9 @@
                 <Property name="text" type="java.lang.String" value="Confirma&#xe7;&#xe3;o de senha"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JPasswordField" name="passwordConfSenha">
+            <Component class="javax.swing.JPasswordField" name="txtConfSenha">
             </Component>
-            <Component class="javax.swing.JPasswordField" name="passwordSenha1">
+            <Component class="javax.swing.JPasswordField" name="txtSenha">
             </Component>
           </SubComponents>
         </Container>
@@ -347,23 +357,15 @@
         </Component>
         <Component class="javax.swing.JLabel" name="labelSetor">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Setor"/>
+            <Property name="text" type="java.lang.String" value="Equipe"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="comboBoxSetorUsuario">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="5">
-                <StringItem index="0" value="             "/>
-                <StringItem index="1" value="Marketing"/>
-                <StringItem index="2" value="T.I."/>
-                <StringItem index="3" value="Comunica&#xe7;&#xe3;o"/>
-                <StringItem index="4" value="Manuten&#xe7;&#xe3;o"/>
-              </StringArray>
-            </Property>
-          </Properties>
+        <Component class="javax.swing.JComboBox" name="comboBoxEquipe">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboBoxEquipeActionPerformed"/>
+          </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Object&gt;"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="btnSalvarUsuario">
@@ -385,6 +387,18 @@
           <Properties>
             <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
               <Format format="##/##/####" subtype="-1" type="5"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelCPF">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="CPF"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JFormattedTextField" name="txtCPF">
+          <Properties>
+            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
+              <Format format="###.###.###-##" subtype="-1" type="5"/>
             </Property>
           </Properties>
         </Component>
