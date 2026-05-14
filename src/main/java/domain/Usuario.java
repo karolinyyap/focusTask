@@ -3,6 +3,7 @@ package domain;
 
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -37,6 +38,9 @@ public class Usuario {
     @ManyToOne
     @JoinColumn(name = "id_equipe")
     private Equipe equipe;
+    
+    @OneToMany(mappedBy = "id.usuario", fetch = FetchType.LAZY)
+    private List<UsuarioEquipe> historicoEquipes;
     
     @Column
     private String senha;

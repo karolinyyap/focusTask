@@ -23,6 +23,9 @@ public class Equipe {
 
     @OneToMany(mappedBy = "id.equipe", fetch = FetchType.LAZY)
     private List<Alocacao> alocacoes;
+    
+    @OneToMany(mappedBy = "id.equipe", fetch = FetchType.LAZY)
+    private List<UsuarioEquipe> historicoUsuarios;
 
     public Equipe(int id, String nome, String setor, List<Alocacao> alocacoes) {
         this.id = id;

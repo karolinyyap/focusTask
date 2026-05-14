@@ -37,6 +37,7 @@
         <mapping class="domain.Tarefa"/>
         <mapping class="domain.Usuario"/>
         <mapping class="domain.Alocacao"/>
+        <mapping class="domain.UsuarioEquipe"/>
 
     </session-factory>
 </hibernate-configuration>
