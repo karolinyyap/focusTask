@@ -1,13 +1,10 @@
 package view;
 
-import static controller.FuncoesUteis.strToDate;
 import controller.GerenciadorInterface;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import domain.Equipe;
 import controller.TableModelEquipe;
-import domain.Usuario;
+import java.util.List;
 
 /**
  *
@@ -22,14 +19,10 @@ public class DlgJanEquipe extends javax.swing.JDialog {
         initComponents();
 
         btnSalvarEquipe.setEnabled(false);
+        btnAlterar.setEnabled(false);
 
-        // Listener do campo nome
-        txtNomeEquipe.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                verificarCampos();
-            }
-        });
+        txtNomeEquipe.addActionListener(e -> verificarCampos());
+        comboBoxSetor.addActionListener(e -> verificarCampos());
 
         tblModelEquipe = new TableModelEquipe();
         tableEquipe.setModel(tblModelEquipe);
@@ -55,6 +48,8 @@ public class DlgJanEquipe extends javax.swing.JDialog {
         comboBoxSetor = new javax.swing.JComboBox<>();
         jScrollPane10 = new javax.swing.JScrollPane();
         tableEquipe = new javax.swing.JTable();
+        btnListarEquipes = new javax.swing.JButton();
+        btnAlterar = new javax.swing.JButton();
         btnVoltarJanEquipe = new javax.swing.JButton();
 
         menuLimpar.setText("Limpar");
@@ -123,7 +118,12 @@ public class DlgJanEquipe extends javax.swing.JDialog {
 
         labelSetor.setText("Setor");
 
-        comboBoxSetor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "           ", "Marketing", "Comunicação", "T.I." }));
+        comboBoxSetor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "                 ", "Marketing", "Comunicação", "T.I.", "Manutenção", "Administrativo", "Recursos Humanos" }));
+        comboBoxSetor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                comboBoxSetorKeyReleased(evt);
+            }
+        });
 
         tableEquipe.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -136,26 +136,43 @@ public class DlgJanEquipe extends javax.swing.JDialog {
         tableEquipe.setComponentPopupMenu(popUpMenuEquipes);
         jScrollPane10.setViewportView(tableEquipe);
 
+        btnListarEquipes.setText("Listar");
+        btnListarEquipes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListarEquipesActionPerformed(evt);
+            }
+        });
+
+        btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout paneCadastrarEquipeLayout = new javax.swing.GroupLayout(paneCadastrarEquipe);
         paneCadastrarEquipe.setLayout(paneCadastrarEquipeLayout);
         paneCadastrarEquipeLayout.setHorizontalGroup(
             paneCadastrarEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(paneCadastrarEquipeLayout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addGroup(paneCadastrarEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(paneCadastrarEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(paneCadastrarEquipeLayout.createSequentialGroup()
                         .addComponent(btnSalvarEquipe, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35))
-                    .addGroup(paneCadastrarEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
-                        .addGroup(paneCadastrarEquipeLayout.createSequentialGroup()
-                            .addGroup(paneCadastrarEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(labelNomeEquipe)
-                                .addComponent(txtNomeEquipe, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(24, 24, 24)
-                            .addGroup(paneCadastrarEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(labelSetor)
-                                .addComponent(comboBoxSetor, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnListarEquipes, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paneCadastrarEquipeLayout.createSequentialGroup()
+                        .addGroup(paneCadastrarEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelNomeEquipe)
+                            .addComponent(txtNomeEquipe, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(paneCadastrarEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelSetor)
+                            .addComponent(comboBoxSetor, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(28, 28, 28))
         );
         paneCadastrarEquipeLayout.setVerticalGroup(
@@ -169,9 +186,12 @@ public class DlgJanEquipe extends javax.swing.JDialog {
                 .addGroup(paneCadastrarEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNomeEquipe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboBoxSetor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addComponent(btnSalvarEquipe)
-                .addGap(32, 32, 32)
+                .addGap(33, 33, 33)
+                .addGroup(paneCadastrarEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSalvarEquipe)
+                    .addComponent(btnListarEquipes)
+                    .addComponent(btnAlterar))
+                .addGap(30, 30, 30)
                 .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(21, Short.MAX_VALUE))
         );
@@ -227,19 +247,18 @@ public class DlgJanEquipe extends javax.swing.JDialog {
         try {
             Equipe equipe = new Equipe();
 
-            equipe.setNomeEquipe(txtNomeEquipe.getText());
+            equipe.setNome(txtNomeEquipe.getText());
             equipe.setSetor(comboBoxSetor.getSelectedItem().toString());
-            
+
             GerenciadorInterface.getMyInstance().getDominio().inserirEquipe(equipe);
 
             JOptionPane.showMessageDialog(null, "Equipe salva com sucesso!");
-
+            carregarTabela();
+            limparCampos();
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erro ao salvar equipe");
         }
-        //Fazer Listar ao invés de inserir na tabela
-        //inserirTabela(nomeEquipe, setor);
     }//GEN-LAST:event_btnSalvarEquipeActionPerformed
 
     private void menuLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLimparActionPerformed
@@ -247,67 +266,107 @@ public class DlgJanEquipe extends javax.swing.JDialog {
     }//GEN-LAST:event_menuLimparActionPerformed
 
     private void menuEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEditarActionPerformed
-        editar();
+        try {
+            btnSalvarEquipe.setEnabled(false);
+            btnAlterar.setEnabled(true);
+            int linha = tableEquipe.getSelectedRow();
+
+            if (linha == -1) {
+                JOptionPane.showMessageDialog(null, "Selecione uma equipe!");
+                return;
+            }
+
+            Equipe equipe = (Equipe) tblModelEquipe.getEquipe(linha);
+            txtNomeEquipe.setText(equipe.getNome());
+            comboBoxSetor.setSelectedItem(equipe.getSetor());
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
+        }
     }//GEN-LAST:event_menuEditarActionPerformed
 
     private void menuExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExcluirActionPerformed
-        excluir();
-    }//GEN-LAST:event_menuExcluirActionPerformed
-
-    private void verificarCampos() {
-        boolean temTexto = !txtNomeEquipe.getText().trim().isEmpty();
-
-        btnSalvarEquipe.setEnabled(temTexto);
-    }
-
-    private void inserirTabela(String nomeEquipe, String setor) {
-
-        Equipe equipe = new Equipe();
-        equipe.setNomeEquipe(nomeEquipe);
-        equipe.setSetor(setor);
-
-        tblModelEquipe.adicionar(equipe);
-
-    }
-
-    private void excluir() {
         int linha = tableEquipe.getSelectedRow();
 
-        if (linha >= 0) {
-
-            int resposta = JOptionPane.showConfirmDialog(
-                    null,
-                    "Deseja realmente excluir?",
-                    "Confirmar exclusão",
-                    JOptionPane.YES_NO_OPTION
-            );
-
-            if (resposta == JOptionPane.YES_OPTION) {
-                TableModelEquipe modelo = (TableModelEquipe) tableEquipe.getModel();
-                modelo.remover(linha);
-            }
-
-        } else {
+        if (linha < 0) {
             JOptionPane.showMessageDialog(null, "Selecione uma linha para excluir!");
+            return;
+        }
+
+        int resposta = JOptionPane.showConfirmDialog(
+                null,
+                "Deseja realmente excluir?",
+                "Confirmar exclusão",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (resposta == JOptionPane.YES_OPTION) {
+            try {
+                Equipe equipe = (Equipe) tblModelEquipe.getEquipe(linha);
+
+                GerenciadorInterface.getMyInstance().getDominio().excluirEquipe(equipe.getId());
+
+                carregarTabela();
+                limparCampos();
+                JOptionPane.showMessageDialog(null, "Equipe excluída com sucesso!");
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao excluir: " + e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_menuExcluirActionPerformed
+
+    private void btnListarEquipesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarEquipesActionPerformed
+        carregarTabela();
+    }//GEN-LAST:event_btnListarEquipesActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        try {
+            int linha = tableEquipe.getSelectedRow();
+
+            Equipe equipe = (Equipe) tblModelEquipe.getEquipe(linha);
+
+            equipe.setNome(txtNomeEquipe.getText());
+            equipe.setSetor(comboBoxSetor.getSelectedItem().toString());
+            GerenciadorInterface.getMyInstance().getDominio().alterarEquipe(equipe);
+
+            JOptionPane.showMessageDialog(null, "Equipe editada com sucesso!");
+            carregarTabela();
+            limparCampos();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void comboBoxSetorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_comboBoxSetorKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboBoxSetorKeyReleased
+
+    private void verificarCampos() {
+        boolean temNome = !txtNomeEquipe.getText().trim().isEmpty();
+        boolean temSetor = comboBoxSetor.getSelectedIndex() > 0;
+
+        btnSalvarEquipe.setEnabled(temNome && temSetor);
+    }
+
+    private void carregarTabela() {
+        try {
+            Equipe equipe = new Equipe();
+
+            List<Equipe> lista = GerenciadorInterface.getMyInstance().getDominio().listarEquipes();
+
+            tblModelEquipe.setLista(lista);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
         }
     }
 
     private void limparCampos() {
+        btnSalvarEquipe.setEnabled(false);
+        btnAlterar.setEnabled(false);
         txtNomeEquipe.setText("");
-
         comboBoxSetor.setSelectedIndex(-1);
-    }
-
-    private void editar() {
-        int linha = tableEquipe.getSelectedRow();
-
-        if (linha >= 0) {
-            txtNomeEquipe.setText(tableEquipe.getValueAt(linha, 0).toString());
-            comboBoxSetor.setSelectedItem(tableEquipe.getValueAt(linha, 1).toString());
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione uma linha para excluir!");
-        }
     }
 
     public static void main(String args[]) {
@@ -353,6 +412,8 @@ public class DlgJanEquipe extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAlterar;
+    private javax.swing.JButton btnListarEquipes;
     private javax.swing.JButton btnSalvarEquipe;
     private javax.swing.JButton btnVoltarJanEquipe;
     private javax.swing.JComboBox<String> comboBoxSetor;

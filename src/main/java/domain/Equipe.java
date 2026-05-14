@@ -1,51 +1,89 @@
-
 package domain;
+
+import jakarta.persistence.*;
+import java.util.List;
 
 /**
  *
  * @author Karoliny
  */
+@Entity
+@Table
 public class Equipe {
-    private int idEquipe;
-    private String nomeEquipe;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(nullable = false)
+    private String nome;
+
+    @Column
     private String setor;
 
-    public Equipe(int idEquipe, String nomeEquipe, String setor) {
-        this.idEquipe = idEquipe;
-        this.nomeEquipe = nomeEquipe;
+    @OneToMany(mappedBy = "id.equipe", fetch = FetchType.LAZY)
+    private List<Alocacao> alocacoes;
+
+    public Equipe(int id, String nome, String setor, List<Alocacao> alocacoes) {
+        this.id = id;
+        this.nome = nome;
         this.setor = setor;
+        this.alocacoes = alocacoes;
     }
+
 
     public Equipe() {
     }
 
-    public int getIdEquipe() {
-        return idEquipe;
+    public int getId() {
+        return id;
     }
 
-    public String getNomeEquipe() {
-        return nomeEquipe;
+    public String getNome() {
+        return nome;
     }
 
     public String getSetor() {
         return setor;
     }
 
-    public void setIdEquipe(int idEquipe) {
-        this.idEquipe = idEquipe;
+    public List<Alocacao> getAlocacoes() {
+        return alocacoes;
+    }
+    
+
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setNomeEquipe(String nomeEquipe) {
-        this.nomeEquipe = nomeEquipe;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public void setSetor(String setor) {
         this.setor = setor;
     }
 
+    public void setAlocacoes(List<Alocacao> alocacoes) {
+        this.alocacoes = alocacoes;
+    }
+
+    
     @Override
     public String toString() {
-        return nomeEquipe;
+        return nome;
     }
-  
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Equipe other = (Equipe) obj;
+        return this.id == other.id;
+    }
 }

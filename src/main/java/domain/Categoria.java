@@ -1,46 +1,62 @@
 
 package domain;
 
+import jakarta.persistence.*;
+
 /**
  *
  * @author Karoliny
  */
+@Entity
+@Table
 public class Categoria {
-    private int idCat;
-    private String nomeCat;
-    private String descricaoCat;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    
+    @Column (nullable = false)
+    private String nome;
+    
+    @Column
+    private String descricao;
 
-    public Categoria(int idCat, String nomeCat, String descricaoCat) {
-        this.idCat = idCat;
-        this.nomeCat = nomeCat;
-        this.descricaoCat = descricaoCat;
+    public Categoria(int id, String nome, String descricao) {
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
     }
 
     public Categoria() {
     }
 
-    public int getIdCat() {
-        return idCat;
+    public int getId() {
+        return id;
     }
 
-    public String getNomeCat() {
-        return nomeCat;
+    public String getNome() {
+        return nome;
     }
 
-    public String getDescricaoCat() {
-        return descricaoCat;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setIdCat(int idCat) {
-        this.idCat = idCat;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setNomeCat(String nomeCat) {
-        this.nomeCat = nomeCat;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public void setDescricaoCat(String descricaoCat) {
-        this.descricaoCat = descricaoCat;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    @Override
+    public String toString() {
+        return nome;
     }
 
    

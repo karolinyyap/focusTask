@@ -25,7 +25,7 @@ public class TableModelTarefa extends AbstractTableModel{
         Tarefa tarefa = (Tarefa) listaTarefas.get(rowIndex);
         
         switch (columnIndex) {
-            case 0: return tarefa.getNomeTarefa();
+            case 0: return tarefa.getNome();
             case 1: return tarefa.getCategoria();
             case 2: return tarefa.getDataLimite();
             case 3: return tarefa.getEquipes();

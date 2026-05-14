@@ -1,4 +1,3 @@
-
 package controller;
 
 import domain.Equipe;
@@ -10,10 +9,10 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Karoliny
  */
-public class TableModelEquipe extends AbstractTableModel{
+public class TableModelEquipe extends AbstractTableModel {
 
     private List listaEquipes = new ArrayList();
-    
+
     @Override
     public int getRowCount() {
         return listaEquipes.size();
@@ -27,52 +26,53 @@ public class TableModelEquipe extends AbstractTableModel{
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Equipe equipe = (Equipe) listaEquipes.get(rowIndex);
-        
+
         switch (columnIndex) {
-            case 0: return equipe.getNomeEquipe();
-            case 1: return equipe.getSetor();
+            case 0:
+                return equipe.getNome();
+            case 1:
+                return equipe.getSetor();
         }
-        
+
         return null;
     }
-    
+
     @Override
-    public String getColumnName (int column) {
+    public String getColumnName(int column) {
         String nomes[] = {"Nome", "Setor"};
         return nomes[column];
     }
-    
-    public Object getTarefa (int rowIndex){
+
+    public Object getEquipe(int rowIndex) {
         return listaEquipes.get(rowIndex);
     }
-    
-    public void adicionar (Object obj) {
+
+    public void adicionar(Object obj) {
         listaEquipes.add(obj);
-        fireTableRowsInserted( listaEquipes.size() - 1, listaEquipes.size() - 1 );
-        
+        fireTableRowsInserted(listaEquipes.size() - 1, listaEquipes.size() - 1);
+
     }
-    
-    public void remover (int indice) {
+
+    public void remover(int indice) {
         listaEquipes.remove(indice);
-        fireTableRowsDeleted( indice, indice );
-        
+        fireTableRowsDeleted(indice, indice);
+
     }
-    
+
     public void setLista(List novaLista) {
-        if ( novaLista == null || novaLista.isEmpty()) {
-            if ( !listaEquipes.isEmpty() ) {
+        if (novaLista == null || novaLista.isEmpty()) {
+            if (!listaEquipes.isEmpty()) {
                 listaEquipes.clear();
-                fireTableRowsDeleted(0,0);
+                fireTableRowsDeleted(0, 0);
             }
         } else {
             listaEquipes = novaLista;
-            fireTableRowsInserted( 0, listaEquipes.size() - 1);
+            fireTableRowsInserted(0, listaEquipes.size() - 1);
         }
-        
+
     }
-    
+
     public List getLista() {
         return listaEquipes;
     }
-    
 }

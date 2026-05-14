@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import view.DlgJanCategoria;
 import view.DlgJanEquipe;
 import view.DlgJanRelatorio;
@@ -40,12 +42,13 @@ public class GerenciadorInterface {
             JOptionPane.showMessageDialog(null, ex, "Inicialização", JOptionPane.ERROR_MESSAGE);
             System.exit(-1);
         }
+
     }
 
     public static GerenciadorInterface getMyInstance() {
         return myInstance;
     }
-    
+
     public GerenciadorDominio getDominio() {
         return gerDominio;
     }
@@ -125,5 +128,20 @@ public class GerenciadorInterface {
         UIManager.put("OptionPane.noButtonText", "Não");
 
         GerenciadorInterface.getMyInstance().abrirPrincipal();
+
+//        try {
+//
+//            SessionFactory factory = new Configuration()
+//                    .configure("hibernate.cfg.xml")
+//                    .buildSessionFactory();
+//
+//            System.out.println("HIBERNATE INICIADO COM SUCESSO!");
+//
+//        } catch (Exception e) {
+//
+//            System.out.println("ERRO AO INICIAR O HIBERNATE:");
+//
+//            e.printStackTrace();
+//        }
     }
 }

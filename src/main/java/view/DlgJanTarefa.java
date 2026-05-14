@@ -1,17 +1,21 @@
 package view;
 
+import static controller.FuncoesUteis.dateToStr;
 import static controller.FuncoesUteis.strToDate;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import controller.GerenciadorInterface;
 import java.util.List;
 import javax.swing.JOptionPane;
 import domain.Tarefa;
 import controller.TableModelTarefa;
+import domain.Alocacao;
+import domain.AlocacaoPK;
 import domain.Categoria;
 import domain.Equipe;
 import domain.Prioridade;
 import domain.Status;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -25,15 +29,19 @@ public class DlgJanTarefa extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
-        btnSalvarTarefa.setEnabled(false);
+        btnSalvarTarefa.setEnabled(true);
+        carregarEquipes();
 
-        // Listener do campo nome
-        txtNomeTarefa.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                verificarCampos();
-            }
-        });
+        try {
+            List<Categoria> lista = GerenciadorInterface.getMyInstance().getDominio().listarCategoria();
+            carregarComboCategorias(lista);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao carregar Categoria");
+        } catch (ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao carregar classe");
+        }
 
         tblModelTarefa = new TableModelTarefa();
         tabelaListarTarefa.setModel(tblModelTarefa);
@@ -68,6 +76,10 @@ public class DlgJanTarefa extends javax.swing.JDialog {
         listEquipes = new javax.swing.JList<>();
         jScrollPane4 = new javax.swing.JScrollPane();
         tabelaListarTarefa = new javax.swing.JTable();
+        labelDtInicio = new javax.swing.JLabel();
+        txtDtInicio = new javax.swing.JFormattedTextField();
+        btnListar = new javax.swing.JButton();
+        btnAlterar = new javax.swing.JButton();
         btnVoltarJanTarefa = new javax.swing.JButton();
 
         menuLimpar.setText("Limpar");
@@ -134,8 +146,6 @@ public class DlgJanTarefa extends javax.swing.JDialog {
 
         labelStatus.setText("Status");
 
-        comboBoxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "             ", "Desenvolvimento", "Manutenção", "Entregas", "Reunião", "Documentação" }));
-
         try {
             txtDtLimite.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
@@ -166,10 +176,10 @@ public class DlgJanTarefa extends javax.swing.JDialog {
         labelEquipe.setText("Equipe");
 
         listEquipes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        listEquipes.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Marketing", "Comunicação", "Recursos Humanos" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        listEquipes.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                listEquipesComponentShown(evt);
+            }
         });
         listEquipes.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -187,7 +197,7 @@ public class DlgJanTarefa extends javax.swing.JDialog {
                 .addComponent(labelEquipe)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelEquipeLayout.setVerticalGroup(
             panelEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,8 +205,8 @@ public class DlgJanTarefa extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(panelEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelEquipe)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         tabelaListarTarefa.setModel(new javax.swing.table.DefaultTableModel(
@@ -210,6 +220,33 @@ public class DlgJanTarefa extends javax.swing.JDialog {
         tabelaListarTarefa.setComponentPopupMenu(popUpMenu);
         jScrollPane4.setViewportView(tabelaListarTarefa);
 
+        labelDtInicio.setText("Data Início");
+
+        try {
+            txtDtInicio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtDtInicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDtInicioActionPerformed(evt);
+            }
+        });
+
+        btnListar.setText("Listar");
+        btnListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListarActionPerformed(evt);
+            }
+        });
+
+        btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout tabCadastrarLayout = new javax.swing.GroupLayout(tabCadastrar);
         tabCadastrar.setLayout(tabCadastrarLayout);
         tabCadastrarLayout.setHorizontalGroup(
@@ -218,30 +255,37 @@ public class DlgJanTarefa extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tabCadastrarLayout.createSequentialGroup()
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 28, Short.MAX_VALUE))
+                        .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(comboBoxStatus, 0, 226, Short.MAX_VALUE)
+                            .addComponent(txtDtLimite)
+                            .addComponent(txtNomeTarefa, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+                            .addComponent(labelDtLimite)
+                            .addComponent(labelNomeTarefa)
+                            .addComponent(labelStatus)
+                            .addComponent(labelDtInicio)
+                            .addComponent(txtDtInicio))
+                        .addGap(45, 45, 45)
+                        .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelCategoria)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabCadastrarLayout.createSequentialGroup()
+                                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(comboBoxPrioridade, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(comboBoxCategoria, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(panelEquipe, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, tabCadastrarLayout.createSequentialGroup()
+                                        .addComponent(labelPrioridade)
+                                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(57, 57, 57))))
                     .addGroup(tabCadastrarLayout.createSequentialGroup()
                         .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(comboBoxStatus, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtDtLimite)
-                                        .addComponent(txtNomeTarefa, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
-                                        .addComponent(labelDtLimite)
-                                        .addComponent(labelNomeTarefa)
-                                        .addComponent(comboBoxCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(labelCategoria)))
-                            .addComponent(labelStatus)
-                            .addComponent(btnSalvarTarefa, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(45, 45, 45)
-                        .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(comboBoxPrioridade, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(panelEquipe, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, tabCadastrarLayout.createSequentialGroup()
-                                .addComponent(labelPrioridade)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(29, 29, 29))))
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(tabCadastrarLayout.createSequentialGroup()
+                                .addComponent(btnSalvarTarefa, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 44, Short.MAX_VALUE))))
         );
         tabCadastrarLayout.setVerticalGroup(
             tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,28 +296,36 @@ public class DlgJanTarefa extends javax.swing.JDialog {
                         .addComponent(labelNomeTarefa)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNomeTarefa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(labelDtLimite)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtDtLimite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24)
-                        .addComponent(labelCategoria)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(labelDtInicio)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboBoxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(panelEquipe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtDtInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelDtLimite))
+                    .addGroup(tabCadastrarLayout.createSequentialGroup()
+                        .addComponent(panelEquipe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelCategoria)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelStatus)
-                    .addComponent(labelPrioridade))
+                    .addComponent(comboBoxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDtLimite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelPrioridade)
+                    .addComponent(labelStatus))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(comboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboBoxPrioridade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addComponent(btnSalvarTarefa)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(comboBoxPrioridade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSalvarTarefa)
+                    .addComponent(btnListar)
+                    .addComponent(btnAlterar))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(15, 15, 15))
         );
 
         panelTabela.addTab("Cadastrar Tarefa", tabCadastrar);
@@ -325,18 +377,46 @@ public class DlgJanTarefa extends javax.swing.JDialog {
     }//GEN-LAST:event_listEquipesValueChanged
 
     private void btnSalvarTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarTarefaActionPerformed
-        String nomeTarefa = txtNomeTarefa.getText();
-        String dataLimite = txtDtLimite.getText();
+        try {
+            Tarefa tarefa = new Tarefa();
 
-        List<String> equipesSelecionadas = listEquipes.getSelectedValuesList();
-        String nomeEquipe = String.join(", ", equipesSelecionadas);
+            tarefa.setNome(txtNomeTarefa.getText());
+            tarefa.setDataInicio(strToDate(txtDtInicio.getText()));
+            tarefa.setDataLimite(strToDate(txtDtLimite.getText()));
 
-        Categoria categoria = (Categoria) comboBoxCategoria.getSelectedItem();
+            List<Equipe> equipesSelecionadas = listEquipes.getSelectedValuesList();
 
-        Status status = (Status) comboBoxStatus.getSelectedItem();
-        Prioridade prioridade = (Prioridade) comboBoxPrioridade.getSelectedItem();
+            List<Alocacao> alocacoes = new ArrayList<>();
 
-        inserir(nomeTarefa, nomeEquipe, prioridade, dataLimite, categoria, status);
+            for (Equipe equipe : equipesSelecionadas) {
+
+                AlocacaoPK pk = new AlocacaoPK();
+                pk.setTarefa(tarefa);
+                pk.setEquipe(equipe);
+
+                Alocacao alocacao = new Alocacao();
+                alocacao.setId(pk);
+
+                alocacoes.add(alocacao);
+            }
+
+            tarefa.setAlocacoes(alocacoes);
+
+            tarefa.setCategoria((Categoria) comboBoxCategoria.getSelectedItem());
+            tarefa.setStatus((Status) comboBoxStatus.getSelectedItem());
+            tarefa.setPrioridade((Prioridade) comboBoxPrioridade.getSelectedItem());
+
+            GerenciadorInterface.getMyInstance().getDominio().inserirTarefa(tarefa);
+
+            JOptionPane.showMessageDialog(null, "Tarefa salva com sucesso!");
+
+            carregarTabela();
+            limparCampos();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao salvar tarefa");
+        }
     }//GEN-LAST:event_btnSalvarTarefaActionPerformed
 
     private void txtDtLimiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDtLimiteActionPerformed
@@ -348,7 +428,35 @@ public class DlgJanTarefa extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNomeTarefaActionPerformed
 
     private void menuExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExcluirActionPerformed
-        excluir();
+        try {
+            int linha = tabelaListarTarefa.getSelectedRow();
+
+            if (linha == -1) {
+                JOptionPane.showMessageDialog(null, "Selecione uma tarefa!");
+                return;
+            }
+
+            Tarefa tarefa = (Tarefa) tblModelTarefa.getTarefa(linha);
+
+            int confirm = JOptionPane.showConfirmDialog(
+                    null,
+                    "Deseja excluir a tarefa \"" + tarefa.getNome() + "\"?",
+                    "Confirmar Exclusão",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                GerenciadorInterface.getMyInstance().getDominio().excluirTarefa(tarefa.getId());
+
+                JOptionPane.showMessageDialog(null, "Tarefa excluída com sucesso!");
+
+                carregarTabela();
+                limparCampos();
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
+        }
     }//GEN-LAST:event_menuExcluirActionPerformed
 
     private void menuLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLimparActionPerformed
@@ -356,66 +464,114 @@ public class DlgJanTarefa extends javax.swing.JDialog {
     }//GEN-LAST:event_menuLimparActionPerformed
 
     private void menuEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEditarActionPerformed
-        editar();
-    }//GEN-LAST:event_menuEditarActionPerformed
-
-    private void inserir(String nomeTarefa, String nomeEquipe, Prioridade prioridade,
-            String dataLimite, Categoria categoria, Status status) {
-
         try {
-            Tarefa tarefa = new Tarefa();
+            btnSalvarTarefa.setEnabled(false);
+            btnAlterar.setEnabled(true);
 
-            tarefa.setNomeTarefa(nomeTarefa);
-            tarefa.setDataLimite(strToDate(dataLimite));
-            tarefa.setPrioridade(prioridade);
-            tarefa.setStatus(status);
-            tarefa.setCategoria(categoria);
-            Equipe equipe = new Equipe();
-            equipe.setNomeEquipe(nomeEquipe);
-            List<Equipe> equipes = new ArrayList<>();
-            equipes.add(equipe);
+            int linha = tabelaListarTarefa.getSelectedRow();
 
-            tarefa.setEquipes(equipes);
-
-            tblModelTarefa.adicionar(tarefa);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void verificarCampos() {
-        boolean temTexto = !txtNomeTarefa.getText().trim().isEmpty();
-        boolean equipeSelecionada = !listEquipes.isSelectionEmpty();
-
-        btnSalvarTarefa.setEnabled(temTexto);
-    }
-
-    private void excluir() {
-        int linha = tabelaListarTarefa.getSelectedRow();
-
-        if (linha >= 0) {
-
-            int resposta = JOptionPane.showConfirmDialog(
-                    null,
-                    "Deseja realmente excluir?",
-                    "Confirmar exclusão",
-                    JOptionPane.YES_NO_OPTION
-            );
-
-            if (resposta == JOptionPane.YES_OPTION) {
-                TableModelTarefa modelo = (TableModelTarefa) tabelaListarTarefa.getModel();
-                modelo.remover(linha);
+            if (linha == -1) {
+                JOptionPane.showMessageDialog(null, "Selecione uma tarefa!");
+                return;
             }
 
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione uma linha para excluir!");
+            Tarefa tarefa = (Tarefa) tblModelTarefa.getTarefa(linha);
+
+            txtNomeTarefa.setText(tarefa.getNome());
+            txtDtInicio.setText(dateToStr(tarefa.getDataInicio()));
+            txtDtLimite.setText(dateToStr(tarefa.getDataLimite()));
+
+            List<Equipe> equipes = tarefa.getEquipes();
+            selecionarEquipes(equipes);
+
+            comboBoxCategoria.setSelectedItem(tarefa.getCategoria());
+            comboBoxStatus.setSelectedItem(tarefa.getStatus());
+            comboBoxPrioridade.setSelectedItem(tarefa.getPrioridade());
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
         }
+    }//GEN-LAST:event_menuEditarActionPerformed
+
+    private void txtDtInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDtInicioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDtInicioActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        try {
+            int linha = tabelaListarTarefa.getSelectedRow();
+
+            if (linha == -1) {
+                JOptionPane.showMessageDialog(null, "Selecione uma tarefa!");
+                return;
+            }
+
+            Tarefa tarefa = (Tarefa) tblModelTarefa.getTarefa(linha);
+
+            tarefa.setNome(txtNomeTarefa.getText());
+            tarefa.setDataInicio(strToDate(txtDtInicio.getText()));
+            tarefa.setDataLimite(strToDate(txtDtLimite.getText()));
+
+            List<Equipe> equipesSelecionadas = listEquipes.getSelectedValuesList();
+
+            List<Alocacao> alocacoes = new ArrayList<>();
+
+            for (Equipe equipe : equipesSelecionadas) {
+
+                AlocacaoPK pk = new AlocacaoPK();
+                pk.setTarefa(tarefa);
+                pk.setEquipe(equipe);
+
+                Alocacao alocacao = new Alocacao();
+                alocacao.setId(pk);
+
+                alocacoes.add(alocacao);
+            }
+
+            tarefa.setAlocacoes(alocacoes);
+
+            tarefa.setCategoria((Categoria) comboBoxCategoria.getSelectedItem());
+            tarefa.setStatus((Status) comboBoxStatus.getSelectedItem());
+            tarefa.setPrioridade((Prioridade) comboBoxPrioridade.getSelectedItem());
+
+            GerenciadorInterface.getMyInstance().getDominio().alterarTarefa(tarefa);
+
+            JOptionPane.showMessageDialog(null, "Tarefa editada com sucesso!");
+
+            carregarTabela();
+            limparCampos();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
+        carregarTabela();
+    }//GEN-LAST:event_btnListarActionPerformed
+
+    private void listEquipesComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_listEquipesComponentShown
+
+    }//GEN-LAST:event_listEquipesComponentShown
+
+    private void verificarCampos() {
+        boolean nomePreenchido = !txtNomeTarefa.getText().trim().isEmpty();
+        boolean dtInicioPreenchida = !txtDtInicio.getText().trim().isEmpty();
+        boolean dtLimitePreenchida = !txtDtLimite.getText().trim().isEmpty();
+
+        boolean categoriaSelecionada = comboBoxCategoria.getSelectedIndex() >= 0;
+        boolean statusSelecionado = comboBoxStatus.getSelectedIndex() >= 0;
+        boolean prioridadeSelecionada = comboBoxPrioridade.getSelectedIndex() >= 0;
+
+        boolean equipeSelecionada = !listEquipes.isSelectionEmpty();
+
+        btnSalvarTarefa.setEnabled(nomePreenchido && dtInicioPreenchida && dtLimitePreenchida && categoriaSelecionada && statusSelecionado && prioridadeSelecionada && equipeSelecionada);
     }
 
     private void limparCampos() {
         txtNomeTarefa.setText("");
         txtDtLimite.setText("");
+        txtDtInicio.setText("");
 
         comboBoxCategoria.setSelectedIndex(-1);
         comboBoxStatus.setSelectedIndex(-1);
@@ -424,27 +580,63 @@ public class DlgJanTarefa extends javax.swing.JDialog {
         listEquipes.clearSelection();
     }
 
-    private void editar() {
-        int linha = tabelaListarTarefa.getSelectedRow();
+    private void carregarComboCategorias(List<Categoria> listaCategorias) {
+        comboBoxCategoria.removeAllItems();
 
-        if (linha >= 0) {
-            txtNomeTarefa.setText(tabelaListarTarefa.getValueAt(linha, 0).toString());
+        for (Categoria categoria : listaCategorias) {
+            comboBoxCategoria.addItem(categoria);
+        }
+    }
 
-            String equipe = tabelaListarTarefa.getValueAt(linha, 1).toString();
-            for (int i = 0; i < listEquipes.getModel().getSize(); i++) {
-                String item = listEquipes.getModel().getElementAt(i);
-                if (equipe.contains(item)) {
-                    listEquipes.addSelectionInterval(i, i);
+    private void carregarTabela() {
+        try {
+            Tarefa tarefa = new Tarefa();
+
+            List<Tarefa> lista = GerenciadorInterface.getMyInstance().getDominio().listarTarefa();
+
+            tblModelTarefa.setLista(lista);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
+        }
+    }
+
+    private void carregarEquipes() {
+        try {
+            List<Equipe> equipes = GerenciadorInterface.getMyInstance()
+                    .getDominio()
+                    .listarEquipes();
+
+            DefaultListModel<Equipe> model = new DefaultListModel<>();
+
+            for (Equipe e : equipes) {
+                model.addElement(e);
+            }
+
+            listEquipes.setModel(model);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao carregar equipes: " + e.getMessage());
+        }
+    }
+
+    private void selecionarEquipes(List<Equipe> equipesTarefa) {
+        DefaultListModel<Equipe> model = (DefaultListModel<Equipe>) listEquipes.getModel();
+        List<Integer> indices = new ArrayList<>();
+
+        for (int i = 0; i < model.getSize(); i++) {
+            Equipe e = model.getElementAt(i);
+
+            for (Equipe eq : equipesTarefa) {
+                if (e.getId() == eq.getId()) {
+                    indices.add(i);
+                    break;
                 }
             }
-            comboBoxPrioridade.setSelectedItem(tabelaListarTarefa.getValueAt(linha, 2).toString());
-            txtDtLimite.setText(tabelaListarTarefa.getValueAt(linha, 3).toString());
-            comboBoxCategoria.setSelectedItem(tabelaListarTarefa.getValueAt(linha, 4).toString());
-            comboBoxStatus.setSelectedItem(tabelaListarTarefa.getValueAt(linha, 5).toString());
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione uma linha para excluir!");
         }
+
+        int[] array = indices.stream().mapToInt(i -> i).toArray();
+        listEquipes.setSelectedIndices(array);
     }
 
     public static void main(String args[]) {
@@ -489,20 +681,23 @@ public class DlgJanTarefa extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAlterar;
+    private javax.swing.JButton btnListar;
     private javax.swing.JButton btnSalvarTarefa;
     private javax.swing.JButton btnVoltarJanTarefa;
     private javax.swing.JComboBox<Object> comboBoxCategoria;
     private javax.swing.JComboBox<Object> comboBoxPrioridade;
-    private javax.swing.JComboBox<Object> comboBoxStatus;
+    private javax.swing.JComboBox<String> comboBoxStatus;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel labelCategoria;
+    private javax.swing.JLabel labelDtInicio;
     private javax.swing.JLabel labelDtLimite;
     private javax.swing.JLabel labelEquipe;
     private javax.swing.JLabel labelNomeTarefa;
     private javax.swing.JLabel labelPrioridade;
     private javax.swing.JLabel labelStatus;
-    private javax.swing.JList<String> listEquipes;
+    private javax.swing.JList<Equipe> listEquipes;
     private javax.swing.JMenuItem menuEditar;
     private javax.swing.JMenuItem menuExcluir;
     private javax.swing.JMenuItem menuLimpar;
@@ -512,6 +707,7 @@ public class DlgJanTarefa extends javax.swing.JDialog {
     private javax.swing.JPopupMenu popUpMenu;
     private javax.swing.JPanel tabCadastrar;
     private javax.swing.JTable tabelaListarTarefa;
+    private javax.swing.JFormattedTextField txtDtInicio;
     private javax.swing.JFormattedTextField txtDtLimite;
     private javax.swing.JTextField txtNomeTarefa;
     private javax.swing.JLabel txtTitulo;

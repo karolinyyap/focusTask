@@ -1,31 +1,47 @@
-
 package view;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import controller.GerenciadorInterface;
 import javax.swing.JOptionPane;
-import domain.Categoria;
 import controller.TableModelCategoria;
+import domain.Categoria;
+import domain.Equipe;
+import java.util.List;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
  * @author Karoliny
  */
 public class DlgJanCategoria extends javax.swing.JDialog {
+
     private TableModelCategoria tblModelCategoria;
-    
+
     public DlgJanCategoria(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
-         // Listener do campo nome
-        txtNomeCategoria.addKeyListener(new KeyAdapter() {
+
+        btnSalvarCategoria.setEnabled(false);
+        btnAlterar.setEnabled(false);
+
+        txtNomeCategoria.addActionListener(e -> verificarCampos());
+        txtAreaDescricaoCategorias.getDocument().addDocumentListener(new DocumentListener() {
             @Override
-            public void keyReleased(KeyEvent e) {
+            public void insertUpdate(DocumentEvent e) {
+                verificarCampos();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                verificarCampos();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
                 verificarCampos();
             }
         });
-        
+
         tblModelCategoria = new TableModelCategoria();
         tabelaListarCategoria.setModel(tblModelCategoria);
     }
@@ -47,9 +63,11 @@ public class DlgJanCategoria extends javax.swing.JDialog {
         labelDescricao = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtAreaDescricaoCategorias = new javax.swing.JTextArea();
-        btnSalvarCategoria = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaListarCategoria = new javax.swing.JTable();
+        btnSalvarCategoria = new javax.swing.JButton();
+        btnAlterar = new javax.swing.JButton();
+        btnListar = new javax.swing.JButton();
         btnVoltarJanCategoria = new javax.swing.JButton();
 
         menuLimpar.setText("Limpar");
@@ -116,13 +134,6 @@ public class DlgJanCategoria extends javax.swing.JDialog {
         txtAreaDescricaoCategorias.setRows(5);
         jScrollPane1.setViewportView(txtAreaDescricaoCategorias);
 
-        btnSalvarCategoria.setText("Salvar");
-        btnSalvarCategoria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalvarCategoriaActionPerformed(evt);
-            }
-        });
-
         tabelaListarCategoria.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -134,42 +145,76 @@ public class DlgJanCategoria extends javax.swing.JDialog {
         tabelaListarCategoria.setComponentPopupMenu(popUpMenu);
         jScrollPane2.setViewportView(tabelaListarCategoria);
 
+        btnSalvarCategoria.setText("Salvar");
+        btnSalvarCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarCategoriaActionPerformed(evt);
+            }
+        });
+
+        btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
+
+        btnListar.setText("Listar");
+        btnListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout tabCadastrarLayout = new javax.swing.GroupLayout(tabCadastrar);
         tabCadastrar.setLayout(tabCadastrarLayout);
         tabCadastrarLayout.setHorizontalGroup(
             tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabCadastrarLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2)
-                    .addGroup(tabCadastrarLayout.createSequentialGroup()
-                        .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabCadastrarLayout.createSequentialGroup()
+                            .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txtNomeCategoria)
+                                .addComponent(labelDescricao, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE))
                             .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtNomeCategoria, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(labelNomeTarefa))
-                            .addComponent(btnSalvarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(27, 27, 27)
-                        .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelDescricao)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(tabCadastrarLayout.createSequentialGroup()
+                                    .addGap(18, 18, 18)
+                                    .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(btnAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnListar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGroup(tabCadastrarLayout.createSequentialGroup()
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btnSalvarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(19, 19, 19)))
+                    .addComponent(labelNomeTarefa))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
         tabCadastrarLayout.setVerticalGroup(
             tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabCadastrarLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelNomeTarefa)
-                    .addComponent(labelDescricao))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tabCadastrarLayout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(labelNomeTarefa)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNomeCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSalvarCategoria)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                        .addComponent(labelDescricao)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(tabCadastrarLayout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(btnSalvarCategoria)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAlterar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnListar)))
                 .addGap(19, 19, 19))
         );
 
@@ -219,10 +264,21 @@ public class DlgJanCategoria extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNomeCategoriaActionPerformed
 
     private void btnSalvarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarCategoriaActionPerformed
-        String nomeCategoria = txtNomeCategoria.getText();
-        String descricao = txtAreaDescricaoCategorias.getText();
-        
-        adicionarTabela(nomeCategoria, descricao);
+        try {
+            Categoria cat = new Categoria();
+
+            cat.setNome(txtNomeCategoria.getText());
+            cat.setDescricao(txtAreaDescricaoCategorias.getText());
+
+            GerenciadorInterface.getMyInstance().getDominio().inserirCategoria(cat);
+
+            JOptionPane.showMessageDialog(null, "Categoria salva com sucesso!");
+            carregarTabela();
+            limparCampos();
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao salvar Categoria");
+        }
     }//GEN-LAST:event_btnSalvarCategoriaActionPerformed
 
     private void menuLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLimparActionPerformed
@@ -230,68 +286,105 @@ public class DlgJanCategoria extends javax.swing.JDialog {
     }//GEN-LAST:event_menuLimparActionPerformed
 
     private void menuEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEditarActionPerformed
-        editar();
+        try {
+            btnSalvarCategoria.setEnabled(false);
+            btnAlterar.setEnabled(true);
+            int linha = tabelaListarCategoria.getSelectedRow();
+
+            if (linha == -1) {
+                JOptionPane.showMessageDialog(null, "Selecione uma categoria!");
+                return;
+            }
+
+            Categoria categoria = (Categoria) tblModelCategoria.getCategoria(linha);
+            txtNomeCategoria.setText(categoria.getNome());
+            txtAreaDescricaoCategorias.setText(categoria.getDescricao());
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
+        }
     }//GEN-LAST:event_menuEditarActionPerformed
 
     private void menuExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExcluirActionPerformed
-        excluir();
-    }//GEN-LAST:event_menuExcluirActionPerformed
-
-    private void verificarCampos() {
-        boolean temTexto = !txtNomeCategoria.getText().trim().isEmpty();
-
-        btnSalvarCategoria.setEnabled(temTexto);
-    }
-    
-    private void adicionarTabela(String nomeCategoria, String descricao){
-        
-        Categoria cat = new Categoria();
-        cat.setNomeCat(nomeCategoria);
-        cat.setDescricaoCat(descricao);
-
-        tblModelCategoria.adicionar(cat);
-
-    }
-    
-    private void excluir() {
         int linha = tabelaListarCategoria.getSelectedRow();
 
-        if (linha >= 0) {
-
-            int resposta = JOptionPane.showConfirmDialog(
-                    null,
-                    "Deseja realmente excluir?",
-                    "Confirmar exclusão",
-                    JOptionPane.YES_NO_OPTION
-            );
-
-            if (resposta == JOptionPane.YES_OPTION) {
-                TableModelCategoria modelo = (TableModelCategoria) tabelaListarCategoria.getModel();
-                modelo.remover(linha);
-            }
-
-        } else {
+        if (linha < 0) {
             JOptionPane.showMessageDialog(null, "Selecione uma linha para excluir!");
+            return;
+        }
+
+        int resposta = JOptionPane.showConfirmDialog(
+                null,
+                "Deseja realmente excluir?",
+                "Confirmar exclusão",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (resposta == JOptionPane.YES_OPTION) {
+            try {
+                Categoria cat = (Categoria) tblModelCategoria.getCategoria(linha);
+
+                GerenciadorInterface.getMyInstance().getDominio().excluirCategoria(cat.getId());
+
+                carregarTabela();
+                limparCampos();
+                JOptionPane.showMessageDialog(null, "Categoria excluída com sucesso!");
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao excluir: " + e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_menuExcluirActionPerformed
+
+    private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
+        carregarTabela();
+    }//GEN-LAST:event_btnListarActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        try {
+            int linha = tabelaListarCategoria.getSelectedRow();
+
+            Categoria cat = (Categoria) tblModelCategoria.getCategoria(linha);
+
+            cat.setNome(txtNomeCategoria.getText());
+            cat.setDescricao(txtAreaDescricaoCategorias.getText());
+            GerenciadorInterface.getMyInstance().getDominio().alterarCategoria(cat);
+
+            JOptionPane.showMessageDialog(null, "Categoria editada com sucesso!");
+            carregarTabela();
+            limparCampos();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void verificarCampos() {
+        boolean temNome = !txtNomeCategoria.getText().trim().isEmpty();
+        boolean temDesc = !txtAreaDescricaoCategorias.getText().trim().isEmpty();
+
+        btnSalvarCategoria.setEnabled(temNome && temDesc);
+    }
+
+    private void carregarTabela() {
+        try {
+            Categoria cat = new Categoria();
+
+            List<Categoria> lista = GerenciadorInterface.getMyInstance().getDominio().listarCategoria();
+
+            tblModelCategoria.setLista(lista);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
         }
     }
-    
+
     private void limparCampos() {
+        btnSalvarCategoria.setEnabled(false);
+        btnAlterar.setEnabled(false);
         txtNomeCategoria.setText("");
         txtAreaDescricaoCategorias.setText("");
     }
-    
-    private void editar() {
-        int linha = tabelaListarCategoria.getSelectedRow();
-        
-        if (linha >= 0){
-            txtNomeCategoria.setText(tabelaListarCategoria.getValueAt(linha, 0).toString());
-            txtAreaDescricaoCategorias.setText(tabelaListarCategoria.getValueAt(linha, 1).toString());
-            
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione uma linha para excluir!");
-        }
-    }
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -333,6 +426,8 @@ public class DlgJanCategoria extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAlterar;
+    private javax.swing.JButton btnListar;
     private javax.swing.JButton btnSalvarCategoria;
     private javax.swing.JButton btnVoltarJanCategoria;
     private javax.swing.JScrollPane jScrollPane1;

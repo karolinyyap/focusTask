@@ -1,26 +1,49 @@
 
 package domain;
 
+import jakarta.persistence.*;
 import java.util.Date;
 
 /**
  *
  * @author Karoliny
  */
+@Entity
+@Table
 public class Usuario {
-    private int idUsuario;
-    private String nomeUsuario;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    
+    @Column
+    private String nome;
+    
+    @Column
     private String cpf;
+    
+    @Column
     private String email;
+    
+    @Column
     private String sexo;
+    
+    @Column
     private Date dtNascimento;
+    
+    @Column
     private String telefone;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_equipe")
     private Equipe equipe;
+    
+    @Column
     private String senha;
 
-    public Usuario(int idUsuario, String nomeUsuario, String cpf, String email, String sexo, Date dtNascimento, String telefone, Equipe equipe, String senha) {
-        this.idUsuario = idUsuario;
-        this.nomeUsuario = nomeUsuario;
+    public Usuario(int id, String nome, String cpf, String email, String sexo, Date dtNascimento, String telefone, Equipe equipe, String senha) {
+        this.id = id;
+        this.nome = nome;
         this.cpf = cpf;
         this.email = email;
         this.sexo = sexo;
@@ -33,12 +56,12 @@ public class Usuario {
     public Usuario() {
     }
 
-    public int getIdUsuario() {
-        return idUsuario;
+    public int getId() {
+        return id;
     }
 
-    public String getNomeUsuario() {
-        return nomeUsuario;
+    public String getNome() {
+        return nome;
     }
 
     public String getCpf() {
@@ -69,12 +92,12 @@ public class Usuario {
         return senha;
     }
 
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setNomeUsuario(String nomeUsuario) {
-        this.nomeUsuario = nomeUsuario;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public void setCpf(String cpf) {

@@ -29,8 +29,8 @@ public class TableModelCategoria extends AbstractTableModel{
         Categoria categoria = (Categoria) listaCategorias.get(rowIndex);
         
         switch (columnIndex) {
-            case 0: return categoria.getNomeCat();
-            case 1: return categoria.getDescricaoCat();
+            case 0: return categoria.getNome();
+            case 1: return categoria.getDescricao();
         }
         
         return null;
@@ -42,7 +42,7 @@ public class TableModelCategoria extends AbstractTableModel{
         return nomes[column];
     }
     
-    public Object getTarefa (int rowIndex){
+    public Object getCategoria (int rowIndex){
         return listaCategorias.get(rowIndex);
     }
     
