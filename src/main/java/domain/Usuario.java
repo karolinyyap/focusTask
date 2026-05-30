@@ -39,7 +39,7 @@ public class Usuario {
     @JoinColumn(name = "id_equipe")
     private Equipe equipe;
     
-    @OneToMany(mappedBy = "id.usuario", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "id.usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<UsuarioEquipe> historicoEquipes;
     
     @Column

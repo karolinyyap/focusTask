@@ -306,34 +306,34 @@ public class DlgJanCategoria extends javax.swing.JDialog {
     }//GEN-LAST:event_menuEditarActionPerformed
 
     private void menuExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExcluirActionPerformed
-        int linha = tabelaListarCategoria.getSelectedRow();
-
-        if (linha < 0) {
-            JOptionPane.showMessageDialog(null, "Selecione uma linha para excluir!");
-            return;
-        }
-
-        int resposta = JOptionPane.showConfirmDialog(
-                null,
-                "Deseja realmente excluir?",
-                "Confirmar exclusão",
-                JOptionPane.YES_NO_OPTION
-        );
-
-        if (resposta == JOptionPane.YES_OPTION) {
-            try {
-                Categoria cat = (Categoria) tblModelCategoria.getCategoria(linha);
-
-                GerenciadorInterface.getMyInstance().getDominio().excluirCategoria(cat.getId());
-
-                carregarTabela();
-                limparCampos();
-                JOptionPane.showMessageDialog(null, "Categoria excluída com sucesso!");
-
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro ao excluir: " + e.getMessage());
-            }
-        }
+//        int linha = tabelaListarCategoria.getSelectedRow();
+//
+//        if (linha < 0) {
+//            JOptionPane.showMessageDialog(null, "Selecione uma linha para excluir!");
+//            return;
+//        }
+//
+//        int resposta = JOptionPane.showConfirmDialog(
+//                null,
+//                "Deseja realmente excluir?",
+//                "Confirmar exclusão",
+//                JOptionPane.YES_NO_OPTION
+//        );
+//
+//        if (resposta == JOptionPane.YES_OPTION) {
+//            try {
+//                Categoria cat = (Categoria) tblModelCategoria.getCategoria(linha);
+//
+//                GerenciadorInterface.getMyInstance().getDominio().excluirCategoria(cat.getId());
+//
+//                carregarTabela();
+//                limparCampos();
+//                JOptionPane.showMessageDialog(null, "Categoria excluída com sucesso!");
+//
+//            } catch (Exception e) {
+//                JOptionPane.showMessageDialog(null, "Erro ao excluir: " + e.getMessage());
+//            }
+//        }
     }//GEN-LAST:event_menuExcluirActionPerformed
 
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
@@ -341,21 +341,21 @@ public class DlgJanCategoria extends javax.swing.JDialog {
     }//GEN-LAST:event_btnListarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        try {
-            int linha = tabelaListarCategoria.getSelectedRow();
-
-            Categoria cat = (Categoria) tblModelCategoria.getCategoria(linha);
-
-            cat.setNome(txtNomeCategoria.getText());
-            cat.setDescricao(txtAreaDescricaoCategorias.getText());
-            GerenciadorInterface.getMyInstance().getDominio().alterarCategoria(cat);
-
-            JOptionPane.showMessageDialog(null, "Categoria editada com sucesso!");
-            carregarTabela();
-            limparCampos();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
-        }
+//        try {
+//            int linha = tabelaListarCategoria.getSelectedRow();
+//
+//            Categoria cat = (Categoria) tblModelCategoria.getCategoria(linha);
+//
+//            cat.setNome(txtNomeCategoria.getText());
+//            cat.setDescricao(txtAreaDescricaoCategorias.getText());
+//            GerenciadorInterface.getMyInstance().getDominio().alterarCategoria(cat);
+//
+//            JOptionPane.showMessageDialog(null, "Categoria editada com sucesso!");
+//            carregarTabela();
+//            limparCampos();
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
+//        }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void verificarCampos() {
@@ -369,7 +369,7 @@ public class DlgJanCategoria extends javax.swing.JDialog {
         try {
             Categoria cat = new Categoria();
 
-            List<Categoria> lista = GerenciadorInterface.getMyInstance().getDominio().listarCategoria();
+            List<Categoria> lista = GerenciadorInterface.getMyInstance().getDominio().listarCategorias();
 
             tblModelCategoria.setLista(lista);
 

@@ -26,10 +26,10 @@ public class TableModelTarefa extends AbstractTableModel{
         
         switch (columnIndex) {
             case 0: return tarefa.getNome();
-            case 1: return tarefa.getCategoria();
-            case 2: return tarefa.getDataLimite();
-            case 3: return tarefa.getEquipes();
-            case 4: return tarefa.getPrioridade();
+            case 1: return tarefa.getEquipes();
+            case 2: return tarefa.getPrioridade();
+            case 3: return tarefa.getDataLimite();
+            case 4: return tarefa.getCategoria();
             case 5: return tarefa.getStatus();
         }
         

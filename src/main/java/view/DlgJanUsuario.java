@@ -21,16 +21,8 @@ public class DlgJanUsuario extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
-        try {
-            List<Equipe> lista = GerenciadorInterface.getMyInstance().getDominio().listarEquipes();
-            carregarComboEquipes(lista);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Erro ao carregar equipes");
-        } catch (ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao carregar classe");
-        }
+        List<Equipe> lista = GerenciadorInterface.getMyInstance().getDominio().listarEquipes();
+        carregarComboEquipes(lista);
 
         btnSalvarUsuario.setEnabled(false);
         btnEditarUsuario.setEnabled(false);
@@ -463,7 +455,7 @@ public class DlgJanUsuario extends javax.swing.JDialog {
             if (!senha.equals(confSenha)) {
                 JOptionPane.showMessageDialog(null, "As senhas não coincidem!");
             } else {
-                usuario.setSenha(txtSenha.getText());
+                usuario.setSenha(new String(txtSenha.getPassword()));
             }
 
             usuario.setDtNascimento(strToDate(txtDataNascimento.getText()));
@@ -487,37 +479,37 @@ public class DlgJanUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_comboBoxEquipeActionPerformed
 
     private void btnEditarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarUsuarioActionPerformed
-        try {
-            Usuario usuario = usuarioSelecionado;
-
-            usuario.setNome(txtNome.getText());
-            usuario.setCpf(txtCPF.getText());
-            usuario.setEmail(txtEmail.getText());
-            String sexo = null;
-
-            if (radioBtnFeminino.isSelected()) {
-                sexo = "F";
-            } else if (radioBtnMasculino.isSelected()) {
-                sexo = "M";
-            } else if (radioBtnNaoDizer.isSelected()) {
-                sexo = "ND";
-            }
-            usuario.setSexo(sexo);
-            usuario.setTelefone(txtTelefone.getText());
-            usuario.setDtNascimento(strToDate(txtDataNascimento.getText()));
-
-            Equipe equipe = (Equipe) comboBoxEquipe.getSelectedItem();
-            usuario.setEquipe(equipe);
-
-            GerenciadorInterface.getMyInstance().getDominio().alterarUsuario(usuario);
-
-            JOptionPane.showMessageDialog(null, "Usuário editado com sucesso!");
-            limparCampos();
-            btnEditarUsuario.setEnabled(false);
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Erro ao editar usuário");
-        }
+//        try {
+//            Usuario usuario = usuarioSelecionado;
+//
+//            usuario.setNome(txtNome.getText());
+//            usuario.setCpf(txtCPF.getText());
+//            usuario.setEmail(txtEmail.getText());
+//            String sexo = null;
+//
+//            if (radioBtnFeminino.isSelected()) {
+//                sexo = "F";
+//            } else if (radioBtnMasculino.isSelected()) {
+//                sexo = "M";
+//            } else if (radioBtnNaoDizer.isSelected()) {
+//                sexo = "ND";
+//            }
+//            usuario.setSexo(sexo);
+//            usuario.setTelefone(txtTelefone.getText());
+//            usuario.setDtNascimento(strToDate(txtDataNascimento.getText()));
+//
+//            Equipe equipe = (Equipe) comboBoxEquipe.getSelectedItem();
+//            usuario.setEquipe(equipe);
+//
+//            GerenciadorInterface.getMyInstance().getDominio().alterarUsuario(usuario);
+//
+//            JOptionPane.showMessageDialog(null, "Usuário editado com sucesso!");
+//            limparCampos();
+//            btnEditarUsuario.setEnabled(false);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            JOptionPane.showMessageDialog(null, "Erro ao editar usuário");
+//        }
     }//GEN-LAST:event_btnEditarUsuarioActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
@@ -525,71 +517,71 @@ public class DlgJanUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnPesquisarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarUsuarioActionPerformed
-        try {
-
-            String nomeConf = txtNome.getText().trim();
-
-            if (nomeConf.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Digite um nome!");
-                return;
-            }
-
-            if (!nomeConf.matches("[a-zA-ZÀ-ÿ ]+")) {
-                JOptionPane.showMessageDialog(null, "Nome inválido! Digite apenas letras.");
-                return;
-            }
-
-            btnExcluirUsuario.setEnabled(true);
-            btnEditarUsuario.setEnabled(true);
-            String nome = txtNome.getText();
-
-            List<Usuario> lista = GerenciadorInterface.getMyInstance().getDominio().pesquisarUsuario(nome);
-
-            if (lista.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Usuário não encontrado!");
-                return;
-            }
-
-            usuarioSelecionado = lista.get(0);
-            preencherCampos(usuarioSelecionado);
-            btnSalvarUsuario.setEnabled(false);
-            btnEditarUsuario.setEnabled(true);
-
-            txtSenha.setEnabled(false);
-            txtConfSenha.setEnabled(false);
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao pesquisar: " + e.getMessage());
-        }
+//        try {
+//
+//            String nomeConf = txtNome.getText().trim();
+//
+//            if (nomeConf.isEmpty()) {
+//                JOptionPane.showMessageDialog(null, "Digite um nome!");
+//                return;
+//            }
+//
+//            if (!nomeConf.matches("[a-zA-ZÀ-ÿ ]+")) {
+//                JOptionPane.showMessageDialog(null, "Nome inválido! Digite apenas letras.");
+//                return;
+//            }
+//
+//            btnExcluirUsuario.setEnabled(true);
+//            btnEditarUsuario.setEnabled(true);
+//            String nome = txtNome.getText();
+//
+//            List<Usuario> lista = GerenciadorInterface.getMyInstance().getDominio().pesquisarUsuario(nome);
+//
+//            if (lista.isEmpty()) {
+//                JOptionPane.showMessageDialog(null, "Usuário não encontrado!");
+//                return;
+//            }
+//
+//            usuarioSelecionado = lista.get(0);
+//            preencherCampos(usuarioSelecionado);
+//            btnSalvarUsuario.setEnabled(false);
+//            btnEditarUsuario.setEnabled(true);
+//
+//            txtSenha.setEnabled(false);
+//            txtConfSenha.setEnabled(false);
+//
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, "Erro ao pesquisar: " + e.getMessage());
+//        }
 
     }//GEN-LAST:event_btnPesquisarUsuarioActionPerformed
 
     private void btnExcluirUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirUsuarioActionPerformed
-        try {
-            int resposta = JOptionPane.showConfirmDialog(
-                    null,
-                    "Deseja realmente excluir este usuário?",
-                    "Confirmação",
-                    JOptionPane.YES_NO_OPTION
-            );
-
-            if (resposta == JOptionPane.YES_OPTION) {
-
-                GerenciadorInterface.getMyInstance().getDominio().excluirUsuario(usuarioSelecionado.getId());
-
-                JOptionPane.showMessageDialog(null, "Usuário excluído com sucesso!");
-
-                limparCampos();
-                usuarioSelecionado = null;
-
-                btnEditarUsuario.setEnabled(false);
-                btnSalvarUsuario.setEnabled(false);
-                btnExcluirUsuario.setEnabled(false);
-            }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao excluir: " + e.getMessage());
-        }
+//        try {
+//            int resposta = JOptionPane.showConfirmDialog(
+//                    null,
+//                    "Deseja realmente excluir este usuário?",
+//                    "Confirmação",
+//                    JOptionPane.YES_NO_OPTION
+//            );
+//
+//            if (resposta == JOptionPane.YES_OPTION) {
+//
+//                GerenciadorInterface.getMyInstance().getDominio().excluirUsuario(usuarioSelecionado.getId());
+//
+//                JOptionPane.showMessageDialog(null, "Usuário excluído com sucesso!");
+//
+//                limparCampos();
+//                usuarioSelecionado = null;
+//
+//                btnEditarUsuario.setEnabled(false);
+//                btnSalvarUsuario.setEnabled(false);
+//                btnExcluirUsuario.setEnabled(false);
+//            }
+//
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, "Erro ao excluir: " + e.getMessage());
+//        }
     }//GEN-LAST:event_btnExcluirUsuarioActionPerformed
 
     private void verificarCampos() {
@@ -609,7 +601,7 @@ public class DlgJanUsuario extends javax.swing.JDialog {
         boolean temSexo = radioBtnFeminino.isSelected()
                 || radioBtnMasculino.isSelected()
                 || radioBtnNaoDizer.isSelected();
-        boolean temEquipe = comboBoxEquipe.getSelectedIndex() > 0;
+        boolean temEquipe = comboBoxEquipe.getSelectedIndex() >= 0;
 
         btnSalvarUsuario.setEnabled(temNome && temEmail && temDtNascimento && temTelefone && temcpf && temSenha && temConfSenha && temEquipe && temSexo && senhasIguais);
     }
@@ -623,7 +615,7 @@ public class DlgJanUsuario extends javax.swing.JDialog {
         txtConfSenha.setText("");
         txtDataNascimento.setText("");
         btnGroupSexo.clearSelection();
-        comboBoxEquipe.setSelectedIndex(-1);
+        comboBoxEquipe.setSelectedIndex(0);
 
         txtSenha.setEnabled(true);
         txtConfSenha.setEnabled(true);

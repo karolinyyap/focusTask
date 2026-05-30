@@ -286,34 +286,34 @@ public class DlgJanEquipe extends javax.swing.JDialog {
     }//GEN-LAST:event_menuEditarActionPerformed
 
     private void menuExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExcluirActionPerformed
-        int linha = tableEquipe.getSelectedRow();
-
-        if (linha < 0) {
-            JOptionPane.showMessageDialog(null, "Selecione uma linha para excluir!");
-            return;
-        }
-
-        int resposta = JOptionPane.showConfirmDialog(
-                null,
-                "Deseja realmente excluir?",
-                "Confirmar exclusão",
-                JOptionPane.YES_NO_OPTION
-        );
-
-        if (resposta == JOptionPane.YES_OPTION) {
-            try {
-                Equipe equipe = (Equipe) tblModelEquipe.getEquipe(linha);
-
-                GerenciadorInterface.getMyInstance().getDominio().excluirEquipe(equipe.getId());
-
-                carregarTabela();
-                limparCampos();
-                JOptionPane.showMessageDialog(null, "Equipe excluída com sucesso!");
-
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro ao excluir: " + e.getMessage());
-            }
-        }
+//        int linha = tableEquipe.getSelectedRow();
+//
+//        if (linha < 0) {
+//            JOptionPane.showMessageDialog(null, "Selecione uma linha para excluir!");
+//            return;
+//        }
+//
+//        int resposta = JOptionPane.showConfirmDialog(
+//                null,
+//                "Deseja realmente excluir?",
+//                "Confirmar exclusão",
+//                JOptionPane.YES_NO_OPTION
+//        );
+//
+//        if (resposta == JOptionPane.YES_OPTION) {
+//            try {
+//                Equipe equipe = (Equipe) tblModelEquipe.getEquipe(linha);
+//
+//                GerenciadorInterface.getMyInstance().getDominio().excluirEquipe(equipe.getId());
+//
+//                carregarTabela();
+//                limparCampos();
+//                JOptionPane.showMessageDialog(null, "Equipe excluída com sucesso!");
+//
+//            } catch (Exception e) {
+//                JOptionPane.showMessageDialog(null, "Erro ao excluir: " + e.getMessage());
+//            }
+//        }
     }//GEN-LAST:event_menuExcluirActionPerformed
 
     private void btnListarEquipesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarEquipesActionPerformed
@@ -321,21 +321,21 @@ public class DlgJanEquipe extends javax.swing.JDialog {
     }//GEN-LAST:event_btnListarEquipesActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        try {
-            int linha = tableEquipe.getSelectedRow();
-
-            Equipe equipe = (Equipe) tblModelEquipe.getEquipe(linha);
-
-            equipe.setNome(txtNomeEquipe.getText());
-            equipe.setSetor(comboBoxSetor.getSelectedItem().toString());
-            GerenciadorInterface.getMyInstance().getDominio().alterarEquipe(equipe);
-
-            JOptionPane.showMessageDialog(null, "Equipe editada com sucesso!");
-            carregarTabela();
-            limparCampos();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
-        }
+//        try {
+//            int linha = tableEquipe.getSelectedRow();
+//
+//            Equipe equipe = (Equipe) tblModelEquipe.getEquipe(linha);
+//
+//            equipe.setNome(txtNomeEquipe.getText());
+//            equipe.setSetor(comboBoxSetor.getSelectedItem().toString());
+//            GerenciadorInterface.getMyInstance().getDominio().alterarEquipe(equipe);
+//
+//            JOptionPane.showMessageDialog(null, "Equipe editada com sucesso!");
+//            carregarTabela();
+//            limparCampos();
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
+//        }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void comboBoxSetorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_comboBoxSetorKeyReleased

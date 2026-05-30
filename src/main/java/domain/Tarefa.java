@@ -22,7 +22,7 @@ public class Tarefa {
     @Column
     private Date dataLimite;
 
-    @OneToMany(mappedBy = "id.tarefa", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "id.tarefa", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Alocacao> alocacoes;
 
     @ManyToOne

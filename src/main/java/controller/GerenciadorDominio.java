@@ -33,88 +33,35 @@ public class GerenciadorDominio {
     }
 
     //------------------USUÁRIO
-    public void inserirUsuario(Usuario usu) throws ClassNotFoundException, SQLException {
-        UsuarioDAO dao = new UsuarioDAO();
-        dao.inserir(usu);
-    }
-    
-    public void alterarUsuario(Usuario usu) throws ClassNotFoundException, SQLException {
-        UsuarioDAO dao = new UsuarioDAO();
-        dao.alterar(usu);
-    }
-    
-    public List<Usuario> pesquisarUsuario(String nome) throws ClassNotFoundException, SQLException {
-        UsuarioDAO dao = new UsuarioDAO();
-        return dao.pesquisarPorNome(nome);
-    }
-    
-    public void excluirUsuario(int idUsu) throws ClassNotFoundException, SQLException {
-        UsuarioDAO dao = new UsuarioDAO();
-        dao.excluir(idUsu);
+    public void inserirUsuario(Usuario usu) {
+        usuarioDAO.inserir(usu);
     }
 
     //------------------EQUIPE
-    public void inserirEquipe(Equipe equ) throws SQLException, ClassNotFoundException {
-        EquipeDAO dao = new EquipeDAO();
-        dao.inserir(equ);
+    public void inserirEquipe(Equipe equ) {
+        equipeDAO.inserir(equ);
     }
 
-    public void alterarEquipe(Equipe equ) throws SQLException, ClassNotFoundException {
-        EquipeDAO dao = new EquipeDAO();
-        dao.alterar(equ);
+    public List<Equipe> listarEquipes() {
+        return equipeDAO.listar();
     }
 
-    public void excluirEquipe(int idEquipe) throws SQLException, ClassNotFoundException {
-        EquipeDAO dao = new EquipeDAO();
-        dao.excluir(idEquipe);
-    }
-    
-    public List<Equipe> listarEquipes() throws SQLException, ClassNotFoundException {
-        EquipeDAO dao = new EquipeDAO();
-        return dao.listar();
-    }
-    
     //------------------CATEGORIA
+    public void inserirCategoria(Categoria cat) {
+        categoriaDAO.inserir(cat);
+    }
     
-    public void inserirCategoria(Categoria cat) throws SQLException, ClassNotFoundException {
-        CategoriaDAO dao = new CategoriaDAO();
-        dao.inserir(cat);
+    public List<Categoria> listarCategorias() {
+        return categoriaDAO.listar();
     }
 
-    public void alterarCategoria(Categoria cat) throws SQLException, ClassNotFoundException {
-        CategoriaDAO dao = new CategoriaDAO();
-        dao.alterar(cat);
-    }
-
-    public void excluirCategoria(int idCategoria) throws SQLException, ClassNotFoundException {
-        CategoriaDAO dao = new CategoriaDAO();
-        dao.excluir(idCategoria);
-    }
-    
-    public List<Categoria> listarCategoria() throws SQLException, ClassNotFoundException {
-        CategoriaDAO dao = new CategoriaDAO();
-        return dao.listar();
-    }
-    
     //------------------TAREFA
-    
-    public void inserirTarefa(Tarefa tarefa) throws SQLException, ClassNotFoundException {
-        TarefaDAO dao = new TarefaDAO();
-        dao.inserir(tarefa);
-    }
-
-    public void alterarTarefa(Tarefa tarefa) throws SQLException, ClassNotFoundException {
-        TarefaDAO dao = new TarefaDAO();
-        dao.alterar(tarefa);
-    }
-
-    public void excluirTarefa(int idTarefa) throws SQLException, ClassNotFoundException {
-        TarefaDAO dao = new TarefaDAO();
-        dao.excluir(idTarefa);
+    public void inserirTarefa(Tarefa tarefa) {
+        tarefaDAO.inserir(tarefa);
     }
     
-    public List<Tarefa> listarTarefa() throws SQLException, ClassNotFoundException {
-        TarefaDAO dao = new TarefaDAO();
-        return dao.listar();
+    public List<Tarefa> listarTarefas() {
+        return tarefaDAO.listar();
     }
+
 }

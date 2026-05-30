@@ -1,6 +1,5 @@
 package view;
 
-import static controller.FuncoesUteis.dateToStr;
 import static controller.FuncoesUteis.strToDate;
 import controller.GerenciadorInterface;
 import java.util.List;
@@ -13,7 +12,6 @@ import domain.Categoria;
 import domain.Equipe;
 import domain.Prioridade;
 import domain.Status;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 
@@ -32,16 +30,11 @@ public class DlgJanTarefa extends javax.swing.JDialog {
         btnSalvarTarefa.setEnabled(true);
         carregarEquipes();
 
-        try {
-            List<Categoria> lista = GerenciadorInterface.getMyInstance().getDominio().listarCategoria();
-            carregarComboCategorias(lista);
+        carregarComboStatus();
+        carregarComboPrioridade();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Erro ao carregar Categoria");
-        } catch (ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao carregar classe");
-        }
+        List<Categoria> lista = GerenciadorInterface.getMyInstance().getDominio().listarCategorias();
+        carregarComboCategorias(lista);
 
         tblModelTarefa = new TableModelTarefa();
         tabelaListarTarefa.setModel(tblModelTarefa);
@@ -428,35 +421,35 @@ public class DlgJanTarefa extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNomeTarefaActionPerformed
 
     private void menuExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExcluirActionPerformed
-        try {
-            int linha = tabelaListarTarefa.getSelectedRow();
-
-            if (linha == -1) {
-                JOptionPane.showMessageDialog(null, "Selecione uma tarefa!");
-                return;
-            }
-
-            Tarefa tarefa = (Tarefa) tblModelTarefa.getTarefa(linha);
-
-            int confirm = JOptionPane.showConfirmDialog(
-                    null,
-                    "Deseja excluir a tarefa \"" + tarefa.getNome() + "\"?",
-                    "Confirmar Exclusão",
-                    JOptionPane.YES_NO_OPTION
-            );
-
-            if (confirm == JOptionPane.YES_OPTION) {
-                GerenciadorInterface.getMyInstance().getDominio().excluirTarefa(tarefa.getId());
-
-                JOptionPane.showMessageDialog(null, "Tarefa excluída com sucesso!");
-
-                carregarTabela();
-                limparCampos();
-            }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
-        }
+//        try {
+//            int linha = tabelaListarTarefa.getSelectedRow();
+//
+//            if (linha == -1) {
+//                JOptionPane.showMessageDialog(null, "Selecione uma tarefa!");
+//                return;
+//            }
+//
+//            Tarefa tarefa = (Tarefa) tblModelTarefa.getTarefa(linha);
+//
+//            int confirm = JOptionPane.showConfirmDialog(
+//                    null,
+//                    "Deseja excluir a tarefa \"" + tarefa.getNome() + "\"?",
+//                    "Confirmar Exclusão",
+//                    JOptionPane.YES_NO_OPTION
+//            );
+//
+//            if (confirm == JOptionPane.YES_OPTION) {
+//                GerenciadorInterface.getMyInstance().getDominio().excluirTarefa(tarefa.getId());
+//
+//                JOptionPane.showMessageDialog(null, "Tarefa excluída com sucesso!");
+//
+//                carregarTabela();
+//                limparCampos();
+//            }
+//
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
+//        }
     }//GEN-LAST:event_menuExcluirActionPerformed
 
     private void menuLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLimparActionPerformed
@@ -464,33 +457,33 @@ public class DlgJanTarefa extends javax.swing.JDialog {
     }//GEN-LAST:event_menuLimparActionPerformed
 
     private void menuEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEditarActionPerformed
-        try {
-            btnSalvarTarefa.setEnabled(false);
-            btnAlterar.setEnabled(true);
-
-            int linha = tabelaListarTarefa.getSelectedRow();
-
-            if (linha == -1) {
-                JOptionPane.showMessageDialog(null, "Selecione uma tarefa!");
-                return;
-            }
-
-            Tarefa tarefa = (Tarefa) tblModelTarefa.getTarefa(linha);
-
-            txtNomeTarefa.setText(tarefa.getNome());
-            txtDtInicio.setText(dateToStr(tarefa.getDataInicio()));
-            txtDtLimite.setText(dateToStr(tarefa.getDataLimite()));
-
-            List<Equipe> equipes = tarefa.getEquipes();
-            selecionarEquipes(equipes);
-
-            comboBoxCategoria.setSelectedItem(tarefa.getCategoria());
-            comboBoxStatus.setSelectedItem(tarefa.getStatus());
-            comboBoxPrioridade.setSelectedItem(tarefa.getPrioridade());
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
-        }
+//        try {
+//            btnSalvarTarefa.setEnabled(false);
+//            btnAlterar.setEnabled(true);
+//
+//            int linha = tabelaListarTarefa.getSelectedRow();
+//
+//            if (linha == -1) {
+//                JOptionPane.showMessageDialog(null, "Selecione uma tarefa!");
+//                return;
+//            }
+//
+//            Tarefa tarefa = (Tarefa) tblModelTarefa.getTarefa(linha);
+//
+//            txtNomeTarefa.setText(tarefa.getNome());
+//            txtDtInicio.setText(dateToStr(tarefa.getDataInicio()));
+//            txtDtLimite.setText(dateToStr(tarefa.getDataLimite()));
+//
+//            List<Equipe> equipes = tarefa.getEquipes();
+//            selecionarEquipes(equipes);
+//
+//            comboBoxCategoria.setSelectedItem(tarefa.getCategoria());
+//            comboBoxStatus.setSelectedItem(tarefa.getStatus());
+//            comboBoxPrioridade.setSelectedItem(tarefa.getPrioridade());
+//
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
+//        }
     }//GEN-LAST:event_menuEditarActionPerformed
 
     private void txtDtInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDtInicioActionPerformed
@@ -498,52 +491,52 @@ public class DlgJanTarefa extends javax.swing.JDialog {
     }//GEN-LAST:event_txtDtInicioActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        try {
-            int linha = tabelaListarTarefa.getSelectedRow();
-
-            if (linha == -1) {
-                JOptionPane.showMessageDialog(null, "Selecione uma tarefa!");
-                return;
-            }
-
-            Tarefa tarefa = (Tarefa) tblModelTarefa.getTarefa(linha);
-
-            tarefa.setNome(txtNomeTarefa.getText());
-            tarefa.setDataInicio(strToDate(txtDtInicio.getText()));
-            tarefa.setDataLimite(strToDate(txtDtLimite.getText()));
-
-            List<Equipe> equipesSelecionadas = listEquipes.getSelectedValuesList();
-
-            List<Alocacao> alocacoes = new ArrayList<>();
-
-            for (Equipe equipe : equipesSelecionadas) {
-
-                AlocacaoPK pk = new AlocacaoPK();
-                pk.setTarefa(tarefa);
-                pk.setEquipe(equipe);
-
-                Alocacao alocacao = new Alocacao();
-                alocacao.setId(pk);
-
-                alocacoes.add(alocacao);
-            }
-
-            tarefa.setAlocacoes(alocacoes);
-
-            tarefa.setCategoria((Categoria) comboBoxCategoria.getSelectedItem());
-            tarefa.setStatus((Status) comboBoxStatus.getSelectedItem());
-            tarefa.setPrioridade((Prioridade) comboBoxPrioridade.getSelectedItem());
-
-            GerenciadorInterface.getMyInstance().getDominio().alterarTarefa(tarefa);
-
-            JOptionPane.showMessageDialog(null, "Tarefa editada com sucesso!");
-
-            carregarTabela();
-            limparCampos();
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
-        }
+//        try {
+//            int linha = tabelaListarTarefa.getSelectedRow();
+//
+//            if (linha == -1) {
+//                JOptionPane.showMessageDialog(null, "Selecione uma tarefa!");
+//                return;
+//            }
+//
+//            Tarefa tarefa = (Tarefa) tblModelTarefa.getTarefa(linha);
+//
+//            tarefa.setNome(txtNomeTarefa.getText());
+//            tarefa.setDataInicio(strToDate(txtDtInicio.getText()));
+//            tarefa.setDataLimite(strToDate(txtDtLimite.getText()));
+//
+//            List<Equipe> equipesSelecionadas = listEquipes.getSelectedValuesList();
+//
+//            List<Alocacao> alocacoes = new ArrayList<>();
+//
+//            for (Equipe equipe : equipesSelecionadas) {
+//
+//                AlocacaoPK pk = new AlocacaoPK();
+//                pk.setTarefa(tarefa);
+//                pk.setEquipe(equipe);
+//
+//                Alocacao alocacao = new Alocacao();
+//                alocacao.setId(pk);
+//
+//                alocacoes.add(alocacao);
+//            }
+//
+//            tarefa.setAlocacoes(alocacoes);
+//
+//            tarefa.setCategoria((Categoria) comboBoxCategoria.getSelectedItem());
+//            tarefa.setStatus((Status) comboBoxStatus.getSelectedItem());
+//            tarefa.setPrioridade((Prioridade) comboBoxPrioridade.getSelectedItem());
+//
+//            GerenciadorInterface.getMyInstance().getDominio().alterarTarefa(tarefa);
+//
+//            JOptionPane.showMessageDialog(null, "Tarefa editada com sucesso!");
+//
+//            carregarTabela();
+//            limparCampos();
+//
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
+//        }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
@@ -590,9 +583,7 @@ public class DlgJanTarefa extends javax.swing.JDialog {
 
     private void carregarTabela() {
         try {
-            Tarefa tarefa = new Tarefa();
-
-            List<Tarefa> lista = GerenciadorInterface.getMyInstance().getDominio().listarTarefa();
+            List<Tarefa> lista = GerenciadorInterface.getMyInstance().getDominio().listarTarefas();
 
             tblModelTarefa.setLista(lista);
 
@@ -637,6 +628,22 @@ public class DlgJanTarefa extends javax.swing.JDialog {
 
         int[] array = indices.stream().mapToInt(i -> i).toArray();
         listEquipes.setSelectedIndices(array);
+    }
+
+    private void carregarComboStatus() {
+        comboBoxStatus.removeAllItems();
+
+        for (Status s : Status.values()) {
+            comboBoxStatus.addItem(s);
+        }
+    }
+
+    private void carregarComboPrioridade() {
+        comboBoxPrioridade.removeAllItems();
+
+        for (Prioridade p : Prioridade.values()) {
+            comboBoxPrioridade.addItem(p);
+        }
     }
 
     public static void main(String args[]) {
@@ -687,7 +694,7 @@ public class DlgJanTarefa extends javax.swing.JDialog {
     private javax.swing.JButton btnVoltarJanTarefa;
     private javax.swing.JComboBox<Object> comboBoxCategoria;
     private javax.swing.JComboBox<Object> comboBoxPrioridade;
-    private javax.swing.JComboBox<String> comboBoxStatus;
+    private javax.swing.JComboBox<Object> comboBoxStatus;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel labelCategoria;

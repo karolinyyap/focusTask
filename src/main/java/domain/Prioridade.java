@@ -10,6 +10,19 @@ public enum Prioridade {
     BAIXA(1, "Baixa"),
     MEDIA(2, "Média"),
     ALTA(3, "Alta");
+    
+    @Override
+    public String toString() {
+        switch(this) {
+            case BAIXA:
+                return "Baixa";
+            case MEDIA:
+                return "Média";
+            case ALTA:
+                return "Alta";
+        }
+        return "";
+    }
 
     private int codigo;
     private String descricao;
