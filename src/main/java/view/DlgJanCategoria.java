@@ -4,10 +4,11 @@ import controller.GerenciadorInterface;
 import javax.swing.JOptionPane;
 import controller.TableModelCategoria;
 import domain.Categoria;
-import domain.Equipe;
+import java.awt.HeadlessException;
 import java.util.List;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import org.hibernate.HibernateException;
 
 /**
  *
@@ -16,6 +17,7 @@ import javax.swing.event.DocumentListener;
 public class DlgJanCategoria extends javax.swing.JDialog {
 
     private TableModelCategoria tblModelCategoria;
+    private int linha;
 
     public DlgJanCategoria(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -265,18 +267,13 @@ public class DlgJanCategoria extends javax.swing.JDialog {
 
     private void btnSalvarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarCategoriaActionPerformed
         try {
-            Categoria cat = new Categoria();
-
-            cat.setNome(txtNomeCategoria.getText());
-            cat.setDescricao(txtAreaDescricaoCategorias.getText());
-
-            GerenciadorInterface.getMyInstance().getDominio().inserirCategoria(cat);
+            GerenciadorInterface.getMyInstance().getDominio().inserirCategoria(txtNomeCategoria.getText(), txtAreaDescricaoCategorias.getText());
 
             JOptionPane.showMessageDialog(null, "Categoria salva com sucesso!");
             carregarTabela();
             limparCampos();
-        } catch (Exception e) {
-            e.printStackTrace();
+
+        } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(null, "Erro ao salvar Categoria");
         }
     }//GEN-LAST:event_btnSalvarCategoriaActionPerformed
@@ -289,7 +286,7 @@ public class DlgJanCategoria extends javax.swing.JDialog {
         try {
             btnSalvarCategoria.setEnabled(false);
             btnAlterar.setEnabled(true);
-            int linha = tabelaListarCategoria.getSelectedRow();
+            linha = tabelaListarCategoria.getSelectedRow();
 
             if (linha == -1) {
                 JOptionPane.showMessageDialog(null, "Selecione uma categoria!");
@@ -300,40 +297,43 @@ public class DlgJanCategoria extends javax.swing.JDialog {
             txtNomeCategoria.setText(categoria.getNome());
             txtAreaDescricaoCategorias.setText(categoria.getDescricao());
 
-        } catch (Exception e) {
+        } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
         }
     }//GEN-LAST:event_menuEditarActionPerformed
 
     private void menuExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExcluirActionPerformed
-//        int linha = tabelaListarCategoria.getSelectedRow();
-//
-//        if (linha < 0) {
-//            JOptionPane.showMessageDialog(null, "Selecione uma linha para excluir!");
-//            return;
-//        }
-//
-//        int resposta = JOptionPane.showConfirmDialog(
-//                null,
-//                "Deseja realmente excluir?",
-//                "Confirmar exclusão",
-//                JOptionPane.YES_NO_OPTION
-//        );
-//
-//        if (resposta == JOptionPane.YES_OPTION) {
-//            try {
-//                Categoria cat = (Categoria) tblModelCategoria.getCategoria(linha);
-//
-//                GerenciadorInterface.getMyInstance().getDominio().excluirCategoria(cat.getId());
-//
-//                carregarTabela();
-//                limparCampos();
-//                JOptionPane.showMessageDialog(null, "Categoria excluída com sucesso!");
-//
-//            } catch (Exception e) {
-//                JOptionPane.showMessageDialog(null, "Erro ao excluir: " + e.getMessage());
-//            }
-//        }
+        try {
+            linha = tabelaListarCategoria.getSelectedRow();
+
+            if (linha == -1) {
+                JOptionPane.showMessageDialog(null, "Selecione uma categoria!");
+                return;
+            }
+
+            TableModelCategoria model = (TableModelCategoria) tabelaListarCategoria.getModel();
+
+            Categoria c = (Categoria) model.getCategoria(linha);
+            int id = c.getId();
+
+            int resposta = JOptionPane.showConfirmDialog(
+                    null,
+                    "Deseja realmente excluir esta categoria?",
+                    "Confirmação",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (resposta == JOptionPane.YES_OPTION) {
+
+                GerenciadorInterface.getMyInstance().getDominio().excluirCategoria(id);
+                JOptionPane.showMessageDialog(null, "Categoria excluída com sucesso!");
+                carregarTabela();
+                limparCampos();
+            }
+
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao excluir categoria");
+        }
     }//GEN-LAST:event_menuExcluirActionPerformed
 
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
@@ -341,21 +341,25 @@ public class DlgJanCategoria extends javax.swing.JDialog {
     }//GEN-LAST:event_btnListarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-//        try {
-//            int linha = tabelaListarCategoria.getSelectedRow();
-//
-//            Categoria cat = (Categoria) tblModelCategoria.getCategoria(linha);
-//
-//            cat.setNome(txtNomeCategoria.getText());
-//            cat.setDescricao(txtAreaDescricaoCategorias.getText());
-//            GerenciadorInterface.getMyInstance().getDominio().alterarCategoria(cat);
-//
-//            JOptionPane.showMessageDialog(null, "Categoria editada com sucesso!");
-//            carregarTabela();
-//            limparCampos();
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
-//        }
+        try {
+            linha = tabelaListarCategoria.getSelectedRow();
+
+            if (linha == -1) {
+                JOptionPane.showMessageDialog(null, "Selecione uma categoria!");
+                return;
+            }
+
+            Categoria categoriaSelecionada = (Categoria) GerenciadorInterface.getMyInstance().getDominio().listar(Categoria.class).get(linha);
+
+            GerenciadorInterface.getMyInstance().getDominio().alterarCategoria(categoriaSelecionada.getId(), txtNomeCategoria.getText(), txtAreaDescricaoCategorias.getText());
+
+            JOptionPane.showMessageDialog(null, "Categoria editada com sucesso!");
+            carregarTabela();
+            limparCampos();
+
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao salvar Categoria");
+        }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void verificarCampos() {
@@ -367,13 +371,11 @@ public class DlgJanCategoria extends javax.swing.JDialog {
 
     private void carregarTabela() {
         try {
-            Categoria cat = new Categoria();
-
-            List<Categoria> lista = GerenciadorInterface.getMyInstance().getDominio().listarCategorias();
+            List<Categoria> lista = GerenciadorInterface.getMyInstance().getDominio().listar(Categoria.class);
 
             tblModelCategoria.setLista(lista);
 
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
         }
     }

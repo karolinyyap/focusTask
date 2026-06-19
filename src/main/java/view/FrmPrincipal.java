@@ -1,4 +1,3 @@
-
 package view;
 
 import controller.GerenciadorInterface;
@@ -9,9 +8,9 @@ import controller.GerenciadorInterface;
  */
 public class FrmPrincipal extends javax.swing.JFrame {
 
- 
     public FrmPrincipal() {
         initComponents();
+
     }
 
     @SuppressWarnings("unchecked")
@@ -28,8 +27,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btnUsuarios = new javax.swing.JButton();
         btnRelatorios = new javax.swing.JButton();
         panelFundoUsuario = new javax.swing.JPanel();
-        btnEntrarPrincipal = new javax.swing.JButton();
-        btnSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("FocusTask");
@@ -165,41 +162,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
         panelFundoUsuario.setBackground(new java.awt.Color(204, 204, 204));
         panelFundoUsuario.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        btnEntrarPrincipal.setBackground(new java.awt.Color(153, 153, 153));
-        btnEntrarPrincipal.setText("Entrar");
-        btnEntrarPrincipal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEntrarPrincipalActionPerformed(evt);
-            }
-        });
-
-        btnSair.setBackground(new java.awt.Color(153, 153, 153));
-        btnSair.setText("Sair");
-        btnSair.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSairActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout panelFundoUsuarioLayout = new javax.swing.GroupLayout(panelFundoUsuario);
         panelFundoUsuario.setLayout(panelFundoUsuarioLayout);
         panelFundoUsuarioLayout.setHorizontalGroup(
             panelFundoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelFundoUsuarioLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(btnEntrarPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
+            .addGap(0, 596, Short.MAX_VALUE)
         );
         panelFundoUsuarioLayout.setVerticalGroup(
             panelFundoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelFundoUsuarioLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(panelFundoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEntrarPrincipal)
-                    .addComponent(btnSair))
-                .addContainerGap())
+            .addGap(0, 35, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -228,14 +199,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnEntrarPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarPrincipalActionPerformed
-        GerenciadorInterface.getMyInstance().abrirLogin();
-    }//GEN-LAST:event_btnEntrarPrincipalActionPerformed
-
-    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSairActionPerformed
-
     private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
         GerenciadorInterface.getMyInstance().abrirRelatorio();
     }//GEN-LAST:event_btnRelatoriosActionPerformed
@@ -263,10 +226,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCategorias;
-    private javax.swing.JButton btnEntrarPrincipal;
     private javax.swing.JButton btnEquipes;
     private javax.swing.JButton btnRelatorios;
-    private javax.swing.JButton btnSair;
     private javax.swing.JButton btnTarefas;
     private javax.swing.JButton btnUsuarios;
     private javax.swing.JPanel fundoBtn;

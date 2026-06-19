@@ -4,7 +4,9 @@ import controller.GerenciadorInterface;
 import javax.swing.JOptionPane;
 import domain.Equipe;
 import controller.TableModelEquipe;
+import java.awt.HeadlessException;
 import java.util.List;
+import org.hibernate.HibernateException;
 
 /**
  *
@@ -13,6 +15,7 @@ import java.util.List;
 public class DlgJanEquipe extends javax.swing.JDialog {
 
     private TableModelEquipe tblModelEquipe;
+    private int linha;
 
     public DlgJanEquipe(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -245,19 +248,14 @@ public class DlgJanEquipe extends javax.swing.JDialog {
 
     private void btnSalvarEquipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarEquipeActionPerformed
         try {
-            Equipe equipe = new Equipe();
-
-            equipe.setNome(txtNomeEquipe.getText());
-            equipe.setSetor(comboBoxSetor.getSelectedItem().toString());
-
-            GerenciadorInterface.getMyInstance().getDominio().inserirEquipe(equipe);
+            GerenciadorInterface.getMyInstance().getDominio().inserirEquipe(txtNomeEquipe.getText(), (String) comboBoxSetor.getSelectedItem());
 
             JOptionPane.showMessageDialog(null, "Equipe salva com sucesso!");
             carregarTabela();
             limparCampos();
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Erro ao salvar equipe");
+
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao salvar Equipe");
         }
     }//GEN-LAST:event_btnSalvarEquipeActionPerformed
 
@@ -280,40 +278,43 @@ public class DlgJanEquipe extends javax.swing.JDialog {
             txtNomeEquipe.setText(equipe.getNome());
             comboBoxSetor.setSelectedItem(equipe.getSetor());
 
-        } catch (Exception e) {
+        } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
         }
     }//GEN-LAST:event_menuEditarActionPerformed
 
     private void menuExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExcluirActionPerformed
-//        int linha = tableEquipe.getSelectedRow();
-//
-//        if (linha < 0) {
-//            JOptionPane.showMessageDialog(null, "Selecione uma linha para excluir!");
-//            return;
-//        }
-//
-//        int resposta = JOptionPane.showConfirmDialog(
-//                null,
-//                "Deseja realmente excluir?",
-//                "Confirmar exclusão",
-//                JOptionPane.YES_NO_OPTION
-//        );
-//
-//        if (resposta == JOptionPane.YES_OPTION) {
-//            try {
-//                Equipe equipe = (Equipe) tblModelEquipe.getEquipe(linha);
-//
-//                GerenciadorInterface.getMyInstance().getDominio().excluirEquipe(equipe.getId());
-//
-//                carregarTabela();
-//                limparCampos();
-//                JOptionPane.showMessageDialog(null, "Equipe excluída com sucesso!");
-//
-//            } catch (Exception e) {
-//                JOptionPane.showMessageDialog(null, "Erro ao excluir: " + e.getMessage());
-//            }
-//        }
+        try {
+            linha = tableEquipe.getSelectedRow();
+
+            if (linha == -1) {
+                JOptionPane.showMessageDialog(null, "Selecione uma equipe!");
+                return;
+            }
+
+            TableModelEquipe model = (TableModelEquipe) tableEquipe.getModel();
+
+            Equipe e = (Equipe) model.getEquipe(linha);
+            int id = e.getId();
+
+            int resposta = JOptionPane.showConfirmDialog(
+                    null,
+                    "Deseja realmente excluir esta equipe?",
+                    "Confirmação",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (resposta == JOptionPane.YES_OPTION) {
+
+                GerenciadorInterface.getMyInstance().getDominio().excluirEquipe(id);
+                JOptionPane.showMessageDialog(null, "Equipe excluída com sucesso!");
+                carregarTabela();
+                limparCampos();
+            }
+
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao excluir Equipe");
+        }
     }//GEN-LAST:event_menuExcluirActionPerformed
 
     private void btnListarEquipesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarEquipesActionPerformed
@@ -321,21 +322,25 @@ public class DlgJanEquipe extends javax.swing.JDialog {
     }//GEN-LAST:event_btnListarEquipesActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-//        try {
-//            int linha = tableEquipe.getSelectedRow();
-//
-//            Equipe equipe = (Equipe) tblModelEquipe.getEquipe(linha);
-//
-//            equipe.setNome(txtNomeEquipe.getText());
-//            equipe.setSetor(comboBoxSetor.getSelectedItem().toString());
-//            GerenciadorInterface.getMyInstance().getDominio().alterarEquipe(equipe);
-//
-//            JOptionPane.showMessageDialog(null, "Equipe editada com sucesso!");
-//            carregarTabela();
-//            limparCampos();
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
-//        }
+        try {
+            linha = tableEquipe.getSelectedRow();
+
+            if (linha == -1) {
+                JOptionPane.showMessageDialog(null, "Selecione uma Equipe!");
+                return;
+            }
+
+            Equipe equipeSelecionada = (Equipe) GerenciadorInterface.getMyInstance().getDominio().listar(Equipe.class).get(linha);
+
+            GerenciadorInterface.getMyInstance().getDominio().alterarEquipe(equipeSelecionada.getId(), txtNomeEquipe.getText(), (String) comboBoxSetor.getSelectedItem());
+
+            JOptionPane.showMessageDialog(null, "Equipe editada com sucesso!");
+            carregarTabela();
+            limparCampos();
+
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao salvar Equipe");
+        }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void comboBoxSetorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_comboBoxSetorKeyReleased
@@ -351,13 +356,11 @@ public class DlgJanEquipe extends javax.swing.JDialog {
 
     private void carregarTabela() {
         try {
-            Equipe equipe = new Equipe();
-
-            List<Equipe> lista = GerenciadorInterface.getMyInstance().getDominio().listarEquipes();
+            List<Equipe> lista = GerenciadorInterface.getMyInstance().getDominio().listar(Equipe.class);
 
             tblModelEquipe.setLista(lista);
 
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
         }
     }

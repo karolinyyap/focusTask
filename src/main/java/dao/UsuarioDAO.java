@@ -1,10 +1,9 @@
 package dao;
 
-import domain.Equipe;
 import domain.Usuario;
-import java.util.ArrayList;
+import jakarta.persistence.criteria.*;
 import java.util.List;
-import org.hibernate.HibernateException;
+import org.hibernate.Session;
 
 /**
  *
@@ -15,18 +14,37 @@ public class UsuarioDAO extends GenericDAO {
     public UsuarioDAO() {
     }
 
-    public void inserir(Usuario usuario) throws HibernateException {
-        super.inserir(usuario);
-    }
+    public Usuario pesquisarPorNome(String nome) {
 
-    private List<Usuario> pesquisar(int tipo, String pesq) throws HibernateException {
+        Session sessao = null;
 
-        List<Usuario> lista = new ArrayList<>();
+        try {
+            sessao = ConexaoHibernate.getSessionFactory().openSession();
 
-        // TESTE
-        lista = this.listar(Usuario.class);
+            CriteriaBuilder cb = sessao.getCriteriaBuilder();
+            CriteriaQuery<Usuario> cq = cb.createQuery(Usuario.class);
 
-        return lista;
+            Root<Usuario> usuario = cq.from(Usuario.class);
+
+            cq.select(usuario);
+            cq.where(cb.equal(usuario.get("nome"), nome));
+
+            List<Usuario> lista = sessao.createQuery(cq).getResultList();
+
+            sessao.close();
+
+            if (lista.isEmpty()) {
+                return null;
+            }
+
+            return lista.get(0);
+
+        } catch (Exception e) {
+            if (sessao != null) {
+                sessao.close();
+            }
+            throw e;
+        }
     }
 
 }

@@ -1,4 +1,3 @@
-
 package domain;
 
 import jakarta.persistence.*;
@@ -10,14 +9,14 @@ import jakarta.persistence.*;
 @Entity
 @Table
 public class Categoria {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    
-    @Column (nullable = false)
+
+    @Column(nullable = false)
     private String nome;
-    
+
     @Column
     private String descricao;
 
@@ -59,6 +58,17 @@ public class Categoria {
         return nome;
     }
 
-   
-   
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Categoria other = (Categoria) obj;
+        return id == other.id;
+    }
+
 }

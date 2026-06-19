@@ -32,6 +32,48 @@ public class GenericDAO {
 
     }
 
+    public void alterar(Object obj) throws HibernateException {
+        Session sessao = null;
+        try {
+            sessao = ConexaoHibernate.getSessionFactory().openSession();
+            sessao.beginTransaction();
+
+            // OPERAÇÃO
+            sessao.update(obj);
+
+            sessao.getTransaction().commit();
+            sessao.close();
+        } catch (HibernateException ex) {
+            if (sessao != null) {
+                sessao.getTransaction().rollback();
+                sessao.close();
+            }
+            throw new HibernateException(ex);
+        }
+
+    }
+
+    public void excluir(Object obj) throws HibernateException {
+        Session sessao = null;
+        try {
+            sessao = ConexaoHibernate.getSessionFactory().openSession();
+            sessao.beginTransaction();
+
+            // OPERAÇÃO
+            sessao.delete(obj);
+
+            sessao.getTransaction().commit();
+            sessao.close();
+        } catch (HibernateException ex) {
+            if (sessao != null) {
+                sessao.getTransaction().rollback();
+                sessao.close();
+            }
+            throw new HibernateException(ex);
+        }
+
+    }
+
     public List listar(Class classe) throws HibernateException {
 
         List lista = null;

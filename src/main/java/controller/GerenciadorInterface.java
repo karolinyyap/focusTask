@@ -1,20 +1,17 @@
 package controller;
 
+import domain.Usuario;
 import java.awt.Frame;
 import java.lang.reflect.InvocationTargetException;
-import java.sql.SQLException;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import view.DlgJanCategoria;
 import view.DlgJanEquipe;
 import view.DlgJanRelatorio;
 import view.DlgJanTarefa;
 import view.DlgJanUsuario;
 import view.FrmPrincipal;
-import view.JanLogin;
 
 /**
  *
@@ -28,7 +25,6 @@ public class GerenciadorInterface {
     private DlgJanUsuario janUsuario = null;
     private DlgJanCategoria janCategoria = null;
     private DlgJanRelatorio janRelatorio = null;
-    private JanLogin janLogin = null;
 
     GerenciadorDominio gerDominio;
 
@@ -36,13 +32,7 @@ public class GerenciadorInterface {
     private static GerenciadorInterface myInstance = new GerenciadorInterface();
 
     private GerenciadorInterface() {
-        try {
-            gerDominio = new GerenciadorDominio();
-        } catch (ClassNotFoundException | SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex, "Inicialização", JOptionPane.ERROR_MESSAGE);
-            System.exit(-1);
-        }
-
+        gerDominio = new GerenciadorDominio();
     }
 
     public static GerenciadorInterface getMyInstance() {
@@ -74,31 +64,33 @@ public class GerenciadorInterface {
     }
 
     public void abrirTarefa() {
-        janTarefa = (DlgJanTarefa) abrirJanela(janPrincipal, janTarefa, DlgJanTarefa.class);
+        DlgJanTarefa dlg = new DlgJanTarefa(janPrincipal, true);
+
+        dlg.setVisible(true);
     }
 
     public void abrirEquipe() {
-        if (janPrincipal == null) {
-            abrirPrincipal();
-        }
+        DlgJanEquipe dlg = new DlgJanEquipe(janPrincipal, true);
 
-        janEquipe = (DlgJanEquipe) abrirJanela(janPrincipal, janEquipe, DlgJanEquipe.class);
+        dlg.setVisible(true);
     }
 
     public void abrirCategoria() {
-        janCategoria = (DlgJanCategoria) abrirJanela(janPrincipal, janCategoria, DlgJanCategoria.class);
+        DlgJanCategoria dlg = new DlgJanCategoria(janPrincipal, true);
+
+        dlg.setVisible(true);
     }
 
     public void abrirUsuario() {
-        janUsuario = (DlgJanUsuario) abrirJanela(janPrincipal, janUsuario, DlgJanUsuario.class);
+        DlgJanUsuario dlg = new DlgJanUsuario(janPrincipal, true);
+
+        dlg.setVisible(true);
     }
 
     public void abrirRelatorio() {
-        janRelatorio = (DlgJanRelatorio) abrirJanela(janPrincipal, janRelatorio, DlgJanRelatorio.class);
-    }
+        DlgJanRelatorio dlg = new DlgJanRelatorio(janPrincipal, true);
 
-    public void abrirLogin() {
-        janLogin = (JanLogin) abrirJanela(janPrincipal, janLogin, JanLogin.class);
+        dlg.setVisible(true);
     }
 
     public static void main(String args[]) {
