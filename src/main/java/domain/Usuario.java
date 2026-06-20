@@ -1,4 +1,3 @@
-
 package domain;
 
 import jakarta.persistence.*;
@@ -12,40 +11,37 @@ import java.util.List;
 @Entity
 @Table
 public class Usuario {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    
+
     @Column
     private String nome;
-    
+
     @Column
     private String cpf;
-    
+
     @Column
     private String email;
-    
+
     @Column
     private String sexo;
-    
+
     @Column
     private Date dtNascimento;
-    
+
     @Column
     private String telefone;
-    
+
     @ManyToOne
     @JoinColumn(name = "id_equipe")
     private Equipe equipe;
-    
-    @OneToMany(mappedBy = "id.usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<UsuarioEquipe> historicoEquipes;
-    
-    @Column
-    private String senha;
 
-    public Usuario(int id, String nome, String cpf, String email, String sexo, Date dtNascimento, String telefone, Equipe equipe, String senha) {
+    @OneToMany(mappedBy = "id.usuario", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<UsuarioEquipe> historicoEquipes;
+
+    public Usuario(int id, String nome, String cpf, String email, String sexo, Date dtNascimento, String telefone, Equipe equipe) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
@@ -54,7 +50,6 @@ public class Usuario {
         this.dtNascimento = dtNascimento;
         this.telefone = telefone;
         this.equipe = equipe;
-        this.senha = senha;
     }
 
     public Usuario() {
@@ -92,10 +87,6 @@ public class Usuario {
         return equipe;
     }
 
-    public String getSenha() {
-        return senha;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -128,9 +119,17 @@ public class Usuario {
         this.equipe = equipe;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public List<UsuarioEquipe> getHistoricoEquipes() {
+        return historicoEquipes;
     }
-    
-    
+
+    public void setHistoricoEquipes(List<UsuarioEquipe> historicoEquipes) {
+        this.historicoEquipes = historicoEquipes;
+    }
+
+    @Override
+    public String toString() {
+        return nome;
+    }
+
 }

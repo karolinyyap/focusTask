@@ -304,6 +304,7 @@ public class DlgJanCategoria extends javax.swing.JDialog {
 
     private void menuExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExcluirActionPerformed
         try {
+
             linha = tabelaListarCategoria.getSelectedRow();
 
             if (linha == -1) {
@@ -312,9 +313,16 @@ public class DlgJanCategoria extends javax.swing.JDialog {
             }
 
             TableModelCategoria model = (TableModelCategoria) tabelaListarCategoria.getModel();
+            Categoria categoria = (Categoria) model.getCategoria(linha);
 
-            Categoria c = (Categoria) model.getCategoria(linha);
-            int id = c.getId();
+            if (GerenciadorInterface.getMyInstance().getDominio().categoriaPossuiTarefas(categoria)) {
+
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Não é possível excluir esta categoria porque existem tarefas vinculadas."
+                );
+                return;
+            }
 
             int resposta = JOptionPane.showConfirmDialog(
                     null,
@@ -325,14 +333,23 @@ public class DlgJanCategoria extends javax.swing.JDialog {
 
             if (resposta == JOptionPane.YES_OPTION) {
 
-                GerenciadorInterface.getMyInstance().getDominio().excluirCategoria(id);
-                JOptionPane.showMessageDialog(null, "Categoria excluída com sucesso!");
+                GerenciadorInterface.getMyInstance().getDominio().excluirCategoria(categoria.getId());
+
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Categoria excluída com sucesso!"
+                );
+
                 carregarTabela();
                 limparCampos();
             }
 
-        } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao excluir categoria");
+        } catch (Exception e) {
+
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Erro ao excluir categoria: " + e.getMessage()
+            );
         }
     }//GEN-LAST:event_menuExcluirActionPerformed
 

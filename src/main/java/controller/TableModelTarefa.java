@@ -17,7 +17,7 @@ public class TableModelTarefa extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return 6;
+        return 7;
     }
 
     @Override
@@ -31,6 +31,7 @@ public class TableModelTarefa extends AbstractTableModel{
             case 3: return tarefa.getDataLimite();
             case 4: return tarefa.getCategoria();
             case 5: return tarefa.getStatus();
+            case 6: return tarefa.getResponsavel();
         }
         
         return null;
@@ -38,7 +39,7 @@ public class TableModelTarefa extends AbstractTableModel{
     
     @Override
     public String getColumnName (int column) {
-        String nomes[] = {"Nome", "Equipe", "Prioridade", "Data Limite", "Categoria", "Status"};
+        String nomes[] = {"Nome", "Equipe", "Prioridade", "Data Limite", "Categoria", "Status", "Responsável"};
         return nomes[column];
     }
     

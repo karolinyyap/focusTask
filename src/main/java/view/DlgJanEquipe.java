@@ -285,17 +285,37 @@ public class DlgJanEquipe extends javax.swing.JDialog {
 
     private void menuExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExcluirActionPerformed
         try {
+
             linha = tableEquipe.getSelectedRow();
 
             if (linha == -1) {
-                JOptionPane.showMessageDialog(null, "Selecione uma equipe!");
+                JOptionPane.showMessageDialog(null,
+                        "Selecione uma equipe!");
                 return;
             }
 
-            TableModelEquipe model = (TableModelEquipe) tableEquipe.getModel();
+            TableModelEquipe model
+                    = (TableModelEquipe) tableEquipe.getModel();
 
-            Equipe e = (Equipe) model.getEquipe(linha);
-            int id = e.getId();
+            Equipe equipe = (Equipe) model.getEquipe(linha);
+
+            if (GerenciadorInterface.getMyInstance().getDominio().equipePossuiUsuarios(equipe)) {
+
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Não é possível excluir esta equipe porque existem usuários vinculados."
+                );
+                return;
+            }
+
+            if (GerenciadorInterface.getMyInstance().getDominio().equipePossuiTarefas(equipe)) {
+
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Não é possível excluir esta equipe porque existem tarefas vinculadas."
+                );
+                return;
+            }
 
             int resposta = JOptionPane.showConfirmDialog(
                     null,
@@ -306,14 +326,23 @@ public class DlgJanEquipe extends javax.swing.JDialog {
 
             if (resposta == JOptionPane.YES_OPTION) {
 
-                GerenciadorInterface.getMyInstance().getDominio().excluirEquipe(id);
-                JOptionPane.showMessageDialog(null, "Equipe excluída com sucesso!");
+                GerenciadorInterface.getMyInstance().getDominio().excluirEquipe(equipe.getId());
+
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Equipe excluída com sucesso!"
+                );
+
                 carregarTabela();
                 limparCampos();
             }
 
-        } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao excluir Equipe");
+        } catch (Exception e) {
+
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Erro ao excluir equipe: " + e.getMessage()
+            );
         }
     }//GEN-LAST:event_menuExcluirActionPerformed
 

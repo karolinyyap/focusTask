@@ -1,9 +1,7 @@
 
 package domain;
 
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -42,11 +40,6 @@ public class UsuarioEquipePK implements Serializable{
 
     public void setEquipe(Equipe equipe) {
         this.equipe = equipe;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(usuario, equipe);
     }
 
     @Override

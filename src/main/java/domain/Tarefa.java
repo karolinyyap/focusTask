@@ -35,7 +35,11 @@ public class Tarefa {
     @Enumerated
     private Prioridade prioridade;
 
-    public Tarefa(int id, String nome, Date dataInicio, Date dataLimite, List<Alocacao> alocacoes, Categoria categoria, Status status, Prioridade prioridade) {
+    @ManyToOne
+    @JoinColumn(name = "id_responsavel")
+    private Usuario responsavel;
+
+    public Tarefa(int id, String nome, Date dataInicio, Date dataLimite, List<Alocacao> alocacoes, Categoria categoria, Status status, Prioridade prioridade, Usuario responsavel) {
         this.id = id;
         this.nome = nome;
         this.dataInicio = dataInicio;
@@ -44,6 +48,7 @@ public class Tarefa {
         this.categoria = categoria;
         this.status = status;
         this.prioridade = prioridade;
+        this.responsavel = responsavel;
     }
 
     public Tarefa() {
@@ -81,6 +86,10 @@ public class Tarefa {
         return prioridade;
     }
 
+    public Usuario getResponsavel() {
+        return responsavel;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -111,6 +120,10 @@ public class Tarefa {
 
     public void setPrioridade(Prioridade prioridade) {
         this.prioridade = prioridade;
+    }
+
+    public void setResponsavel(Usuario responsavel) {
+        this.responsavel = responsavel;
     }
 
     @Transient

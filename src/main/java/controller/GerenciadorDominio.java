@@ -14,6 +14,8 @@ import domain.Prioridade;
 import domain.Status;
 import domain.Tarefa;
 import domain.Usuario;
+import domain.UsuarioEquipe;
+import domain.UsuarioEquipePK;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -47,7 +49,7 @@ public class GerenciadorDominio {
     }
 
     //------------------USUÁRIO
-    public void inserirUsuario(String nome, String cpf, String email, String sexo, Date dtNascimento, String telefone, Equipe equipe, String senha) {
+    public void inserirUsuario(String nome, String cpf, String email, String sexo, Date dtNascimento, String telefone, Equipe equipe) {
         Usuario usuario = new Usuario();
 
         usuario.setNome(nome);
@@ -57,7 +59,22 @@ public class GerenciadorDominio {
         usuario.setDtNascimento(dtNascimento);
         usuario.setTelefone(telefone);
         usuario.setEquipe(equipe);
-        usuario.setSenha(senha);
+
+        List<UsuarioEquipe> historico = new ArrayList<>();
+
+        UsuarioEquipe ue = new UsuarioEquipe();
+
+        UsuarioEquipePK pk = new UsuarioEquipePK();
+        pk.setUsuario(usuario);
+        pk.setEquipe(equipe);
+
+        ue.setId(pk);
+        ue.setDataEntrada(new Date());
+        ue.setDataSaida(null);
+
+        historico.add(ue);
+
+        usuario.setHistoricoEquipes(historico);
 
         genDAO.inserir(usuario);
     }
@@ -71,6 +88,29 @@ public class GerenciadorDominio {
         usuario.setTelefone(telefone);
         usuario.setDtNascimento(dtNascimento);
         usuario.setSexo(sexo);
+
+        if (usuario.getEquipe().getId() != equipe.getId()) {
+            for (UsuarioEquipe ue : usuario.getHistoricoEquipes()) {
+
+                if (ue.getDataSaida() == null) {
+                    ue.setDataSaida(new Date());
+                    break;
+                }
+            }
+
+            UsuarioEquipe novo = new UsuarioEquipe();
+
+            UsuarioEquipePK pk = new UsuarioEquipePK();
+
+            pk.setUsuario(usuario);
+            pk.setEquipe(equipe);
+
+            novo.setId(pk);
+            novo.setDataEntrada(new Date());
+            novo.setDataSaida(null);
+
+            usuario.getHistoricoEquipes().add(novo);
+        }
         usuario.setEquipe(equipe);
 
         usuarioDAO.alterar(usuario);
@@ -86,6 +126,13 @@ public class GerenciadorDominio {
         return usuarioDAO.pesquisarPorNome(nome);
     }
 
+    public List<Usuario> listarUsuariosDasEquipes(List<Equipe> equipes) {
+        return usuarioDAO.listarUsuariosDasEquipes(equipes);
+    }
+
+    public boolean usuarioPossuiTarefas(Usuario usuario) {
+        return usuarioDAO.possuiTarefasResponsavel(usuario);
+    }
 
     //------------------EQUIPE
     public void inserirEquipe(String nome, String setor) {
@@ -109,6 +156,14 @@ public class GerenciadorDominio {
     public void excluirEquipe(int id) {
         Equipe equipe = (Equipe) equipeDAO.get(Equipe.class, id);
         genDAO.excluir(equipe);
+    }
+
+    public boolean equipePossuiTarefas(Equipe equipe) {
+        return equipeDAO.possuiTarefas(equipe);
+    }
+
+    public boolean equipePossuiUsuarios(Equipe equipe) {
+        return equipeDAO.possuiUsuarios(equipe);
     }
 
     //------------------CATEGORIA
@@ -135,8 +190,12 @@ public class GerenciadorDominio {
         genDAO.excluir(cat);
     }
 
+    public boolean categoriaPossuiTarefas(Categoria categoria) {
+        return categoriaDAO.possuiTarefas(categoria);
+    }
+
     //------------------TAREFA
-    public void inserirTarefa(String nome, Date dataInicio, Date dataLimite, Categoria categoria, Prioridade prioridade, Status status, List<Equipe> equipes) {
+    public void inserirTarefa(String nome, Date dataInicio, Date dataLimite, Categoria categoria, Prioridade prioridade, Status status, List<Equipe> equipes, Usuario responsavel) {
         Tarefa tarefa = new Tarefa();
 
         tarefa.setNome(nome);
@@ -160,11 +219,12 @@ public class GerenciadorDominio {
         }
 
         tarefa.setAlocacoes(alocacoes);
+        tarefa.setResponsavel(responsavel);
 
         tarefaDAO.inserir(tarefa);
     }
 
-    public void alterarTarefa(int id, String nome, Date dataInicio, Date dataLimite, Categoria categoria, Prioridade prioridade, Status status, List<Equipe> equipes) {
+    public void alterarTarefa(int id, String nome, Date dataInicio, Date dataLimite, Categoria categoria, Prioridade prioridade, Status status, List<Equipe> equipes, Usuario responsavel) {
         Tarefa tarefa = (Tarefa) tarefaDAO.get(Tarefa.class, id);
 
         tarefa.setNome(nome);
@@ -188,6 +248,7 @@ public class GerenciadorDominio {
         }
 
         tarefa.setAlocacoes(alocacoes);
+        tarefa.setResponsavel(responsavel);
 
         tarefaDAO.alterar(tarefa);
     }
@@ -195,6 +256,18 @@ public class GerenciadorDominio {
     public void excluirTarefa(int id) {
         Tarefa tarefa = (Tarefa) tarefaDAO.get(Tarefa.class, id);
         genDAO.excluir(tarefa);
+    }
+
+    public long contarTarefas() {
+        return tarefaDAO.contarTarefas();
+    }
+
+    public long contarPorStatus(Status status) {
+        return tarefaDAO.contarPorStatus(status);
+    }
+
+    public int contarTarefasEquipe(Equipe equipe) {
+        return tarefaDAO.contarTarefasEquipe(equipe);
     }
 
 }

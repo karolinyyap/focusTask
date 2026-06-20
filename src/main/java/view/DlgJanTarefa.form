@@ -153,29 +153,46 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="comboBoxStatus" alignment="0" pref="226" max="32767" attributes="0"/>
                                   <Component id="txtDtLimite" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="txtNomeTarefa" alignment="0" pref="226" max="32767" attributes="0"/>
+                                  <Component id="txtNomeTarefa" alignment="0" max="32767" attributes="0"/>
                                   <Component id="labelDtLimite" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="labelNomeTarefa" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="labelStatus" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="labelDtInicio" min="-2" max="-2" attributes="0"/>
                                   <Component id="txtDtInicio" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="comboBoxStatus" pref="0" max="32767" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="labelStatus" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="labelPrioridade" min="-2" max="-2" attributes="0"/>
+                                          <Component id="comboBoxPrioridade" min="-2" pref="99" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
                               </Group>
                               <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="labelCategoria" min="-2" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="1" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="labelCategoria" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="lblResponsavel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="comboBoxPrioridade" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="comboBoxResponsavel" alignment="0" max="32767" attributes="0"/>
                                           <Component id="comboBoxCategoria" alignment="0" max="32767" attributes="0"/>
                                           <Component id="panelEquipe" alignment="0" max="32767" attributes="0"/>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="labelPrioridade" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                          </Group>
                                       </Group>
-                                      <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -190,7 +207,7 @@
                                       <Component id="btnListar" min="-2" pref="96" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace min="0" pref="44" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -227,11 +244,13 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelPrioridade" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="labelStatus" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblResponsavel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="comboBoxPrioridade" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="comboBoxStatus" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="comboBoxResponsavel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -417,13 +436,14 @@
                 <Component class="javax.swing.JTable" name="tabelaListarTarefa">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="6" rowCount="0">
+                      <Table columnCount="7" rowCount="0">
                         <Column editable="true" title="Tarefa" type="java.lang.Object"/>
                         <Column editable="true" title="Equipe" type="java.lang.Object"/>
                         <Column editable="true" title="Prioridade" type="java.lang.Object"/>
                         <Column editable="true" title="Data Limite" type="java.lang.Object"/>
                         <Column editable="true" title="Categoria" type="java.lang.Object"/>
                         <Column editable="true" title="Status" type="java.lang.Object"/>
+                        <Column editable="true" title="Respons&#xe1;vel" type="java.lang.Object"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -505,6 +525,24 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAlterarActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblResponsavel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Respons&#xe1;vel"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="comboBoxResponsavel">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="0"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboBoxResponsavelActionPerformed"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Object&gt;"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>

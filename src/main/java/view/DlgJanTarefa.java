@@ -7,12 +7,11 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import domain.Tarefa;
 import controller.TableModelTarefa;
-import domain.Alocacao;
-import domain.AlocacaoPK;
 import domain.Categoria;
 import domain.Equipe;
 import domain.Prioridade;
 import domain.Status;
+import domain.Usuario;
 import java.awt.HeadlessException;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
@@ -31,6 +30,7 @@ public class DlgJanTarefa extends javax.swing.JDialog {
         initComponents();
 
         btnSalvarTarefa.setEnabled(true);
+        comboBoxResponsavel.setEnabled(false);
         carregarEquipes();
 
         carregarComboStatus();
@@ -76,6 +76,8 @@ public class DlgJanTarefa extends javax.swing.JDialog {
         txtDtInicio = new javax.swing.JFormattedTextField();
         btnListar = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
+        lblResponsavel = new javax.swing.JLabel();
+        comboBoxResponsavel = new javax.swing.JComboBox<>();
         btnVoltarJanTarefa = new javax.swing.JButton();
 
         menuLimpar.setText("Limpar");
@@ -216,7 +218,7 @@ public class DlgJanTarefa extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Tarefa", "Equipe", "Prioridade", "Data Limite", "Categoria", "Status"
+                "Tarefa", "Equipe", "Prioridade", "Data Limite", "Categoria", "Status", "Responsável"
             }
         ));
         tabelaListarTarefa.setComponentPopupMenu(popUpMenu);
@@ -249,6 +251,14 @@ public class DlgJanTarefa extends javax.swing.JDialog {
             }
         });
 
+        lblResponsavel.setText("Responsável");
+
+        comboBoxResponsavel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxResponsavelActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout tabCadastrarLayout = new javax.swing.GroupLayout(tabCadastrar);
         tabCadastrar.setLayout(tabCadastrarLayout);
         tabCadastrarLayout.setHorizontalGroup(
@@ -258,26 +268,37 @@ public class DlgJanTarefa extends javax.swing.JDialog {
                 .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tabCadastrarLayout.createSequentialGroup()
                         .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(comboBoxStatus, 0, 226, Short.MAX_VALUE)
                             .addComponent(txtDtLimite)
-                            .addComponent(txtNomeTarefa, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+                            .addComponent(txtNomeTarefa)
                             .addComponent(labelDtLimite)
                             .addComponent(labelNomeTarefa)
-                            .addComponent(labelStatus)
                             .addComponent(labelDtInicio)
-                            .addComponent(txtDtInicio))
+                            .addComponent(txtDtInicio)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabCadastrarLayout.createSequentialGroup()
+                                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(tabCadastrarLayout.createSequentialGroup()
+                                        .addComponent(comboBoxStatus, 0, 1, Short.MAX_VALUE)
+                                        .addGap(18, 18, 18))
+                                    .addGroup(tabCadastrarLayout.createSequentialGroup()
+                                        .addComponent(labelStatus)
+                                        .addGap(95, 95, 95)))
+                                .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelPrioridade)
+                                    .addComponent(comboBoxPrioridade, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(45, 45, 45)
                         .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelCategoria)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabCadastrarLayout.createSequentialGroup()
+                            .addGroup(tabCadastrarLayout.createSequentialGroup()
+                                .addComponent(labelCategoria)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(tabCadastrarLayout.createSequentialGroup()
+                                .addComponent(lblResponsavel)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(tabCadastrarLayout.createSequentialGroup()
                                 .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(comboBoxPrioridade, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(comboBoxResponsavel, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(comboBoxCategoria, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(panelEquipe, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, tabCadastrarLayout.createSequentialGroup()
-                                        .addComponent(labelPrioridade)
-                                        .addGap(0, 0, Short.MAX_VALUE)))
-                                .addGap(57, 57, 57))))
+                                    .addComponent(panelEquipe, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(41, 41, 41))))
                     .addGroup(tabCadastrarLayout.createSequentialGroup()
                         .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -287,7 +308,7 @@ public class DlgJanTarefa extends javax.swing.JDialog {
                                 .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 44, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         tabCadastrarLayout.setVerticalGroup(
             tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -315,11 +336,13 @@ public class DlgJanTarefa extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelPrioridade)
-                    .addComponent(labelStatus))
+                    .addComponent(labelStatus)
+                    .addComponent(lblResponsavel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comboBoxPrioridade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBoxResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addGroup(tabCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvarTarefa)
@@ -375,7 +398,10 @@ public class DlgJanTarefa extends javax.swing.JDialog {
     }//GEN-LAST:event_btnVoltarJanTarefaActionPerformed
 
     private void listEquipesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listEquipesValueChanged
-
+        if (!evt.getValueIsAdjusting()) {
+            preencherResponsaveis();
+        }
+        comboBoxResponsavel.setEnabled(true);
     }//GEN-LAST:event_listEquipesValueChanged
 
     private void btnSalvarTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarTarefaActionPerformed
@@ -386,8 +412,7 @@ public class DlgJanTarefa extends javax.swing.JDialog {
             GerenciadorInterface.getMyInstance().getDominio().inserirTarefa(txtNomeTarefa.getText(), strToDate(txtDtInicio.getText()),
                     strToDate(txtDtLimite.getText()), (Categoria) comboBoxCategoria.getSelectedItem(),
                     (Prioridade) comboBoxPrioridade.getSelectedItem(), (Status) comboBoxStatus.getSelectedItem(),
-                    equipesSelecionadas
-            );
+                    equipesSelecionadas, (Usuario) comboBoxResponsavel.getSelectedItem());
 
             JOptionPane.showMessageDialog(null, "Tarefa salva com sucesso!");
             carregarTabela();
@@ -418,8 +443,8 @@ public class DlgJanTarefa extends javax.swing.JDialog {
 
             TableModelTarefa model = (TableModelTarefa) tabelaListarTarefa.getModel();
 
-            Categoria c = (Categoria) model.getTarefa(linha);
-            int id = c.getId();
+            Tarefa t = (Tarefa) model.getTarefa(linha);
+            int id = t.getId();
 
             int resposta = JOptionPane.showConfirmDialog(
                     null,
@@ -469,6 +494,7 @@ public class DlgJanTarefa extends javax.swing.JDialog {
             comboBoxCategoria.setSelectedItem(tarefa.getCategoria());
             comboBoxStatus.setSelectedItem(tarefa.getStatus());
             comboBoxPrioridade.setSelectedItem(tarefa.getPrioridade());
+            comboBoxResponsavel.setSelectedItem(tarefa.getResponsavel());
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
@@ -498,10 +524,9 @@ public class DlgJanTarefa extends javax.swing.JDialog {
             List<Equipe> equipesSelecionadas = listEquipes.getSelectedValuesList();
 
             GerenciadorInterface.getMyInstance().getDominio().alterarTarefa(tarefaSelecionada.getId(),
-                            txtNomeTarefa.getText(), strToDate(txtDtInicio.getText()), strToDate(txtDtLimite.getText()),
-                            (Categoria) comboBoxCategoria.getSelectedItem(), (Prioridade) comboBoxPrioridade.getSelectedItem(),
-                            (Status) comboBoxStatus.getSelectedItem(), equipesSelecionadas
-                    );
+                    txtNomeTarefa.getText(), strToDate(txtDtInicio.getText()), strToDate(txtDtLimite.getText()),
+                    (Categoria) comboBoxCategoria.getSelectedItem(), (Prioridade) comboBoxPrioridade.getSelectedItem(),
+                    (Status) comboBoxStatus.getSelectedItem(), equipesSelecionadas, (Usuario) comboBoxResponsavel.getSelectedItem());
 
             JOptionPane.showMessageDialog(null, "Tarefa alterada com sucesso!");
 
@@ -525,6 +550,10 @@ public class DlgJanTarefa extends javax.swing.JDialog {
     private void comboBoxCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxCategoriaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboBoxCategoriaActionPerformed
+
+    private void comboBoxResponsavelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxResponsavelActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboBoxResponsavelActionPerformed
 
     private void verificarCampos() {
         boolean nomePreenchido = !txtNomeTarefa.getText().trim().isEmpty();
@@ -625,6 +654,28 @@ public class DlgJanTarefa extends javax.swing.JDialog {
         }
     }
 
+    private void preencherResponsaveis() {
+
+        comboBoxResponsavel.removeAllItems();
+
+        List<Equipe> equipesSelecionadas = listEquipes.getSelectedValuesList();
+
+        if (equipesSelecionadas.isEmpty()) {
+
+            comboBoxResponsavel.setEnabled(false);
+
+            return;
+        }
+
+        comboBoxResponsavel.setEnabled(true);
+
+        List<Usuario> usuarios = GerenciadorInterface.getMyInstance().getDominio().listarUsuariosDasEquipes(equipesSelecionadas);
+
+        for (Usuario u : usuarios) {
+            comboBoxResponsavel.addItem(u);
+        }
+    }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -673,6 +724,7 @@ public class DlgJanTarefa extends javax.swing.JDialog {
     private javax.swing.JButton btnVoltarJanTarefa;
     private javax.swing.JComboBox<Object> comboBoxCategoria;
     private javax.swing.JComboBox<Object> comboBoxPrioridade;
+    private javax.swing.JComboBox<Object> comboBoxResponsavel;
     private javax.swing.JComboBox<Object> comboBoxStatus;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -683,6 +735,7 @@ public class DlgJanTarefa extends javax.swing.JDialog {
     private javax.swing.JLabel labelNomeTarefa;
     private javax.swing.JLabel labelPrioridade;
     private javax.swing.JLabel labelStatus;
+    private javax.swing.JLabel lblResponsavel;
     private javax.swing.JList<Equipe> listEquipes;
     private javax.swing.JMenuItem menuEditar;
     private javax.swing.JMenuItem menuExcluir;
